@@ -64,4 +64,5 @@ export interface State {
   loading: boolean
   company?: Company
   department?: Department
+  hide: boolean
 }

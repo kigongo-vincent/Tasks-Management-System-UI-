@@ -209,6 +209,7 @@ tasks?.length != 0 && populateDailyTasks()
 
       {/* sub header  */}
       <div
+      className="flex-vertical"
       style={{
         display: "flex",
         alignItems: "center",
@@ -224,23 +225,29 @@ tasks?.length != 0 && populateDailyTasks()
 
         {/* filter  */}
         <div
+        
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          // background: "red",
+          width: innerWidth < 768 ? "100%": "max-content"
           
         }}
         >
           {/* start date  */}
-        <Input noBorder zeroMargin setter={setStartDate} input={startDate}  type={"date"} placeholder={"Starting date"}/>
+        <Input fullwidth={innerWidth < 768} noBorder zeroMargin setter={setStartDate} input={startDate}  type={"date"} placeholder={"Starting date"}/>
 
         <div style={{margin:"0px 10px"}}/>
 
         {/* end date  */}
-        <Input noBorder zeroMargin setter={setEndDate} input={endDate}  type={"date"} placeholder={"ending date"}/>
+        <Input noBorder fullwidth={innerWidth < 768} zeroMargin setter={setEndDate} input={endDate}  type={"date"} placeholder={"ending date"}/>
         
 
         </div>
+        {
+          innerWidth < 768 && <br/>
+        }
 
         {/* search  */}
         <Input zeroMargin noBorder setter={setSearch} input={search}  type={"search"} placeholder={"search for tasks"}/>
@@ -263,18 +270,20 @@ tasks?.length != 0 && populateDailyTasks()
           
         }}
         >
-          <Text>Total Number of working hours</Text>
+          {
+            innerWidth > 768 ? <Text>Total Number of working hours</Text> : <Text>working hours:</Text>
+          }
           <div
             style={{
               // background: theme?.error,
               // height: 30,
-              // width: 60,
+              // width: innerWidth > 768 ? "": "100vw",
               padding: "3px 12px",
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent: "space-between",
               borderRadius: "100px",
-              marginLeft: 8
+              // marginLeft: 
             }}
           >
             <Text heading>{Math.floor(hours/60) + ` hour${Math.floor(hours/60) == 1 ? "" : "s"} and ` + hours%60 + " minutes"}</Text>
@@ -298,7 +307,7 @@ tasks?.length != 0 && populateDailyTasks()
         setter={setter}
         showBody={showBody}
         editor={editTask}
-        columns={["body", "duration"]}
+        columns={["body", "duration", "project_name"]}
         rows={searchResults}
         delete
         edit
@@ -314,7 +323,7 @@ tasks?.length != 0 && populateDailyTasks()
         editor={editTask}
         setter={setter}
         showBody={showBody}
-        columns={["body", "duration"]}
+        columns={["body", "duration", "project_name"]}
         rows={filteredTasks}
         delete
         edit

@@ -2,7 +2,7 @@ import React from 'react'
 
 const x_stack = ({children}) => {
   return (
-    <div style={{display: "flex", alignItems: "center", width: "85%", justifyContent: "center"}}>
+    <div className='login-parent' style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
       {children}
     </div>
   )

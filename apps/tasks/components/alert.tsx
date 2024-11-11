@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Alert, Theme } from "../types";
 import { useDispatch, useSelector } from "react-redux";
-import { getTheme, setAlert } from "../model/data";
+import { allowHide, disableHide, getTheme, setAlert } from "../model/data";
 import Text from "./text";
 import { FaBell, FaCheckCircle } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
+import Button from "./button";
 
 const alert = (props: Alert) => {
   const theme: Theme = useSelector(getTheme);
 
   const dispatch = useDispatch();
+
+  useEffect(()=>{
+
+    if(props?.title == "Weak password"){
+      dispatch(disableHide())
+    }
+
+  }, [props.title])
 
   return (
     <AnimatePresence mode="sync">
@@ -38,15 +47,14 @@ const alert = (props: Alert) => {
             y: -100,
             opacity: 0,
           }}
-
           style={{
             position: "absolute",
             top: "1%",
-            left: "35%",
+            left: innerWidth > 768 ?"35%": "5%",
             background: theme?.paper,
             boxShadow:
               "10px 10px 20px rgba(0,0,0,.05), -10px -10px 20px rgba(0,0,0,.05)",
-            width: "30vw",
+            width: innerWidth > 768 ?"30vw": "80vw",
             borderRadius: "10px",
             padding: 20,
           }}
@@ -74,22 +82,28 @@ const alert = (props: Alert) => {
                     style={{ marginRight: 10 }}
                     size={20}
                   />
-                ) :  props?.mode == "error" ? (
+                ) : props?.mode == "error" ? (
                   <FaX
                     color={theme?.error}
                     style={{ marginRight: 10 }}
                     size={16}
                   />
-                )
-              :
-              <FaBell
+                ) : (
+                  <FaBell
                     color={theme?.text}
                     style={{ marginRight: 10 }}
                     size={16}
                   />
-
-              }
-                <Text color={props?.mode == "success" ? "success" : props?.mode == "error" ? "error" : "text"}>
+                )}
+                <Text
+                  color={
+                    props?.mode == "success"
+                      ? "success"
+                      : props?.mode == "error"
+                      ? "error"
+                      : "text"
+                  }
+                >
                   {props?.title}
                 </Text>
               </div>
@@ -97,8 +111,11 @@ const alert = (props: Alert) => {
               {/* close button  */}
               <div
                 onClick={() =>
-                  dispatch(setAlert({ title: "", body: "", mode: "" }))
-                }
+                  {
+                   dispatch(setAlert({ title: "", body: "", mode: "" }));
+                   dispatch(allowHide())
+                  }
+                 }
                 style={{
                   background: theme?.pale,
                   padding: "10px 20px",
@@ -122,11 +139,31 @@ const alert = (props: Alert) => {
             <Text>{props?.body}</Text>
           </div>
 
+          {/* weak password  */}
+
           {/* buttons  */}
-          <div style={{ display: 'flex', marginTop: 10, justifyContent: "flex-end"}}>
-          {
-            props?.buttons && props?.buttons[0]
-          }
+          <div
+            style={{
+              display: "flex",
+              marginTop: 10,
+              justifyContent: "flex-end",
+            }}
+          >
+            {props?.title == "Weak password" ? (
+              <Button
+                contain
+                onClick={() =>
+                 {
+                  dispatch(setAlert({ title: "", body: "", mode: "" }));
+                  dispatch(allowHide())
+                 }
+                }
+                title={"I've understood"}
+                loading={false}
+              />
+            ) : (
+              props?.buttons && props?.buttons[0]
+            )}
           </div>
           <div>{/* button iteration  */}</div>
         </motion.div>

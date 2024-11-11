@@ -157,8 +157,10 @@ const add_task = (props: Props) => {
         setter={setBody}
         input={body}
       />
-      <br />
-      {/* <div
+      {
+        !props?.values && <>
+        <br />
+      <div
         style={{
           display: "flex",
           alignItems: "center",
@@ -168,8 +170,10 @@ const add_task = (props: Props) => {
       >
         <Text>Attach Project (optional)</Text>
         <Switch setActive={setAddProject} />
-      </div> */}
-      {/* <br /> <br /> */}
+      </div>
+      <br /> <br />
+        </>
+      }
       {addProject && (
         <select
           value={project}

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Background from "../../components/background";
 import XStack from "../../components/x_stack";
 import { Theme, User } from "../../types";
@@ -25,6 +25,8 @@ const login = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [width, setWidth] = useState(0)
+
   const [email, setEmail] = useState({
     value: "",
     error: "invalid email",
@@ -103,9 +105,9 @@ const login = () => {
         };
 
         if (loggedin_user?.role == "company_admin") {
-          fetchCompany(loggedin_user?.user_id);
+          await fetchCompany(loggedin_user?.user_id);
         } else if (loggedin_user?.role == "department_admin") {
-          fetchDepartment(loggedin_user?.user_id);
+          await fetchDepartment(loggedin_user?.user_id);
         } else if (loggedin_user?.role == "admin") {
           navigate(`/admin/companies`);
         } else {
@@ -157,21 +159,21 @@ const login = () => {
     <Background>
       <XStack>
         {/* empty container  */}
-        <div style={{ width: "40vw" }} />
+        <div className="login-empty-container" />
         <motion.form
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           onSubmit={onSubmit}
+          className="login-main-container"
           style={{
-            width: "30vw",
+            
             borderRadius: 30,
             boxShadow: "10px 10px 20px rgba(0,0,0,.05)",
             background: theme.paper,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center",
-            padding: 50,
+            justifyContent: "center"
           }}
         >
           <img src={Logo} alt="" height={70} />

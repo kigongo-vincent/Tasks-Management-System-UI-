@@ -12,8 +12,8 @@ const background = ({children}) => {
 
   return (
     <div 
+    className='login-bg'
     style={{
-        background: `url(${LoginImage})`,
         backgroundColor: theme?.pale,
         height: "100vh",
         display: "flex",

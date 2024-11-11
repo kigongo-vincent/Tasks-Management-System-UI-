@@ -1,4 +1,4 @@
-export const server_host = `https://tekjuice.pythonanywhere.com/`
+export const server_host = `http://tekjuice.pythonanywhere.com`
 export const server_url = `${server_host}/api/v1`
 
 interface GETParams{

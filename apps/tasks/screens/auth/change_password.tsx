@@ -79,10 +79,10 @@ const change_password = () => {
       <form 
       onSubmit={onSubmit}
       style={{
-        width: "30vw",
+        width: innerWidth > 768 ? "30vw": "90vw",
         background: theme?.paper,
         boxShadow: "10px 10px 20px rgba(0,0,0,.05)",
-        padding: 40,
+        padding: innerWidth > 768 ? 40: "40px 20px",
         borderRadius: 10
       }}
       >

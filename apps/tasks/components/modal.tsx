@@ -58,12 +58,13 @@ const modal = (props: ModalProps) => {
             opacity: 0,
           }}
           transition={{
-            delay: 0.2,
+            delay: 0.1,
+            duration: .1
           }}
           style={{
             background: theme?.paper,
             padding: 20,
-            width: "30vw",
+            width:innerWidth > 768 ? "30vw": "80vw",
             // height: "70vh",
             borderRadius: 10,
             boxShadow: "10px 10px 20px rgba(0,0,0,.05)",

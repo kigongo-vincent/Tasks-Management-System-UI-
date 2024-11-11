@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // screens 
 import {Routes, Route, Navigate, useNavigate, useLocation} from "react-router-dom"
@@ -11,7 +11,7 @@ import "./app.css"
 import AlertComponent from "./components/alert"
 import { Alert, Theme } from './types'
 import { useDispatch, useSelector } from 'react-redux'
-import { alert_msg, getTheme, loadingState, setAlert } from './model/data'
+import { alert_msg, allowHide, getHide, getTheme, loadingState, setAlert } from './model/data'
 import Loader from "./components/loader"
 import { FaBackspace } from 'react-icons/fa'
 import Text from "./components/text"
@@ -21,44 +21,47 @@ const Index = () => {
   const alert: Alert = useSelector(alert_msg)
   const loading = useSelector(loadingState)
   const dispatch = useDispatch()
+  const hide = useSelector(getHide)
+
+  // useEffect(()=>{
+  //   if(alert?.title && !alert?.buttons){
+  //     setTimeout(() => {
+  //       dispatch(setAlert({title: "", mode: "", body: ""}))
+  //     }, 1500);
+  //   }
+  // },[alert?.title])
+  // useEffect(()=>{
+  //   if(hide){
+  //     if(!alert?.buttons){
+  //       setTimeout(() => {
+  //         dispatch(setAlert({title: "", mode: "", body: ""}))
+  //       }, 1500);
+  //     }
+  //   }
+  // },[alert?.title, hide])
+
+
+  // useEffect(()=>{
+
+  //   if(!alert?.title){
+  //     dispatch(allowHide())
+  //   }
+
+  // },[alert?.title])
 
   useEffect(()=>{
-    if(alert?.title && !alert?.buttons){
-      setTimeout(() => {
-        dispatch(setAlert({title: "", mode: "", body: ""}))
-      }, 1500);
-    }
-  },[alert?.title])
+    console.log(hide)
+  },[hide])
 
   const theme: Theme = useSelector(getTheme)
   const {pathname} = useLocation()
 
   const navigate = useNavigate()
 
-  const BackButton=()=>{
-    return(
-      <div 
-      onClick={()=>navigate(-1)}
-      style={{
-        position: "fixed",
-        background: theme?.paper,
-        bottom: "5%",
-        right: "5%",
-        display:"flex",
-        alignItems: "center",
-        boxShadow: "10px 10px 20px rgba(0,0,0,.1)",
-        padding: "15px 30px",
-        borderRadius: 100,
-        cursor: "pointer"
-      }}>
-        <FaBackspace style={{marginRight: 10}}/>
-        <Text>Back</Text>
-      </div>
-    )
-  }
+  
 
   return (
-    <>
+    <div>
 
     <Routes>
       <Route path='/*' Component={AuthRouter}/>
@@ -78,12 +81,7 @@ const Index = () => {
     {
       loading && <Loader/>
     }
-    {
-      pathname != "/"
-      &&
-      <BackButton />
-    }
-    </>
+    </div>
   )
 }
 

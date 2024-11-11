@@ -35,8 +35,8 @@ const header = (props: Props) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          background: theme?.pale,
-          padding: 20,
+          background: innerWidth > 768 && theme?.pale,
+          padding:innerWidth > 768 ? 20 : 0,
           borderRadius: 5,
         }}
       >

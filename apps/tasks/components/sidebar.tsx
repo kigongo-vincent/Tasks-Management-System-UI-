@@ -18,15 +18,6 @@ const sidebar = () => {
   const company:Company = useSelector(getCompany)
   const department:Department = useSelector(getDepartment)
 
-  const logout=()=>{
-    dispatch(setUser({email: ""}))
-    navigate("/")
-    dispatch(setAlert(null))
-    setTimeout(() => {
-      dispatch(setAlert({title: "Session terminated", body: "You have been logged out", mode: "normal"}))
-    }, 500);
-  }
-
   const adminOptions=[
     // {
     //   icon: <FaChartBar style={{marginRight: 10}} color={theme?.text}/>,
@@ -47,11 +38,6 @@ const sidebar = () => {
       icon: <FaLock style={{marginRight: 10}} color={theme?.text}/>,
       label: "Change password",
       link: "/change_password"
-    },
-    {
-      icon:<FaSignOutAlt style={{marginRight: 10}} color={theme?.text}/>,
-      label: "Logout",
-      action: ()=>dispatch(setAlert({title: "Logout Confirmation", mode: "normal", body: "Are you sure you want to logout", buttons: [<Button onClick={logout} contain title={"confirm Logout"}/>]}))
     }
   ]
 
@@ -70,11 +56,6 @@ const sidebar = () => {
       icon: <FaLock style={{marginRight: 10}} color={theme?.text}/>,
       label: "Change password",
       link: "/change_password"
-    },
-    {
-      icon:<FaSignOutAlt style={{marginRight: 10}} color={theme?.text}/>,
-      label: "Logout",
-      action: ()=>dispatch(setAlert({title: "Logout Confirmation", mode: "normal", body: "Are you sure you want to logout", buttons: [<Button onClick={logout} contain title={"confirm Logout"}/>]}))
     }
   ]
 
@@ -93,11 +74,6 @@ const sidebar = () => {
       icon: <FaLock style={{marginRight: 10}} color={theme?.text}/>,
       label: "Change password",
       link: "/change_password"
-    },
-    {
-      icon:<FaSignOutAlt style={{marginRight: 10}} color={theme?.text}/>,
-      label: "Logout",
-      action: ()=>dispatch(setAlert({title: "Logout Confirmation", mode: "normal", body: "Are you sure you want to logout", buttons: [<Button onClick={logout} contain title={"confirm Logout"}/>]}))
     }
   ]
 
@@ -111,11 +87,6 @@ const sidebar = () => {
       icon: <FaLock style={{marginRight: 10}} color={theme?.text}/>,
       label: "Change password",
       link: "/change_password"
-    },
-    {
-      icon:<FaSignOutAlt style={{marginRight: 10}} color={theme?.text}/>,
-      label: "Logout",
-      action: ()=>dispatch(setAlert({title: "Logout Confirmation", mode: "normal", body: "Are you sure you want to logout", buttons: [<Button onClick={logout} contain title={"confirm Logout"}/>]}))
     }
   ]
 
@@ -147,12 +118,14 @@ const sidebar = () => {
   },[])
 
   return (
-    <div style={{background: theme?.paper,
+    <div 
+    className='d-none'
+    style={{background: theme?.paper,
       // , overflowY: "scroll",
       boxShadow: "10px 10px 20px rgba(50,50,50,.05)",
       width: "24%",
       height: "100%",
-      borderRadius: 10
+      borderRadius: 10,
     }}>
 
     {/* links  */}

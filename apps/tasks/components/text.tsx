@@ -10,6 +10,7 @@ export interface Props {
   children: any;
   color?: "text" | "primary" | "success" | "error" | "placeholder";
   justify?: boolean
+  small: boolean
 }
 
 const text = (props: Props) => {
@@ -32,7 +33,7 @@ const text = (props: Props) => {
             : theme?.text,
         fontFamily: "poppins",
         fontWeight: props?.heading ? "bold" : "normal",
-        fontSize: !props?.is_h1 ? 12.5 : 24,
+        fontSize: props?.is_h1 ? 24 : props?.small ? 10.5 : 12.5,
         lineHeight: 1.8,
         textAlign: props?.justify ? "justify" : "start"
       }}
