@@ -90,6 +90,17 @@ const tabs = () => {
       label: "Change password",
       link: "/change_password"
     }
+    ,
+    {
+      icon: <FaSignOutAlt size={19} style={{marginRight: 10}} />,
+      label: "Logout",
+      // link: "/logout"
+    },
+    {
+      icon: <FaUser size={19} style={{marginRight: 10}} />,
+      label: "profile",
+      link: "/profile"
+    },
   ]
 
   const departmentOptions = [
@@ -108,6 +119,17 @@ const tabs = () => {
       label: "Change password",
       link: "/change_password"
     }
+    ,
+    {
+      icon: <FaSignOutAlt size={19} style={{marginRight: 10}} />,
+      label: "Logout",
+      // link: "/logout"
+    },
+    {
+      icon: <FaUser size={19} style={{marginRight: 10}} />,
+      label: "profile",
+      link: "/profile"
+    },
   ]
 
   const employeeOptions = [
@@ -121,6 +143,17 @@ const tabs = () => {
       label: "Change password",
       link: "/change_password"
     }
+    ,
+    {
+      icon: <FaSignOutAlt size={19} style={{marginRight: 10}} />,
+      label: "Logout",
+      // link: "/logout"
+    },
+    {
+      icon: <FaUser size={19} style={{marginRight: 10}} />,
+      label: "profile",
+      link: "/profile"
+    },
   ]
 
 
