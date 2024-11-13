@@ -369,6 +369,7 @@ const add_company = (props: Props) => {
 
   return (
     <form onSubmit={onSubmit}>
+      <br />
       <Input
         noBorder
         fullwidth

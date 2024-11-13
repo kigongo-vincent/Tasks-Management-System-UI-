@@ -30,8 +30,9 @@ const alert = (props: Alert) => {
           left: 0,
           width: "100vw",
           height: "100vh",
-          background: "rgba(0,0,0,0.2)",
+          background: "rgba(0,0,0,0.5)",
           // backdropFilter: "blur(3px)",
+          backdropFilter: "blur(6px)",
         }}
       >
         <motion.div
@@ -56,6 +57,7 @@ const alert = (props: Alert) => {
               "10px 10px 20px rgba(0,0,0,.05), -10px -10px 20px rgba(0,0,0,.05)",
             width: innerWidth > 768 ?"30vw": "80vw",
             borderRadius: "10px",
+            
             padding: 20,
           }}
         >

@@ -154,6 +154,7 @@ const add_department = (props: Props) => {
 
   return (
     <form onSubmit={onSubmit}>
+      <br />
       <Input
         noBorder
         fullwidth

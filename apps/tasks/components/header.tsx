@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getTheme } from "../model/data";
 import { FaCirclePlus } from "react-icons/fa6";
+import { Theme } from "../types";
 
 export interface Props {
   heading?: string;
@@ -14,7 +15,7 @@ export interface Props {
 
 const header = (props: Props) => {
   const { state } = useLocation();
-  const theme = useSelector(getTheme);
+  const theme:Theme = useSelector(getTheme);
 
   return (
     <div style={{ background: theme?.paper, padding: 20, borderRadius: 10 }}>
@@ -60,7 +61,7 @@ const header = (props: Props) => {
               borderRadius: "100%",
             }}
           >
-            <Text light>{props?.count}</Text>
+            <Text color="white">{props?.count}</Text>
           </div>
         </div>
         {/* add company button  */}
@@ -77,9 +78,9 @@ const header = (props: Props) => {
               cursor: "pointer",
             }}
           >
-            <FaCirclePlus color={theme?.paper} size={15} />
+            <FaCirclePlus color={theme?.name == "dark" ? theme?.text : theme?.paper} size={15} />
             <div style={{ margin: "0 5px" }} />
-            <Text light>add {props?.title}</Text>
+            <Text color={theme?.name == "dark" ? theme?.text : theme?.paper}>add {props?.title}</Text>
           </div>
         </div>
         {/* end add company button  */}

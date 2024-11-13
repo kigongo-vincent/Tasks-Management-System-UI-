@@ -39,6 +39,7 @@ const modal = (props: ModalProps) => {
           width: "100vw",
           backgroundColor: "rgba(0,0,0,.4)",
           display: "flex",
+          backdropFilter: "blur(6px)",
           alignItems: "center",
           justifyContent: "center",
         }}
@@ -46,7 +47,7 @@ const modal = (props: ModalProps) => {
         {/* modal content  */}
         <motion.div
           initial={{
-            y: 100,
+            y: -100,
             opacity: 0,
           }}
           animate={{
@@ -59,7 +60,7 @@ const modal = (props: ModalProps) => {
           }}
           transition={{
             delay: 0.1,
-            duration: .1
+            // duration: .1
           }}
           style={{
             background: theme?.paper,

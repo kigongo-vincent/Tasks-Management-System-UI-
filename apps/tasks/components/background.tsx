@@ -15,10 +15,12 @@ const background = ({children}) => {
     className='login-bg'
     style={{
         backgroundColor: theme?.pale,
+        // mixBlendMode: "luminosity",
+        backgroundImage: LoginImage,
         height: "100vh",
         display: "flex",
         alignItems: "center",
-        backgroundPosition: "left",
+        backgroundPosition: "left 20%",
         backgroundSize: "contain",
         backgroundRepeat:"no-repeat",
         width: "100vw",

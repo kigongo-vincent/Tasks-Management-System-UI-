@@ -2,10 +2,10 @@
     margin: 0;
     padding: 0;
 }
-/* 
+
 ::-webkit-scrollbar{
  width: 0;
-} */
+}
 
 .login-empty-container{
     width: 40vw;
@@ -22,6 +22,7 @@
 
 .login-bg{
     background-image: url(./assets/images/login.svg);
+    mix-blend-mode: multiply;
 }
 
 .bottom-navbar{

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getCompany, getDepartment, getTheme, getUser } from '../model/data'
 import { Theme } from '../types'
-import { FaHotel, FaList, FaLock, FaSignOutAlt, FaUser } from 'react-icons/fa'
+import { FaBars, FaHotel, FaList, FaLock, FaSignOutAlt, FaUser } from 'react-icons/fa'
 import { FaPeopleGroup } from 'react-icons/fa6'
 import Tab from "./tab_link"
 
@@ -84,6 +84,11 @@ const tabs = () => {
       icon: <FaPeopleGroup size={19} style={{marginRight: 10}} />,
       label: "View all departments",
       link: "/admin/company/" + company?.id
+    },
+    {
+      icon: <FaBars style={{marginRight: 10}} color={theme?.text}/>,
+      label: "View all projects",
+      link: "/admin/projects/" + company?.id
     },
     {
       icon: <FaLock size={19} style={{marginRight: 10}} />,

@@ -13,7 +13,7 @@ const button = ({loading, title, onClick, fullwidth, contain}) => {
     onClick={onClick}
     style={{
       background: theme?.primary,
-      color: theme?.paper,
+      color: "aliceblue",
       border: "none",
       outline: "none",
       width: fullwidth ? "98%" : contain ? "max-content" : "81%",

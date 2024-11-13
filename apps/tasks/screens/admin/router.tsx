@@ -8,6 +8,8 @@ import { Theme } from "../../types";
 import { useSelector } from "react-redux";
 import { getTheme } from "../../model/data";
 import Layout from "../../components/layout";
+import ProjectsPage from "./projects"
+import Settings from "./settings"
 
 const router = () => {
   return (
@@ -17,6 +19,8 @@ const router = () => {
         <Route path="/companies" Component={CompaniesPage} />
         <Route path="/company/:id" Component={CompanyPage} />
         <Route path="/users" Component={UsersPage} />
+        <Route path="/projects/:id" Component={ProjectsPage}/>
+        <Route path="/settings" Component={Settings}/>
       </Routes>
     </Layout>
   );

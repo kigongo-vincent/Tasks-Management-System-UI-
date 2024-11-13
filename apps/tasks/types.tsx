@@ -5,6 +5,7 @@ export interface User {
   role?: string;
   date_joined?: string;
   tokens?: Tokens
+  company?: number
 }
 
 export interface Tokens{
@@ -13,6 +14,7 @@ export interface Tokens{
 }
 
 export interface Theme {
+  name: "light" | "dark",
   primary: string;
   paper: string;
   pale: string;

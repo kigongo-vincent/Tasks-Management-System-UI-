@@ -42,7 +42,7 @@ const navbar = () => {
         borderRadius: 5,
         cursor: "pointer"
       }}>
-        <FaBackspace style={{marginRight: 10}}/>
+        <FaBackspace color={theme?.text} style={{marginRight: 10}}/>
         <Text>Back</Text>
       </div>
     )

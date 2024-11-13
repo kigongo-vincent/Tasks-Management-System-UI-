@@ -1,11 +1,20 @@
-import React from "react";
-import { FaEnvelope, FaLock, FaSearch } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaEnvelope, FaEye, FaLock, FaRegEyeSlash, FaSearch } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { getTheme } from "../model/data";
 import { Theme } from "../types";
 
 const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargin, large }) => {
   const theme: Theme = useSelector(getTheme);
+  const [hide, setHide] = useState(false)
+
+  useEffect(()=>{
+
+    if(type == "password"){
+      setHide(true)
+    }
+
+  },[])
 
   return (
     <div
@@ -17,7 +26,7 @@ const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargi
         marginBottom:zeroMargin ? 0 : 10,
         padding: 15,
         borderRadius: 2,
-        borderBottom:noBorder ? "none": "1px solid " + theme?.primary,
+        // borderBottom:noBorder ? "none": "1px solid " + theme?.primary,
       }}
     >
       {
@@ -63,14 +72,26 @@ const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargi
           border: "none",
           outline: "none",
           fontFamily: "poppins",
-          fontSize: 12.5
+          fontSize: 12.5,
+          colorScheme: theme?.name =="light" ? "light" : "dark"
         }}
         value={input.value}
-        type={type}
+        type={type == "password" ? hide ? "password" : "text" : type}
         minLength={4}
         placeholder={placeholder}
         onChange={(e) => setter({ ...input, value: e.target.value })}
       />
+      }
+      {
+        type == "password"
+        ?
+        !hide
+        ?
+        <FaEye style={{cursor: "pointer"}} color={theme?.text} onClick={()=>setHide(true)}/>
+        :
+        <FaRegEyeSlash style={{cursor: "pointer"}} color={theme?.text} onClick={()=>setHide(false)}/>
+        :
+        ""
       }
     </div>
   );

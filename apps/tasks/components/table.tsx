@@ -37,7 +37,7 @@ const Table = (props: Props) => {
         {/* columns  */}
         {props?.columns?.map((column) => (
           <td style={{ padding: 15 }}>
-            <Text light>{column}</Text>
+            <Text color="white">{column}</Text>
           </td>
         ))}
 

@@ -98,6 +98,7 @@ const login = () => {
           email: decrypted_data?.email,
           user_id: decrypted_data?.user_id,
           role: decrypted_data?.role,
+          company: decrypted_data?.company,
           tokens: {
             access: data?.access,
             refresh: data?.refresh,
@@ -159,7 +160,9 @@ const login = () => {
     <Background>
       <XStack>
         {/* empty container  */}
-        <div className="login-empty-container" />
+        {
+          <div className="login-empty-container" />
+        }
         <motion.form
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getTheme, SERVER_URL, setAlert, setLoadingState } from "../model/data";
-import { Theme } from "../types";
+import { useLocation, useParams } from "react-router-dom";
+import { getTheme, getUser, SERVER_URL, setAlert, setLoadingState } from "../model/data";
+import { Theme, User } from "../types";
 import Input from "./input";
 import Text from "./text";
 import Button from "./button";
@@ -21,6 +21,12 @@ const add_task = (props: Props) => {
   const theme: Theme = useSelector(getTheme);
   const dispatch = useDispatch();
   const [addProject, setAddProject] = useState(false);
+  const user:User = useSelector(getUser)
+
+  const [title, setTitle] = useState({
+    value: "",
+    error: null,
+  });
 
   const [body, setBody] = useState({
     value: "",
@@ -57,7 +63,18 @@ const add_task = (props: Props) => {
 
   const onSubmit = async(e) => {
     e.preventDefault();
+
     if(!props?.values){
+
+      if(!body?.value || !title?.value || !duration?.value){
+        dispatch(setAlert({
+          title: "Empty fields",
+          body: "please fillout all form fields",
+          mode: "error"
+        }))
+        return
+      }
+
       POST({
         data: props?.data,
         path: "/tasks/" + id,
@@ -65,6 +82,7 @@ const add_task = (props: Props) => {
           body: body.value,
           duration: duration?.value,
           project: project && project,
+          title: title?.value
         },
         setData: props?.setData,
         setLoading: setLoading,
@@ -73,12 +91,12 @@ const add_task = (props: Props) => {
         successMessage: successMessage,
       });
     }else{
-      if(props?.values["body"] == body?.value && props?.values["duration"] == duration?.value){
+      if(props?.values["body"] == body?.value && props?.values["duration"] == duration?.value && props?.values["title"] == title?.value){
         dispatch(setAlert({title: "No changes detected", body: "There is nothing to update", mode: "normal"}))
         return
       }else{
 
-        if(!body?.value || !duration?.value){
+        if(!body?.value || !duration?.value || !title?.value){
           dispatch(setAlert({title: "empty fields detected", body: "Please fill out all form fields", mode: "error"}))
           return
         }
@@ -91,7 +109,8 @@ const add_task = (props: Props) => {
           },
           body: JSON.stringify({
             body: body?.value,
-            duration: duration?.value
+            duration: duration?.value,
+            title: title?.value
           })
         })
 
@@ -118,41 +137,54 @@ const add_task = (props: Props) => {
   // },[loading])
 
   useEffect(() => {
-    GET({ path: "/projects/1", setData: setProjects, setLoading: setLoading });
-  }, []);
-
-  useEffect(() => {
     if (addProject) {
       setProject(projects[0]?.id);
     }
   }, [addProject]);
 
-  useEffect(() => {
-    console.log(project);
-  }, [project]);
-
-  useEffect(() => {
-    if(!addProject){
-      
-    }
-  }, [addProject]);
 
   useEffect(()=>{
 
     if(props?.values){
       setBody({...body, value: props?.values["body"]})
       setDuration({...duration, value: props?.values["duration"]})
+      setTitle({...title, value: props?.values["title"]})
+
     }
 
   },[props?.values])
 
+  const {state} = useLocation()
+
+  useEffect(()=>{
+   if(state?.row){
+
+    GET({ path: "/projects/" + state?.row?.company, setData: setProjects, setLoading: setLoading });
+
+   }else{
+
+    user?.company && GET({ path: "/projects/" + user?.company, setData: setProjects, setLoading: setLoading });
+
+   }
+  }, [state, user])
+
   return (
     <form onSubmit={onSubmit}>
+      <br />
+      <Input
+        // large
+        noBorder
+        fullwidth
+        placeholder={"Title"}
+        type={"text"}
+        setter={setTitle}
+        input={title}
+      />
       <Input
         large
         noBorder
         fullwidth
-        placeholder={"Enter task"}
+        placeholder={"Description"}
         type={"text"}
         setter={setBody}
         input={body}
@@ -180,6 +212,7 @@ const add_task = (props: Props) => {
           onChange={(e) => setProject(e.target.value)}
           style={{
             backgroundColor: theme?.pale,
+            color: theme?.text,
             width: "97%",
             marginBottom: 10,
             padding: 15,
@@ -189,7 +222,7 @@ const add_task = (props: Props) => {
           }}
         >
           {projects?.map((project) => (
-            <option value={project?.id}>{project?.name}</option>
+            <option  value={project?.id}>{project?.name}</option>
           ))}
         </select>
       )}
