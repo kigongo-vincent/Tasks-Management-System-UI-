@@ -272,6 +272,22 @@ const companies = () => {
     setCompanies(companies?.map(company => company?.id == payload["id"] ? payload : company))
   }
 
+  const updateCompanyAdmin=(payload: any)=>{
+
+    // look for the company 
+    const foundCompany = companies?.find(company=> company?.admin == payload["id"])
+
+    // change all fields starting with admin_ 
+    foundCompany.admin_contact = payload["contact"]
+    foundCompany.admin_first_name = payload["first_name"]
+    foundCompany.admin_last_name = payload["last_name"]
+    foundCompany.admin_email = payload["email"]
+
+    // update companies list 
+    setCompanies(companies?.map(company => company?.id == payload["id"] ? foundCompany : company))
+
+  }
+
   useEffect(()=>{
 
     if(!CMOpen){
@@ -299,7 +315,7 @@ const companies = () => {
       ) : (
         <Table
           setter={setter}
-          columns={["name", "admin_email"]}
+          columns={["name", "admin_email", "admin_contact"]}
           rows={companies}
           delete
           edit
@@ -310,7 +326,7 @@ const companies = () => {
       )}
 
       {CMOpen && (
-        <Modal open={CMOpen} setOpen={setCMOpen} title={currentCompany ? "Edit company" : "Add company"} content={<AddCompany values={currentCompany && currentCompany} updateCompany={updateCompany} add={addComany} setOpen={setCMOpen}/>}/>
+        <Modal open={CMOpen} setOpen={setCMOpen} title={currentCompany ? "Edit company" : "Add company"} content={<AddCompany values={currentCompany && currentCompany} updateCompany={updateCompany} updateAdmin={updateCompanyAdmin} add={addComany} setOpen={setCMOpen}/>}/>
       )}
     </div>
   );

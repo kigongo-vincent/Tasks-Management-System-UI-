@@ -7,6 +7,7 @@ import Input from "../../components/input"
 import Button from "../../components/button"
 import Text from "../../components/text"
 import { verifyPassword } from '../../utils/password_checker'
+import { Navigate } from 'react-router-dom'
 
 const change_password = () => {
 
@@ -73,6 +74,10 @@ const change_password = () => {
   }
 
   return (
+    !user?.email
+    ?
+    <Navigate to={"/"}/>
+    :
     <div>
       <Layout center>
 

@@ -5,6 +5,7 @@ import { getTheme, SERVER_URL, setAlert } from "../model/data";
 import { Theme } from "../types";
 import Input from "./input";
 import Button from "./button";
+import Text from "./text";
 import { verifyPassword } from "../utils/password_checker";
 
 export interface Props {
@@ -12,6 +13,7 @@ export interface Props {
   add?: (data: any) => void;
   values?: any;
   updateDept: any;
+  updateAdmin: any
 }
 
 const add_department = (props: Props) => {
@@ -34,6 +36,18 @@ const add_department = (props: Props) => {
     value: "",
     error: null,
   });
+  const [fName, setFName] = useState({
+    value: "",
+    error: null
+  })
+  const [lName, setLName] = useState({
+    value: "",
+    error: null
+  })
+  const [contact, setContact] = useState({
+    value: "",
+    error: null
+  })
 
   const [loading, setLoading] = useState(false);
   const server = useSelector(SERVER_URL);
@@ -45,6 +59,9 @@ const add_department = (props: Props) => {
     if (props?.values) {
       setName({ ...name, value: props?.values["name"] });
       setEmail({ ...email, value: props?.values["admin_email"] });
+      setContact({ ...contact, value: props?.values["admin_contact"] });
+      setFName({ ...fName, value: props?.values["admin_first_name"] });
+      setLName({ ...lName, value: props?.values["admin_last_name"] });
     }
   }, [props?.values]);
 
@@ -54,7 +71,7 @@ const add_department = (props: Props) => {
     
 
     if (!props?.values) {
-      if (!email.value || !password?.value || !name?.value) {
+      if (!email.value || !password?.value || !name?.value || !contact?.value || !fName?.value || !lName?.value) {
         dispatch(
           setAlert({
             title: "Empty form fields",
@@ -96,6 +113,9 @@ const add_department = (props: Props) => {
         body: JSON.stringify({
           email: email?.value,
           password: password?.value,
+          first_name: fName?.value,
+          last_name: lName?.value,
+          contact: contact?.value
         }),
       });
 
@@ -306,10 +326,13 @@ const add_department = (props: Props) => {
     }
   };
 
-  const update = () => {
+  const update = async() => {
     if (
       name?.value == props?.values["name"] &&
       email?.value == props?.values["admin_email"] &&
+      fName?.value == props?.values["admin_first_name"] &&
+      lName?.value == props?.values["admin_last_name"] &&
+      contact?.value == props?.values["admin_contact"] &&
       !password?.value
     ) {
       dispatch(
@@ -322,11 +345,11 @@ const add_department = (props: Props) => {
       return;
     }
 
-    if (email?.value != props?.values["admin_email"]) {
-      // change company admin
-      uploadNewDepartmentAdmin();
-      return;
-    }
+    // if (email?.value != props?.values["admin_email"]) {
+    //   // change company admin
+    //   uploadNewDepartmentAdmin();
+    //   return;
+    // }
 
     if (password?.value) {
       // change password
@@ -360,6 +383,40 @@ const add_department = (props: Props) => {
       setLoading(true);
       updateDepartment({ name: name?.value });
     }
+
+    if (email?.value && contact?.value && fName?.value && lName?.value) {
+      // // change company admin
+      // uploadNewCompanyAdmin();
+      setLoading(true)
+      const res = await fetch(`${server}/update_user/${props?.values["admin"]}`, {
+        method: "PATCH",
+        headers: {
+          "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+          email: email?.value,
+          first_name: fName?.value,
+          last_name: lName?.value,
+          contact: contact?.value
+        })
+      })
+
+      if(res.status == 200){
+
+        setLoading(false)
+        props?.updateAdmin(await res.json())
+        props?.setOpen(false)
+        dispatch(setAlert({title: "Update success", body: "The department representative has been updated successfully", mode: "success"}))
+
+      }else{
+
+        setLoading(false)
+        dispatch(setAlert({title: "update failed", body: "failed to update the department representative", mode: "error"}))
+
+      }
+      
+    }
+
   };
 
   // ==============================================================
@@ -367,6 +424,13 @@ const add_department = (props: Props) => {
   return (
     <form onSubmit={onSubmit}>
       <br />
+      <Text>Department details</Text>
+
+      <br />
+      <br />
+      <hr style={{opacity: .1}}/>
+      <br />
+
       <Input
         noBorder
         fullwidth
@@ -376,6 +440,13 @@ const add_department = (props: Props) => {
         input={name}
       />
       <br />
+      <Text>Department Representative</Text>
+
+      <br />
+      <br />
+      <hr style={{opacity: .1}}/>
+      <br />
+
       <Input
         noBorder
         fullwidth
@@ -383,6 +454,33 @@ const add_department = (props: Props) => {
         type={"email"}
         setter={setEmail}
         input={email}
+      />
+      <br />
+      <Input
+        noBorder
+        fullwidth
+        placeholder={"first name"}
+        type={""}
+        setter={setFName}
+        input={fName}
+      />
+      <br />
+      <Input
+        noBorder
+        fullwidth
+        placeholder={"last name"}
+        type={""}
+        setter={setLName}
+        input={lName}
+      />
+      <br />
+      <Input
+        noBorder
+        fullwidth
+        placeholder={"contact"}
+        type={"number"}
+        setter={setContact}
+        input={contact}
       />
       <br />
       <Input

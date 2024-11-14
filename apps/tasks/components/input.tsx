@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaEnvelope, FaEye, FaLock, FaRegEyeSlash, FaSearch } from "react-icons/fa";
+import { FaEnvelope, FaEye, FaLock, FaPhone, FaRegEyeSlash, FaSearch } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { getTheme } from "../model/data";
 import { Theme } from "../types";
@@ -30,6 +30,10 @@ const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargi
       }}
     >
       {
+        placeholder == "contact"
+        ?
+        <FaPhone style={{rotate: "90deg"}} color={theme?.placeholder} size={20} />
+        :
       type == "search"
       ?
       <FaSearch color={theme?.placeholder} size={20} />

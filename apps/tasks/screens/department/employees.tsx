@@ -3,6 +3,7 @@ import Text from "../../components/text";
 import { FaCirclePlus, FaEye, FaPen } from "react-icons/fa6";
 import {
   getTheme,
+  getUser,
   SERVER_URL,
   setAlert,
   setLoadingState,
@@ -101,7 +102,13 @@ const employees = () => {
     })
   }
 
+  const user = useSelector(getUser)
+
   return (
+    !user?.email 
+    ?
+    <Navigate to={"/"}/>
+    :
     JSON.parse(localStorage.getItem("TMS_USER"))?.role == "department_admin" || JSON.parse(localStorage.getItem("TMS_USER"))?.role == "company_admin" || JSON.parse(localStorage.getItem("TMS_USER"))?.role == "admin" ?
     <div>
       {/* header  */}
@@ -120,7 +127,7 @@ const employees = () => {
           editor={editEmployee}
           setter={setter}
           setActive={setActive}
-          columns={["email", "date_joined"]}
+          columns={["email", "contact" ,"date_joined"]}
           rows={employees}
           delete
           toggle={toggleAccountState}

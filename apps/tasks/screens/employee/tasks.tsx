@@ -4,13 +4,14 @@ import Text from "../../components/text";
 import { FaCirclePlus, FaEye, FaPen } from "react-icons/fa6";
 import {
   getTheme,
+  getUser,
   SERVER_URL,
   setAlert,
   setLoadingState,
 } from "../../model/data";
 import { useDispatch, useSelector } from "react-redux";
 import { Theme } from "../../types";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import Table from "../../components/table";
 import Header from "../../components/header";
 import Modal from "../../components/modal";
@@ -184,7 +185,14 @@ const tasks = () => {
     setTasks(tasks?.map((task) => (task?.id == payload?.id ? payload : task)));
   };
 
+  const user = useSelector(getUser)
+
   return (
+    !user?.email 
+    ?
+    <Navigate to={"/"}/>
+    :
+
     <div>
       {/* header  */}
       <Header

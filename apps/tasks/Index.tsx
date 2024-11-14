@@ -30,15 +30,20 @@ const Index = () => {
   //     }, 1500);
   //   }
   // },[alert?.title])
-  // useEffect(()=>{
-  //   if(hide){
-  //     if(!alert?.buttons){
-  //       setTimeout(() => {
-  //         dispatch(setAlert({title: "", mode: "", body: ""}))
-  //       }, 1500);
-  //     }
-  //   }
-  // },[alert?.title, hide])
+  useEffect(()=>{
+    if(!(alert?.buttons || alert?.title == "Weak password")){
+      // if(!alert?.buttons){
+        setTimeout(() => {
+          dispatch(setAlert({title: "", mode: "", body: ""}))
+        }, 1500);
+        return
+      }
+    //   else if(alert?.title != "Weak password"){
+    //   setTimeout(() => {
+    //     dispatch(setAlert({title: "", mode: "", body: ""}))
+    //   }, 1500);
+    // }
+  },[alert?.title, alert?.buttons, hide])
 
 
   // useEffect(()=>{
@@ -48,10 +53,6 @@ const Index = () => {
   //   }
 
   // },[alert?.title])
-
-  useEffect(()=>{
-    console.log(hide)
-  },[hide])
 
   const theme: Theme = useSelector(getTheme)
   const {pathname} = useLocation()

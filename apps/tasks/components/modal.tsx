@@ -47,7 +47,7 @@ const modal = (props: ModalProps) => {
         {/* modal content  */}
         <motion.div
           initial={{
-            y: -100,
+            // y: -100,
             opacity: 0,
           }}
           animate={{
@@ -55,7 +55,7 @@ const modal = (props: ModalProps) => {
             opacity: 1,
           }}
           exit={{
-            y: 100,
+            // y: 100,
             opacity: 0,
           }}
           transition={{
@@ -64,6 +64,8 @@ const modal = (props: ModalProps) => {
           }}
           style={{
             background: theme?.paper,
+            maxHeight: "90vh",
+            overflowY: "scroll",
             padding: 20,
             width:innerWidth > 768 ? "30vw": "80vw",
             // height: "70vh",

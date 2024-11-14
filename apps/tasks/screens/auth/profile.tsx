@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { getTheme, getUser } from '../../model/data'
 import { FaUser } from 'react-icons/fa'
 import Text from "../../components/text"
+import { Navigate } from 'react-router-dom'
 
 const profile = () => {
 
@@ -12,6 +13,10 @@ const profile = () => {
   const user:User = useSelector(getUser)
 
   return (
+    !user?.email 
+    ?
+    <Navigate to={"/"}/>
+    :
     <Layout>
        <div
        style={{

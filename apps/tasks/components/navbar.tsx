@@ -32,13 +32,13 @@ const navbar = () => {
       onClick={()=>navigate(-1)}
       style={{
         // position: "fixed",
-        background: theme?.pale,
+        // background: theme?.pale,
         // bottom: "2.5%",
         // right: "2.5%",
         marginLeft: 10,
         alignItems: "center",
         // boxShadow: "10px 10px 20px rgba(0,0,0,.01)",
-        padding: "15px 30px",
+        // padding: "15px 30px",
         borderRadius: 5,
         cursor: "pointer"
       }}>

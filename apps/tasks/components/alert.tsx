@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { Alert, Theme } from "../types";
 import { useDispatch, useSelector } from "react-redux";
 import { allowHide, disableHide, getTheme, setAlert } from "../model/data";
@@ -13,13 +13,13 @@ const alert = (props: Alert) => {
 
   const dispatch = useDispatch();
 
-  useEffect(()=>{
+  // useLayoutEffect(()=>{
 
-    if(props?.title == "Weak password"){
-      dispatch(disableHide())
-    }
+  //   if(props?.title == "Weak password"){
+  //     dispatch(disableHide())
+  //   }
 
-  }, [props.title])
+  // }, [props?.title])
 
   return (
     <AnimatePresence mode="sync">

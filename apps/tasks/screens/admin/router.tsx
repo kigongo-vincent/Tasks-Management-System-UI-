@@ -1,18 +1,25 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "./index";
 import CompaniesPage from "./companies";
 import CompanyPage from "./company";
 import UsersPage from "./users";
 import { Theme } from "../../types";
 import { useSelector } from "react-redux";
-import { getTheme } from "../../model/data";
+import { getTheme, getUser } from "../../model/data";
 import Layout from "../../components/layout";
 import ProjectsPage from "./projects"
 import Settings from "./settings"
 
 const router = () => {
+
+  const user = useSelector(getUser)
+
   return (
+    !user?.email
+    ?
+    <Navigate to={"/"}/>
+    :
     <Layout>
       <Routes>
         <Route path="/" Component={Dashboard} />

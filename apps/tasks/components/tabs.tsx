@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { getCompany, getDepartment, getTheme, getUser } from '../model/data'
 import { Theme } from '../types'
 import { FaBars, FaHotel, FaList, FaLock, FaSignOutAlt, FaUser } from 'react-icons/fa'
-import { FaPeopleGroup } from 'react-icons/fa6'
+import { FaPeopleGroup, FaToolbox } from 'react-icons/fa6'
 import Tab from "./tab_link"
 
 const tabs = () => {
@@ -72,6 +72,11 @@ const tabs = () => {
       label: "profile",
       link: "/profile"
     },
+    {
+      icon: <FaToolbox style={{marginRight: 10}}/>,
+      label: "settings",
+      link: "/admin/settings"
+    },
   ]
 
   const companyOptions=[
@@ -106,6 +111,11 @@ const tabs = () => {
       label: "profile",
       link: "/profile"
     },
+    {
+      icon: <FaToolbox style={{marginRight: 10}}/>,
+      label: "settings",
+      link: "/admin/settings"
+    },
   ]
 
   const departmentOptions = [
@@ -135,6 +145,11 @@ const tabs = () => {
       label: "profile",
       link: "/profile"
     },
+    {
+      icon: <FaToolbox style={{marginRight: 10}}/>,
+      label: "settings",
+      link: "/admin/settings"
+    },
   ]
 
   const employeeOptions = [
@@ -158,6 +173,11 @@ const tabs = () => {
       icon: <FaUser size={19} style={{marginRight: 10}} />,
       label: "profile",
       link: "/profile"
+    },
+    {
+      icon: <FaToolbox style={{marginRight: 10}}/>,
+      label: "settings",
+      link: "/admin/settings"
     },
   ]
 

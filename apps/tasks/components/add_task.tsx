@@ -189,6 +189,16 @@ const add_task = (props: Props) => {
         setter={setBody}
         input={body}
       />
+      {/* <br /> */}
+      <Input
+        noBorder
+        fullwidth
+        placeholder={"duration (in minutes)"}
+        type={"number"}
+        setter={setDuration}
+        input={duration}
+      />
+      {/* <br /> */}
       {
         !props?.values && <>
         <br />
@@ -196,11 +206,12 @@ const add_task = (props: Props) => {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "flex-end",
           width: "97%",
         }}
       >
         <Text>Attach Project (optional)</Text>
+        <div style={{margin: "0 20px"}}/>
         <Switch setActive={setAddProject} />
       </div>
       <br /> <br />
@@ -217,6 +228,7 @@ const add_task = (props: Props) => {
             marginBottom: 10,
             padding: 15,
             borderRadius: 2,
+            colorScheme: theme?.name == "light" ? "light" : "dark",
             outline: "none",
             border: "none",
           }}
@@ -226,15 +238,7 @@ const add_task = (props: Props) => {
           ))}
         </select>
       )}
-      <Input
-        noBorder
-        fullwidth
-        placeholder={"duration (in minutes)"}
-        type={"number"}
-        setter={setDuration}
-        input={duration}
-      />
-      <br />
+      
       <Button
         loading={loading}
         fullwidth

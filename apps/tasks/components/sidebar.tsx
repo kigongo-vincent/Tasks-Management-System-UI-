@@ -66,7 +66,12 @@ const sidebar = () => {
       icon: <FaLock style={{marginRight: 10}}/>,
       label: "Change password",
       link: "/change_password"
-    }
+    },
+    {
+      icon: <FaToolbox style={{marginRight: 10}}/>,
+      label: "settings",
+      link: "/admin/settings"
+    },
   ]
 
   const departmentOptions = [
@@ -84,7 +89,12 @@ const sidebar = () => {
       icon: <FaLock style={{marginRight: 10}}/>,
       label: "Change password",
       link: "/change_password"
-    }
+    },
+    {
+      icon: <FaToolbox style={{marginRight: 10}}/>,
+      label: "settings",
+      link: "/admin/settings"
+    },
   ]
 
   const employeeOptions = [
@@ -97,7 +107,12 @@ const sidebar = () => {
       icon: <FaLock style={{marginRight: 10}} color={theme?.text}/>,
       label: "Change password",
       link: "/change_password"
-    }
+    },
+    {
+      icon: <FaToolbox style={{marginRight: 10}}/>,
+      label: "settings",
+      link: "/admin/settings"
+    },
   ]
 
   const [options, setOptions] = useState<any[]>([])

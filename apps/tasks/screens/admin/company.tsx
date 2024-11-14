@@ -81,6 +81,22 @@ const company = () => {
     setDepartments(departments?.map(department => department["id"] == payload["id"] ? payload : department))
   }
 
+  const updateDepartmentAdmin=(payload: any)=>{
+
+    // look for the company 
+    const foundDepartment = departments?.find(department=> department?.admin == payload["id"])
+
+    // change all fields starting with admin_ 
+    foundDepartment.admin_contact = payload["contact"]
+    foundDepartment.admin_first_name = payload["first_name"]
+    foundDepartment.admin_last_name = payload["last_name"]
+    foundDepartment.admin_email = payload["email"]
+
+    // update companies list 
+    setDepartments(departments?.map(department => department?.id == payload["id"] ? foundDepartment : department))
+
+  }
+
   return (
     JSON.parse(localStorage.getItem("TMS_USER"))?.role == "admin" || JSON.parse(localStorage.getItem("TMS_USER"))?.role == "company_admin" ? 
     <div>
@@ -101,7 +117,7 @@ const company = () => {
         <Table
         editor={editDepartment}
         setter={setter}
-        columns={["name", "admin_email"]}
+        columns={["name", "admin_email", "admin_contact"]}
         rows={departments}
         delete
         edit
@@ -110,7 +126,7 @@ const company = () => {
       />
       }
 
-      {open && <Modal title={currentDepartment ? "Edit department" : "Add department"} open={open}  setOpen={setOpen} content={<AddDepartment updateDept={updateDepartment} values={currentDepartment && currentDepartment}  add={addDepartment} setOpen={setOpen}/>}/>
+      {open && <Modal title={currentDepartment ? "Edit department" : "Add department"} open={open}  setOpen={setOpen} content={<AddDepartment updateDept={updateDepartment} values={currentDepartment && currentDepartment} updateAdmin={updateDepartmentAdmin}  add={addDepartment} setOpen={setOpen}/>}/>
       }
     </div>
     :
