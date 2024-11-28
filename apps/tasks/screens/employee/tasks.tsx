@@ -199,7 +199,7 @@ const tasks = () => {
         title="a task"
         setOpen={setOpen}
         count={filteredTasks?.length}
-        heading="Tasks"
+        heading={ state?.row ? `Tasks for ${state?.row?.first_name}`: 'Tasks'}
       />
 
       

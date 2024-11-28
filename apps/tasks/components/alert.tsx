@@ -56,7 +56,7 @@ const alert = (props: Alert) => {
             boxShadow:
               "10px 10px 20px rgba(0,0,0,.05), -10px -10px 20px rgba(0,0,0,.05)",
             width: innerWidth > 768 ?"30vw": "80vw",
-            borderRadius: "10px",
+            borderRadius: "3px",
             
             padding: 20,
           }}

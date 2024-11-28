@@ -88,7 +88,7 @@ const change_password = () => {
         background: theme?.paper,
         boxShadow: "10px 10px 20px rgba(0,0,0,.05)",
         padding: innerWidth > 768 ? 40: "40px 20px",
-        borderRadius: 10
+        borderRadius: 3
       }}
       >
 

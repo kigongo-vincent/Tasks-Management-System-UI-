@@ -57,14 +57,14 @@ const navbar = () => {
           justifyContent: "space-between",
           background: theme?.paper,
           boxShadow: "10px 10px 20px rgba(50,50,50,.05)",
-          borderRadius: 5,
+          borderRadius: 3,
           padding: "10px 20px",
         }}
       >
         {/* logo  */}
         <div style={{display: "flex", alignItems: "center"}}>
         <img src={Logo} height={50} alt="" />
-        <BackButton/>
+        {/* <BackButton/> */}
         </div>
 
         {/* email  */}

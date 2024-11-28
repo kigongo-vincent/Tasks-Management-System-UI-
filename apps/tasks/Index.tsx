@@ -15,6 +15,7 @@ import { alert_msg, allowHide, getHide, getTheme, loadingState, setAlert } from 
 import Loader from "./components/loader"
 import { FaBackspace } from 'react-icons/fa'
 import Text from "./components/text"
+import TestsPage from "./screens/test"
 
 const Index = () => {
 
@@ -70,7 +71,9 @@ const Index = () => {
       <Route path='/company/*' Component={CompanyRouter}/>
       <Route path='/department/*' Component={DepartmentRouter}/>
       <Route path='/employee/*' Component={EmployeeRouter}/>
+      <Route path='/tests' Component={TestsPage}/>
       <Route path='*' element={<Navigate to="/"/>}/>
+
 
       
     </Routes>

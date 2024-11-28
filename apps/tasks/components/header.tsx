@@ -18,7 +18,7 @@ const header = (props: Props) => {
   const theme:Theme = useSelector(getTheme);
 
   return (
-    <div style={{ background: theme?.paper, padding: 20, borderRadius: 10 }}>
+    <div style={{ background: theme?.paper, padding: 20, borderRadius: 2 }}>
       {state?.row["name"] && (
         <>
           <Text heading is_h1>
@@ -38,7 +38,7 @@ const header = (props: Props) => {
           justifyContent: "space-between",
           background: innerWidth > 768 && theme?.pale,
           padding:innerWidth > 768 ? 20 : 0,
-          borderRadius: 5,
+          borderRadius: 2,
         }}
       >
         <div

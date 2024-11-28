@@ -1,10 +1,11 @@
 *{
     margin: 0;
     padding: 0;
+    /* transition: .2s; */
 }
 
 ::-webkit-scrollbar{
- width: 0;
+ color-scheme: dark;
 }
 
 .login-empty-container{
@@ -31,6 +32,15 @@
 
 .d-none{
     display: flex;
+}
+
+.shadow{
+    transition: .3s;
+}
+
+.shadow:hover{
+    box-shadow: 10px 10px 20px rgba(0,0,0,.05), -10px -10px 20px rgba(0,0,0,.05);
+    transition: .3s;
 }
 
 @media (max-width: 768px){

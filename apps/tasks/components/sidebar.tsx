@@ -7,7 +7,7 @@ import {motion} from "framer-motion"
 import { Company, Department, Theme, User } from '../types'
 import Button from "./button"
 import { useNavigate } from 'react-router-dom'
-import { FaPeopleGroup } from 'react-icons/fa6'
+import { FaCheckDouble, FaCheckToSlot, FaListCheck, FaPeopleGroup } from 'react-icons/fa6'
 
 const sidebar = () => {
 
@@ -26,7 +26,7 @@ const sidebar = () => {
     // },
     {
       icon: <FaHotel style={{marginRight: 10}}/>,
-      label: "View all companies",
+      label: "View companies",
       link: "/admin/companies"
     },
     // {
@@ -85,6 +85,7 @@ const sidebar = () => {
       label: "View all employees",
       link: "/department/" + department?.id
     },
+    
     {
       icon: <FaLock style={{marginRight: 10}}/>,
       label: "Change password",
@@ -99,9 +100,19 @@ const sidebar = () => {
 
   const employeeOptions = [
     {
-      icon: <FaList style={{marginRight: 10}}/>,
+      icon: <FaCheckToSlot style={{marginRight: 10}}/>,
       label: "View all tasks",
       link: "/employee/" + user?.user_id
+    },
+    {
+      icon: <FaListCheck style={{marginRight: 10}}/>,
+      label: "draft",
+      link: "/employee/saved_tasks/" + user?.user_id
+    },
+    {
+      icon: <FaCheckDouble style={{marginRight: 10}}/>,
+      label: "Today's todo List",
+      link: "/employee/todos/" + user?.user_id
     },
     {
       icon: <FaLock style={{marginRight: 10}} color={theme?.text}/>,
@@ -140,6 +151,7 @@ const sidebar = () => {
 
     setUserOtions()
 
+
   },[])
 
   return (
@@ -150,7 +162,7 @@ const sidebar = () => {
       // boxShadow: "10px 10px 20px rgba(50,50,50,.05)",
       width: "24%",
       height: "100%",
-      borderRadius: 10,
+      borderRadius: 3,
     }}>
 
     {/* links  */}
@@ -159,13 +171,13 @@ const sidebar = () => {
    {
       options?.map(option=> (
         <motion.div 
-        onHoverStart={()=>console.log("focused")}
-        onHoverEnd={()=>console.log("ended")}
+        // onHoverStart={()=>console.log("focused")}
+        // onHoverEnd={()=>console.log("ended")}
         onClick={option?.action ? option?.action : ()=>navigate(option?.link)}
         whileHover={{backgroundColor: theme?.pale}}
         // whileTap={{backgroundColor: theme?.paper}}
         // 
-        style={{display: "flex", cursor: "pointer", backgroundColor: theme?.paper, alignItems: "center", padding: 15, borderRadius:10, color: theme?.text}}>
+        style={{display: "flex", cursor: "pointer", backgroundColor: theme?.paper, alignItems: "center", padding: 15, borderRadius:3, color: theme?.text}}>
       {option?.icon}
       <Text>{option?.label}</Text>
      </motion.div>

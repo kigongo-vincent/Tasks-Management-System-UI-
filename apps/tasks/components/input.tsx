@@ -3,10 +3,13 @@ import { FaEnvelope, FaEye, FaLock, FaPhone, FaRegEyeSlash, FaSearch } from "rea
 import { useSelector } from "react-redux";
 import { getTheme } from "../model/data";
 import { Theme } from "../types";
+import { FaPenClip, FaUser } from "react-icons/fa6";
 
 const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargin, large }) => {
   const theme: Theme = useSelector(getTheme);
   const [hide, setHide] = useState(false)
+
+  const [BColor, setBColor] = useState("rgba(0,0,0,.05)")
 
   useEffect(()=>{
 
@@ -18,6 +21,8 @@ const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargi
 
   return (
     <div
+      onFocus={()=>setBColor(theme?.primary)}
+      onBlur={()=>setBColor("rgba(0,0,0,.05)")}
       style={{
         display: "flex",
         alignItems: "center",
@@ -26,10 +31,16 @@ const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargi
         marginBottom:zeroMargin ? 0 : 10,
         padding: 15,
         borderRadius: 2,
-        // borderBottom:noBorder ? "none": "1px solid " + theme?.primary,
+        border: "1px solid " + BColor,
+        transition: ".3s"
+        
       }}
     >
       {
+        placeholder == "first name" || placeholder == "last name"
+        ?
+        <FaUser color={theme?.placeholder} size={17.5} />
+        :
         placeholder == "contact"
         ?
         <FaPhone style={{rotate: "90deg"}} color={theme?.placeholder} size={20} />

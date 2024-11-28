@@ -58,6 +58,15 @@ export interface Department{
   updated_at: string
 }
 
+export interface Task{
+  title: string
+  body: string
+  local_timestamp: string 
+  project: number 
+  duration: number
+  id: number
+}
+
 export interface State {
   user: User;
   theme?: Theme;
@@ -67,4 +76,5 @@ export interface State {
   company?: Company
   department?: Department
   hide: boolean
+  tasks?: Task[]
 }

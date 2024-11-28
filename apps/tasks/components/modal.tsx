@@ -69,7 +69,7 @@ const modal = (props: ModalProps) => {
             padding: 20,
             width:innerWidth > 768 ? "30vw": "80vw",
             // height: "70vh",
-            borderRadius: 10,
+            borderRadius: 2,
             boxShadow: "10px 10px 20px rgba(0,0,0,.05)",
           }}
         >

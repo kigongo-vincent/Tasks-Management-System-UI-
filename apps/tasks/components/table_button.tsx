@@ -7,6 +7,7 @@ import Text from "./text";
 import { useNavigate } from "react-router-dom";
 import Button from "./button"
 import Modal from "./modal"
+import {motion} from "framer-motion"
 import AddCompany from "./add_company";
 
 export interface Props {
@@ -47,7 +48,8 @@ const table_button = (props: Props) => {
   };
 
   return (
-    <div
+    <motion.div
+      whileHover={{background: theme?.pale}}
       onClick={
         props?.mode == "delete"
           ? deleteRow
@@ -56,12 +58,12 @@ const table_button = (props: Props) => {
           : editRow
       }
       style={{
-        background: theme?.pale,
-        padding: "10px 20px",
+        background: theme?.paper,
+        padding: "10px",
         borderRadius: "4px",
         display: "flex",
         alignItems: "center",
-        width: "max-content",
+        // width: "max-content",
         cursor: "pointer",
       }}
     >
@@ -82,7 +84,7 @@ const table_button = (props: Props) => {
         <Modal open={open} content={<AddCompany values={props?.row}  setOpen={setOpen}/>} title="Edit company" setOpen={setOpen} />
       }
 
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { getTheme, getUser, SERVER_URL, setAlert, setLoadingState } from "../model/data";
-import { Theme, User } from "../types";
+import { addTask, editTask, getTheme, getUser, SERVER_URL, setAlert, setLoadingState } from "../model/data";
+import { Task, Theme, User } from "../types";
 import Input from "./input";
 import Text from "./text";
 import Button from "./button";
@@ -36,6 +36,9 @@ const add_task = (props: Props) => {
     value: "",
     error: null,
   });
+
+  const [projects, setProjects] = useState([]);
+  const [project, setProject] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const server = useSelector(SERVER_URL);
@@ -74,22 +77,18 @@ const add_task = (props: Props) => {
         }))
         return
       }
-
-      POST({
-        data: props?.data,
-        path: "/tasks/" + id,
-        payload: {
-          body: body.value,
-          duration: duration?.value,
-          project: project && project,
-          title: title?.value
-        },
-        setData: props?.setData,
-        setLoading: setLoading,
-        setOpen: props?.setOpen,
-        errorMessage: errorMessage,
-        successMessage: successMessage,
-      });
+      dispatch(addTask({
+        id: Math.floor(Math.random() * 1000),
+        title: title?.value,
+        body: body?.value,
+        local_timestamp: new Date().toISOString(),
+        duration: duration?.value,
+        employee: user?.user_id,
+        project: project && project,
+        project_name: project && projects?.find(p => parseInt(p?.id) == parseInt(project))?.name
+      }))
+      props?.setOpen(false)
+        dispatch(setAlert({title: "Task saved", body: "The task has been saved on your machine", mode: "success"}))
     }else{
       if(props?.values["body"] == body?.value && props?.values["duration"] == duration?.value && props?.values["title"] == title?.value){
         dispatch(setAlert({title: "No changes detected", body: "There is nothing to update", mode: "normal"}))
@@ -100,37 +99,28 @@ const add_task = (props: Props) => {
           dispatch(setAlert({title: "empty fields detected", body: "Please fill out all form fields", mode: "error"}))
           return
         }
-        
-        setLoading(true)
-        const res = await fetch(`${server}/task/${props?.values["id"]}`,{
-          method: "PATCH",
-          headers: {
-            "Content-type": 'application/json'
-          },
-          body: JSON.stringify({
-            body: body?.value,
-            duration: duration?.value,
-            title: title?.value
-          })
-        })
 
-        if(res.status == 202){
-          const data = await res.json()
-          props?.updateTasks(data)
-          setLoading(false)
-          props?.setOpen(false)
-          dispatch(setAlert({title: "Task updated successfully", body: "The task has been updated", mode: "success"}))
-
-        }else{
-          setLoading(false)
-          dispatch(setAlert({title: "Failed to update task", body: "Please try again", mode: "error"}))
+        const updated_task = {
+          id: props?.values["id"],
+          title: title?.value,
+          body: body?.value,
+          local_timestamp: new Date().toISOString(),
+          duration: duration?.value,
+          employee: user?.user_id,
+          project: project && project,
+          project_name: project && projects?.find(p => parseInt(p?.id) == parseInt(project))?.name
         }
+
+        dispatch(editTask(updated_task))
+        // console.log(updated_task)
+        // props?.setData([...props?.data, updated_task])
+        props?.setOpen(false)
+        dispatch(setAlert({title: "Task updated successfully", body: "The task has been updated", mode: "success"}))
       }
     }
   };
 
-  const [projects, setProjects] = useState([]);
-  const [project, setProject] = useState(null);
+ 
 
   // useEffect(()=>{
   //     dispatch(setLoadingState(loading))
@@ -241,22 +231,12 @@ const add_task = (props: Props) => {
         </select>
       )}
       
-      <div style={{display: "flex", alignItems: "center"}}>
-      <Button
-        // loading={loading}
-        outline
-        fullwidth
-        onClick={onSubmit}
-        title={props?.values ? "Edit task": "add to draft"}
-      />
-      <div style={{margin: "0 2px"}}/>
       <Button
         loading={loading}
         fullwidth
         onClick={onSubmit}
         title={props?.values ? "Edit task": "Add task"}
       />
-      </div>
     </form>
   );
 };

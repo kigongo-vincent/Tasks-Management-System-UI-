@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import Text from "./text";
 import TableButton from "./table_button";
 import { getRelativeTime } from "../utils/getRelativeTime";
-import Switch from "../components/switch"
+import Switch from "../components/switch";
 import { TextCropper } from "../utils/textCropper";
-import { User } from "../types";
+import { Theme, User } from "../types";
 import { useSelector } from "react-redux";
-import { getUser } from "../model/data";
+import { getTheme, getUser } from "../model/data";
+import { FaX } from "react-icons/fa6";
+import { AnimatePresence, motion } from "framer-motion";
 
 export interface Props {
   row: object;
@@ -14,63 +16,176 @@ export interface Props {
   edit?: boolean;
   delete?: boolean;
   view?: true;
-  redirect_path?: string,
-  setActive?: (active: boolean)=>void
-  showBody?: (data: any)=>void
-  rows?: any[]
-  setter?: any
-  editor: any
-  toggle?: any
+  redirect_path?: string;
+  setActive?: (active: boolean) => void;
+  showBody?: (data: any) => void;
+  rows?: any[];
+  setter?: any;
+  editor: any;
+  toggle?: any;
+  cache: boolean
 }
 
 const row = (props: Props) => {
-
-  const user:User = useSelector(getUser)
+  const user: User = useSelector(getUser);
+  const theme: Theme = useSelector(getTheme);
+  const [open, setOpen] = useState(false);
 
   return (
-    
-      <tr>
+    <AnimatePresence mode="sync">
+      <tr className="shadow">
         {props?.columns?.map((column, index) => (
           <td style={{ padding: 15 }}>
-            <Text>{TextCropper(!column?.includes("date") ? props?.row[column] : getRelativeTime(props?.row[column]), 60)}</Text>
+            <Text>
+              {TextCropper(
+                !column?.includes("date")
+                  ? props?.row[column]
+                  : getRelativeTime(props?.row[column]),
+                60
+              )}
+            </Text>
           </td>
         ))}
 
-        <td style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end"
-        }}>
-          {/* view  */}
-        {props?.view &&  (
-          <span style={{ padding: 15 }}>
-            <TableButton setter={props?.setter} showBody={props?.showBody} redirect_path={props?.redirect_path} mode="view" row={props?.row}/>
-          </span>
-        )}
+        <td
+          style={{
+            padding: "15px 30px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
+          {props?.setActive && (
+            <span style={{ marginRight: 20 }}>
+              <Switch
+                toggle={props?.toggle}
+                is_active={props?.row["is_active"]}
+                row={props?.row}
+                rows={props?.rows}
+              />
+            </span>
+          )}
+          <motion.div
+            // whileHover={{background: theme?.pale}}
+            onBlur={() => setOpen(false)}
+            onClick={() => setOpen(!open)}
+            style={{
+              position: "relative",
+              display: "flex",
+              cursor: "pointer",
+              alignItems: "center",
+              justifyContent: "center",
+              background: theme?.paper,
+              padding: "7px 10px",
+              borderRadius: 5,
+              flexDirection: "column",
+            }}
+          >
+            <div
+              style={{
+                width: 4,
+                height: 4,
+                borderRadius: 300,
+                background: theme?.text,
+              }}
+            />
+            <div
+              style={{
+                width: 4,
+                height: 4,
+                borderRadius: 300,
+                margin: "5px 0",
+                background: theme?.text,
+              }}
+            />
+            <div
+              style={{
+                width: 4,
+                height: 4,
+                borderRadius: 300,
+                background: theme?.text,
+              }}
+            />
 
-        {
-          props?.setActive && <td><Switch toggle={props?.toggle} is_active={props?.row["is_active"]}  row={props?.row} rows={props?.rows}/></td>
-        }
+            {/* menu */}
+            {open && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  right: "0%",
+                  padding: 20,
+                  backgroundColor: theme?.paper,
+                  boxShadow:
+                    "10px 10px 20px rgba(0,0,0,.1), -10px -10px 20px rgba(0,0,0,.1)",
+                  width: "10vw",
+                }}
+              >
+                {/* menu header  */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                    marginBottom: 10,
+                  }}
+                >
+                  <FaX
+                    color={theme?.placeholder}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setOpen(false)}
+                    size={15}
+                  />
+                </div>
 
-        {/* edit  */}
-        {props?.edit && user?.role !="employee" && user?.role != "department_admin"  && (
-          <span style={{ padding: 15 }}>
-            <TableButton editor={props?.editor} setter={props?.setter}  mode="edit" row={props?.row} />
-          </span>
-        )}
+                {/* menu body  */}
+                {/* view  */}
+                {props?.view && (
+                  <span>
+                    <TableButton
+                      setter={props?.setter}
+                      showBody={props?.showBody}
+                      redirect_path={props?.redirect_path}
+                      mode="view"
+                      row={props?.row}
+                    />
+                  </span>
+                )}
 
-        {/* delete  */}
-        {props?.delete && user?.role != "employee" && (
-          <span style={{ padding: 15 }}>
-            <TableButton setter={props?.setter} mode="delete" row={props?.row} />
-          </span>
-        )}
+                {/* edit  */}
+                {((props?.edit &&
+                  user?.role != "employee" &&
+                  user?.role != "department_admin") || props?.cache) && (
+                    <span>
+                      <TableButton
+                        editor={props?.editor}
+                        setter={props?.setter}
+                        mode="edit"
+                        row={props?.row}
+                      />
+                    </span>
+                  )}
+
+                {/* delete  */}
+                {((props?.delete && user?.role != "employee") || props?.cache) && (
+                  <span>
+                    <TableButton
+                      setter={props?.setter}
+                      mode="delete"
+                      row={props?.row}
+                    />
+                  </span>
+                )}
+                {/*end menu body  */}
+              </motion.div>
+            )}
+          </motion.div>
         </td>
-
-
-
       </tr>
-    
+    </AnimatePresence>
   );
 };
 

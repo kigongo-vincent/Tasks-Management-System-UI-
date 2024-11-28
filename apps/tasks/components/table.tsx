@@ -15,7 +15,8 @@ export interface Props {
   showBody?: (data: any)=>void
   setter: any,
   editor: any,
-  toggle: any
+  toggle: any,
+  cache: boolean
 }
 
 const Table = (props: Props) => {
@@ -26,7 +27,7 @@ const Table = (props: Props) => {
       style={{
         width: "100%",
         marginTop: 10,
-        overflow: "hidden",
+        // overflow: "hidden",
         background: theme?.paper,
         boxShadow: "10px 10px 20px rgba(0,0,0,.05)",
         borderRadius: 4,
@@ -37,7 +38,7 @@ const Table = (props: Props) => {
         {/* columns  */}
         {props?.columns?.map((column) => (
           <td style={{ padding: 15 }}>
-            <Text color="white">{column}</Text>
+            <Text color="white">{column?.toLocaleUpperCase()?.replace("_", " ")}</Text>
           </td>
         ))}
 
@@ -50,7 +51,7 @@ const Table = (props: Props) => {
 
       {/* rows  */}
       {props?.rows?.map((row, index) => (
-        <Row toggle={props?.toggle} editor={props?.editor} setter={props?.setter} rows={props?.rows} showBody={props?.showBody} setActive={props?.setActive} redirect_path={props?.redirect_path} key={index} row={row} columns = {props?.columns} edit={props?.edit} view ={props?.view} delete={props?.delete}/>
+        <Row toggle={props?.toggle} cache={props?.cache} editor={props?.editor} setter={props?.setter} rows={props?.rows} showBody={props?.showBody} setActive={props?.setActive} redirect_path={props?.redirect_path} key={index} row={row} columns = {props?.columns} edit={props?.edit} view ={props?.view} delete={props?.delete}/>
       ))}
     </table>
   );
