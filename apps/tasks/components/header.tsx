@@ -18,7 +18,7 @@ const header = (props: Props) => {
   const theme:Theme = useSelector(getTheme);
 
   return (
-    <div style={{ background: theme?.paper, padding: 20, borderRadius: 2 }}>
+    <div style={{ background: theme?.paper, padding: 15, borderRadius: 2 }}>
       {state?.row["name"] && (
         <>
           <Text heading is_h1>
@@ -36,8 +36,7 @@ const header = (props: Props) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          background: innerWidth > 768 && theme?.pale,
-          padding:innerWidth > 768 ? 20 : 0,
+          background: innerWidth > 768 && theme?.paper,
           borderRadius: 2,
         }}
       >
@@ -61,7 +60,7 @@ const header = (props: Props) => {
               borderRadius: "100%",
             }}
           >
-            <Text color="white">{props?.count}</Text>
+            <Text color="white">{props?.count > 99 ? "99+" : props?.count}</Text>
           </div>
         </div>
         {/* add company button  */}
@@ -80,7 +79,7 @@ const header = (props: Props) => {
           >
             <FaCirclePlus color={theme?.name == "dark" ? theme?.text : theme?.paper} size={15} />
             <div style={{ margin: "0 5px" }} />
-            <Text color={theme?.name == "dark" ? theme?.text : theme?.paper}>add {props?.title}</Text>
+            <Text color={theme?.name == "dark" ? theme?.text : theme?.paper}>Add {props?.title}</Text>
           </div>
         </div>
         {/* end add company button  */}

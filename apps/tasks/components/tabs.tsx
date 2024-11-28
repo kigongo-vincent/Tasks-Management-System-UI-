@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getCompany, getDepartment, getTheme, getUser } from '../model/data'
 import { Theme } from '../types'
-import { FaBars, FaHotel, FaList, FaLock, FaSignOutAlt, FaUser } from 'react-icons/fa'
-import { FaPeopleGroup, FaToolbox } from 'react-icons/fa6'
+import { FaBars, FaCheckDouble, FaHotel, FaList, FaLock, FaSignOutAlt, FaUser } from 'react-icons/fa'
+import { FaCheckToSlot, FaListCheck, FaPeopleGroup, FaToolbox } from 'react-icons/fa6'
 import Tab from "./tab_link"
+import { IoSettingsSharp } from 'react-icons/io5'
 
 const tabs = () => {
 
@@ -43,142 +44,129 @@ const tabs = () => {
 
   const adminOptions=[
     // {
-    //   icon: <FaChartBar size={19} style={{marginRight: 10}} />,
+    //   icon: <FaChartBar style={{marginRight: 10}} />,
     //   label: "Dashboard",
     //   link: "/admin",
     // },
     {
-      icon: <FaHotel size={19} style={{marginRight: 10}} />,
-      label: "View all companies",
+      icon: <FaHotel style={{marginRight: 10}}/>,
+      label: "View companies",
       link: "/admin/companies"
     },
     // {
-    //   icon: <FaUserAlt size={19} style={{marginRight: 10}} />,
+    //   icon: <FaUserAlt style={{marginRight: 10}}/>,
     //   label: "view all users",
     //   link: "/admin/users"
     // },
     {
-      icon: <FaLock size={19} style={{marginRight: 10}} />,
+      icon: <FaLock style={{marginRight: 10}}/>,
       label: "Change password",
       link: "/change_password"
     },
     {
-      icon: <FaSignOutAlt size={19} style={{marginRight: 10}} />,
-      label: "Logout",
-      // link: "/logout"
-    },
-    {
-      icon: <FaUser size={19} style={{marginRight: 10}} />,
-      label: "profile",
-      link: "/profile"
-    },
-    {
-      icon: <FaToolbox style={{marginRight: 10}}/>,
+      icon: <IoSettingsSharp style={{marginRight: 10}}/>,
       label: "settings",
       link: "/admin/settings"
     },
+    {
+      icon: <FaSignOutAlt/>,
+      label: "Logout"
+    }
   ]
 
   const companyOptions=[
     // {
-    //   icon: <FaChartBar size={19} style={{marginRight: 10}} />,
+    //   icon: <FaChartBar style={{marginRight: 10}}/>,
     //   label: "Dashboard",
     //   link: "/company/",
     // },
     {
-      icon: <FaPeopleGroup size={19} style={{marginRight: 10}} />,
+      icon: <FaPeopleGroup style={{marginRight: 10}}/>,
       label: "View all departments",
       link: "/admin/company/" + company?.id
     },
     {
-      icon: <FaBars style={{marginRight: 10}} color={theme?.text}/>,
+      icon: <FaBars style={{marginRight: 10}}/>,
       label: "View all projects",
       link: "/admin/projects/" + company?.id
     },
     {
-      icon: <FaLock size={19} style={{marginRight: 10}} />,
+      icon: <FaLock style={{marginRight: 10}}/>,
       label: "Change password",
       link: "/change_password"
-    }
-    ,
-    {
-      icon: <FaSignOutAlt size={19} style={{marginRight: 10}} />,
-      label: "Logout",
-      // link: "/logout"
     },
     {
-      icon: <FaUser size={19} style={{marginRight: 10}} />,
-      label: "profile",
-      link: "/profile"
-    },
-    {
-      icon: <FaToolbox style={{marginRight: 10}}/>,
+      icon: <IoSettingsSharp style={{marginRight: 10}}/>,
       label: "settings",
       link: "/admin/settings"
     },
+    {
+      icon: <FaSignOutAlt/>,
+      label: "Logout",
+      
+    }
   ]
 
   const departmentOptions = [
     // {
-    //   icon: <FaChartBar size={19} style={{marginRight: 10}} />,
+    //   icon: <FaChartBar style={{marginRight: 10}}/>,
     //   label: "Dashboard",
     //   link: "/department/",
     // },
     {
-      icon: <FaHotel size={19} style={{marginRight: 10}} />,
-      label: "View all employees",
+      icon: <FaHotel style={{marginRight: 10}}/>,
+      label: "View all Consultants",
       link: "/department/" + department?.id
     },
+    
     {
-      icon: <FaLock size={19} style={{marginRight: 10}} />,
+      icon: <FaLock style={{marginRight: 10}}/>,
       label: "Change password",
       link: "/change_password"
-    }
-    ,
-    {
-      icon: <FaSignOutAlt size={19} style={{marginRight: 10}} />,
-      label: "Logout",
-      // link: "/logout"
     },
     {
-      icon: <FaUser size={19} style={{marginRight: 10}} />,
-      label: "profile",
-      link: "/profile"
-    },
-    {
-      icon: <FaToolbox style={{marginRight: 10}}/>,
+      icon: <IoSettingsSharp style={{marginRight: 10}}/>,
       label: "settings",
       link: "/admin/settings"
     },
+    {
+      icon: <FaSignOutAlt/>,
+      label: "Logout",
+      
+    }
   ]
 
   const employeeOptions = [
     {
-      icon: <FaList size={19} style={{marginRight: 10}} />,
+      icon: <FaCheckToSlot style={{marginRight: 10}}/>,
       label: "View all tasks",
       link: "/employee/" + user?.user_id
     },
     {
-      icon: <FaLock size={19} style={{marginRight: 10}} />,
+      icon: <FaListCheck style={{marginRight: 10}}/>,
+      label: "Draft",
+      link: "/employee/saved_tasks/" + user?.user_id
+    },
+    {
+      icon: <FaCheckDouble style={{marginRight: 10}}/>,
+      label: "Today's todo List",
+      link: "/employee/todos/" + user?.user_id
+    },
+    {
+      icon: <FaLock style={{marginRight: 10}} />,
       label: "Change password",
       link: "/change_password"
-    }
-    ,
-    {
-      icon: <FaSignOutAlt size={19} style={{marginRight: 10}} />,
-      label: "Logout",
-      // link: "/logout"
     },
     {
-      icon: <FaUser size={19} style={{marginRight: 10}} />,
-      label: "profile",
-      link: "/profile"
-    },
-    {
-      icon: <FaToolbox style={{marginRight: 10}}/>,
+      icon: <IoSettingsSharp style={{marginRight: 10}}/>,
       label: "settings",
       link: "/admin/settings"
     },
+    {
+      icon: <FaSignOutAlt/>,
+      label: "Logout",
+      
+    }
   ]
 
 

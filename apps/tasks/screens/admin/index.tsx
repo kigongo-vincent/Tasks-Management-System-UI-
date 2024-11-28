@@ -9,6 +9,13 @@ import { FaHotel, FaUser } from "react-icons/fa";
 const index = () => {
   const theme: Theme = useSelector(getTheme);
 
+  const setTableColors=()=>{
+    const allTrs = document.querySelectorAll("tr:nth-child(2n)")
+    allTrs?.forEach(tr => {
+      tr.classList.add("red")
+    })
+  }
+
   return (
     <div style={{ width: "100%" }}>
       {/* users card  */}

@@ -67,11 +67,11 @@ const layout = ({ children, center }) => {
             width: "100%",
             // border: "1px solid red",
             paddingLeft: 10,
-            overflowY: "scroll",
+            overflowY: "auto",
             display: center && "flex",
             alignItems: center && "center",
             justifyContent: center && "center",
-            borderRadius: 10,
+            borderRadius: 3,
             flexDirection: "column",
             height: "100%",
           }}
@@ -80,8 +80,13 @@ const layout = ({ children, center }) => {
   <BackButton/>
           </div> */}
           {children}
+
+          {/* break line  */}
+      <div className="br"/>
         </div>
       </div>
+
+      
 
       {/* bottom navigation  */}
       <BottomNavigation/>

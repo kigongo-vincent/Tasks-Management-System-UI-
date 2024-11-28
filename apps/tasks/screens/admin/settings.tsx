@@ -54,7 +54,7 @@ const settings = () => {
       <br />
       {/* <br /> */}
 
-      <Text>Theme settings</Text>
+      <Text>Theme settings (experimental)</Text>
 
       <div
         style={{
@@ -85,7 +85,7 @@ const settings = () => {
 
           {/* mode label  */}
           <Text>
-            {theme?.name == "dark" ? "Dark" : "Light"} mode currently enabled (click on the switch to deactivate)
+            {theme?.name == "dark" ? "Dark" : "Light"} mode currently enabled
           </Text>
         </div>
 

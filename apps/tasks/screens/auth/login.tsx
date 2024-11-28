@@ -204,7 +204,7 @@ const login = () => {
           <br />
           <Button
             fullwidth
-            title={"Continue"}
+            title={"Login"}
             onClick={onSubmit}
             loading={loading}
           />

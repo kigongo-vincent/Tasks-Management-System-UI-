@@ -20,10 +20,10 @@ const background = ({children}) => {
         height: "100vh",
         display: "flex",
         alignItems: "center",
-        backgroundPosition: "left 20%",
-        backgroundSize: "contain",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
         backgroundRepeat:"no-repeat",
-        width: "100vw",
+        // width: "100vw",
         
     }}
     >

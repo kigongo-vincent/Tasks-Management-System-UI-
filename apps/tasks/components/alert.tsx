@@ -48,6 +48,7 @@ const alert = (props: Alert) => {
             y: -100,
             opacity: 0,
           }}
+          
           style={{
             position: "absolute",
             top: "1%",

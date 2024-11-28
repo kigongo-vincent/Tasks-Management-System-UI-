@@ -114,9 +114,9 @@ const employees = () => {
       {/* header  */}
       <Header
         setOpen={setOpen}
-        title="an employee"
+        title="consultant"
         count={employees?.length}
-        heading="Employees"
+        heading="Consultant"
       />
 
       {/* body  */}
@@ -139,7 +139,7 @@ const employees = () => {
 
       {open && (
         <Modal
-          title={currentEmployee ? "Edit employee" : "Add employee"}
+          title={currentEmployee ? "Edit Consultant" : "Add Consultant"}
           content={
             <AddEmployee
               values={currentEmployee}

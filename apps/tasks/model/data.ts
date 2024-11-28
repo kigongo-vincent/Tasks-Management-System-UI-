@@ -41,9 +41,7 @@ const initialState: State = {
     // contact: "0756643681"
   },
   theme: TMS_THEME
-    ? TMS_THEME
-    : window?.matchMedia?.("(prefers-color-scheme:dark)").matches
-    ? DarkMode
+    ? TMS_THEME  : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? DarkMode 
     : LightMode,
   SERVER_URL: server_url,
   alert: {
@@ -135,10 +133,8 @@ export const DataSlice = createSlice({
         localStorage.removeItem("TMS_COMPANY");
         state.company = null;
         localStorage.removeItem("TMS_THEME");
-        state.theme = window?.matchMedia?.("(prefers-color-scheme:dark)")
-          .matches
-          ? DarkMode
-          : LightMode;
+        window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? DarkMode 
+    : LightMode
       } else {
         localStorage.setItem("TMS_USER", JSON.stringify(state?.user));
       }

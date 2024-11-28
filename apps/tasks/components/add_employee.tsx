@@ -126,8 +126,8 @@ const add_department = (props: Props) => {
       if (res.status == 200) {
         dispatch(
           setAlert({
-            title: "employee updated",
-            body: "employee has been updated successfully",
+            title: "Consultant updated",
+            body: "Consultant has been updated successfully",
             mode: "success",
           })
         );
@@ -138,8 +138,8 @@ const add_department = (props: Props) => {
       } else {
         dispatch(
           setAlert({
-            title: "employee failed to be updated",
-            body: "employee has not been updated, please try again",
+            title: "Consultant failed to be updated",
+            body: "Consultant has not been updated, please try again",
             mode: "error",
           })
         );
@@ -204,8 +204,8 @@ const add_department = (props: Props) => {
         const data = await res.json();
         dispatch(
           setAlert({
-            title: "Employee uploaded successfully",
-            body: "Employee has been created Successfully",
+            title: "Consultant uploaded successfully",
+            body: "Consultant has been created Successfully",
             mode: "success",
           })
         );
@@ -215,7 +215,7 @@ const add_department = (props: Props) => {
       } else {
         dispatch(
           setAlert({
-            title: "Failed to upload employee",
+            title: "Failed to upload consultant",
             body: "Please try again with a different email",
             mode: "error",
           })
@@ -240,7 +240,7 @@ const add_department = (props: Props) => {
       <Input
         noBorder
         fullwidth
-        placeholder={"Employee's email"}
+        placeholder={"Consultant's email"}
         type={"email"}
         setter={setEmail}
         input={email}
@@ -295,7 +295,7 @@ const add_department = (props: Props) => {
         loading={loading}
         fullwidth
         onClick={onSubmit}
-        title={props?.values ? "Edit employee" : "Add an employee"}
+        title={props?.values ? "Edit consultant" : "Add consultant"}
       />
     </form>
   );

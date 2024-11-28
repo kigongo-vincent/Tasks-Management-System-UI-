@@ -188,7 +188,14 @@ const add_task = (props: Props) => {
         setter={setDuration}
         input={duration}
       />
-      {/* <br /> */}
+      <br />
+      {/* time hint  */}
+      <Text color="placeholder">Duration in hours: {duration?.value && Math.floor(duration?.value / 60) +
+              ` hour${Math.floor(duration?.value / 60) == 1 ? "" : "s"} and ` +
+              (duration?.value % 60) +
+              " minutes"}</Text>
+      <br />
+      <br />
       {
         !props?.values && <>
         <br />
@@ -235,7 +242,7 @@ const add_task = (props: Props) => {
         loading={loading}
         fullwidth
         onClick={onSubmit}
-        title={props?.values ? "Edit task": "Add task"}
+        title={props?.values ? "Edit task": "Save to drafts"}
       />
     </form>
   );

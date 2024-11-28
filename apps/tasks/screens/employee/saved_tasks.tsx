@@ -184,7 +184,7 @@ const tasks = () => {
     <div>
       {/* header  */}
       <Header
-        title="a task"
+        title="a task to drafts"
         setOpen={setOpen}
         count={tasks?.length}
         heading={`Tasks`}
@@ -204,11 +204,11 @@ const tasks = () => {
             alignItems: "center",
             justifyContent: "space-between",
             margin: "10px 0",
-            background: theme?.paper,
-            boxShadow: "10px 10px 20px rgba(0,0,0,.05)",
+            background: innerWidth > 768 ? theme?.paper: "",
+            boxShadow: innerWidth > 768 ? "10px 10px 20px rgba(0,0,0,.05)": "none",
             borderRadius: 5,
             width: "max-content",
-            padding: "18px 20px",
+            padding: innerWidth > 768 ? "18px 20px" : "0px",
           }}
         >
           {innerWidth > 768 ? (
@@ -223,7 +223,7 @@ const tasks = () => {
               // width: innerWidth > 768 ? "": "100vw",
               padding: "3px 12px",
               display: "flex",
-              alignItems: "center",
+              alignItems: "stretch",
               justifyContent: "space-between",
               borderRadius: "100px",
               // marginLeft:
@@ -231,20 +231,22 @@ const tasks = () => {
           >
             <Text heading>
               {Math.floor(hours / 60) +
-                ` hour${Math.floor(hours / 60) == 1 ? "" : "s"} and ` +
+                ` h${innerWidth > 768 ? "our" : "r"}${Math.floor(hours / 60) == 1 ? "" : "s"} and ` +
                 (hours % 60) +
-                " minutes"}
+                `m${innerWidth > 768 ? "inutes" : "s"}`}
             </Text>
           </div>
         </div>
 
         {/* publish button  */}
-        <Button
+        {
+          tasks?.length > 0 && <Button
           title={"Publish tasks"}
           onClick={publish}
           loading={loading}
           contain
         />
+        }
       </div>
 
       {/* body  */}

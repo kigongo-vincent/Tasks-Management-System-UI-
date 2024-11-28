@@ -64,7 +64,7 @@ const modal = (props: ModalProps) => {
           }}
           style={{
             background: theme?.paper,
-            maxHeight: "90vh",
+            maxHeight: innerWidth < 768 ? "65vh": "90vh",
             overflowY: "scroll",
             padding: 20,
             width:innerWidth > 768 ? "30vw": "80vw",

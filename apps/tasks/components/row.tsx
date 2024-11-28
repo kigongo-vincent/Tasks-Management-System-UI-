@@ -11,6 +11,7 @@ import { FaX } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
 
 export interface Props {
+  index: number,
   row: object;
   columns: string[];
   edit?: boolean;
@@ -33,9 +34,9 @@ const row = (props: Props) => {
 
   return (
     <AnimatePresence mode="sync">
-      <tr className="shadow">
+      <tr className="shadow" style={{background: props?.index % 2 == 0 ? theme?.pale : ""}}>
         {props?.columns?.map((column, index) => (
-          <td style={{ padding: 15 }}>
+          <td style={{ padding: "5px 10px" }}>
             <Text>
               {TextCropper(
                 !column?.includes("date")
@@ -49,7 +50,7 @@ const row = (props: Props) => {
 
         <td
           style={{
-            padding: "15px 30px",
+            padding: "7px 10px",
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-end",
@@ -57,12 +58,14 @@ const row = (props: Props) => {
         >
           {props?.setActive && (
             <span style={{ marginRight: 20 }}>
-              <Switch
+              {
+                (user?.role == "admin" || user?.role == "company_admin") && <Switch
                 toggle={props?.toggle}
                 is_active={props?.row["is_active"]}
                 row={props?.row}
                 rows={props?.rows}
               />
+              }
             </span>
           )}
           <motion.div
@@ -75,7 +78,7 @@ const row = (props: Props) => {
               cursor: "pointer",
               alignItems: "center",
               justifyContent: "center",
-              background: theme?.paper,
+              // background: theme?.paper,
               padding: "7px 10px",
               borderRadius: 5,
               flexDirection: "column",
@@ -110,18 +113,19 @@ const row = (props: Props) => {
             {/* menu */}
             {open && (
               <motion.div
+                className="w-10"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 style={{
                   position: "absolute",
-                  bottom: 0,
+                  bottom: -30,
                   right: "0%",
                   padding: 20,
                   backgroundColor: theme?.paper,
+                  zIndex: 4,
                   boxShadow:
                     "10px 10px 20px rgba(0,0,0,.1), -10px -10px 20px rgba(0,0,0,.1)",
-                  width: "10vw",
                 }}
               >
                 {/* menu header  */}
@@ -170,7 +174,7 @@ const row = (props: Props) => {
                   )}
 
                 {/* delete  */}
-                {((props?.delete && user?.role != "employee") || props?.cache) && (
+                {((props?.delete && (user?.role == "admin" || user?.role == "company_admin")) || props?.cache) && (
                   <span>
                     <TableButton
                       setter={props?.setter}

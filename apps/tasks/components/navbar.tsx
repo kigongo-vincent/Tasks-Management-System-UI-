@@ -58,7 +58,7 @@ const navbar = () => {
           background: theme?.paper,
           boxShadow: "10px 10px 20px rgba(50,50,50,.05)",
           borderRadius: 3,
-          padding: "10px 20px",
+          padding: "5px 12px",
         }}
       >
         {/* logo  */}

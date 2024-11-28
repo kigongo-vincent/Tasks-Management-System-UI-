@@ -25,7 +25,7 @@ const text = (props: Props) => {
         "aliceblue"
         :
           props?.color == "primary"
-            ? theme?.primary
+            ? theme?.name == "light" ? theme?.primary : "orange"
             : props?.color == "success"
             ? theme?.success
             : props?.color == "error"

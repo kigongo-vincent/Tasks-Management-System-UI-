@@ -60,7 +60,23 @@ const Index = () => {
 
   const navigate = useNavigate()
 
-  
+  useEffect(()=>{
+    // document.documentElement.style.display = 'none';
+    document.documentElement.style.display = 'none';
+
+    document.documentElement.setAttribute(
+        "data-color-scheme",
+        theme?.name == "dark"  ? "dark" : "light"
+    );
+    // remove scrollbars
+//                document.documentElement.style.overflow = "hidden";
+    // trigger reflow so that overflow style is applied
+    document.body.clientWidth;
+    // remove overflow style, which will bring back the scrollbar with the correct scheme
+//                document.documentElement.style.overflow = "";
+    document.documentElement.style.display = '';
+    
+  },[theme?.name])
 
   return (
     <div>

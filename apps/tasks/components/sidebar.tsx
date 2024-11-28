@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { FaBars, FaChartBar, FaHotel, FaList, FaLock, FaSignOutAlt, FaToolbox, FaUserAlt } from 'react-icons/fa'
+import { FaBars, FaChartBar, FaHotel, FaList, FaLock, FaSignOutAlt, FaUserAlt } from 'react-icons/fa'
 import Text from "./text"
 import { useDispatch, useSelector } from 'react-redux'
 import { getCompany, getDepartment, getTheme, getUser, setAlert, setUser } from '../model/data'
 import {motion} from "framer-motion"
 import { Company, Department, Theme, User } from '../types'
 import Button from "./button"
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { FaCheckDouble, FaCheckToSlot, FaListCheck, FaPeopleGroup } from 'react-icons/fa6'
-
+import { IoSettingsSharp } from "react-icons/io5";
 const sidebar = () => {
 
   const theme:Theme = useSelector(getTheme)
@@ -20,7 +20,7 @@ const sidebar = () => {
 
   const adminOptions=[
     // {
-    //   icon: <FaChartBar style={{marginRight: 10}} color={theme?.text}/>,
+    //   icon: <FaChartBar style={{marginRight: 10}} />,
     //   label: "Dashboard",
     //   link: "/admin",
     // },
@@ -40,7 +40,7 @@ const sidebar = () => {
       link: "/change_password"
     },
     {
-      icon: <FaToolbox style={{marginRight: 10}}/>,
+      icon: <IoSettingsSharp style={{marginRight: 10}}/>,
       label: "settings",
       link: "/admin/settings"
     },
@@ -68,7 +68,7 @@ const sidebar = () => {
       link: "/change_password"
     },
     {
-      icon: <FaToolbox style={{marginRight: 10}}/>,
+      icon: <IoSettingsSharp style={{marginRight: 10}}/>,
       label: "settings",
       link: "/admin/settings"
     },
@@ -82,7 +82,7 @@ const sidebar = () => {
     // },
     {
       icon: <FaHotel style={{marginRight: 10}}/>,
-      label: "View all employees",
+      label: "View all Consultants",
       link: "/department/" + department?.id
     },
     
@@ -92,7 +92,7 @@ const sidebar = () => {
       link: "/change_password"
     },
     {
-      icon: <FaToolbox style={{marginRight: 10}}/>,
+      icon: <IoSettingsSharp style={{marginRight: 10}}/>,
       label: "settings",
       link: "/admin/settings"
     },
@@ -106,7 +106,7 @@ const sidebar = () => {
     },
     {
       icon: <FaListCheck style={{marginRight: 10}}/>,
-      label: "draft",
+      label: "Draft",
       link: "/employee/saved_tasks/" + user?.user_id
     },
     {
@@ -115,18 +115,20 @@ const sidebar = () => {
       link: "/employee/todos/" + user?.user_id
     },
     {
-      icon: <FaLock style={{marginRight: 10}} color={theme?.text}/>,
+      icon: <FaLock style={{marginRight: 10}} />,
       label: "Change password",
       link: "/change_password"
     },
     {
-      icon: <FaToolbox style={{marginRight: 10}}/>,
+      icon: <IoSettingsSharp style={{marginRight: 10}}/>,
       label: "settings",
       link: "/admin/settings"
     },
   ]
 
   const [options, setOptions] = useState<any[]>([])
+
+  const {pathname} = useLocation()
 
   const setUserOtions=()=>{
     switch(user?.role){
@@ -160,26 +162,29 @@ const sidebar = () => {
     style={{background: theme?.paper,
       // , overflowY: "scroll",
       // boxShadow: "10px 10px 20px rgba(50,50,50,.05)",
-      width: "24%",
+      width: "max-conent",
       height: "100%",
       borderRadius: 3,
     }}>
 
     {/* links  */}
 
-   <div style={{padding: 20}}>
+   <div style={{padding: 20, width: "100%"}}>
    {
       options?.map(option=> (
-        <motion.div 
+        <motion.div
+
         // onHoverStart={()=>console.log("focused")}
         // onHoverEnd={()=>console.log("ended")}
         onClick={option?.action ? option?.action : ()=>navigate(option?.link)}
         whileHover={{backgroundColor: theme?.pale}}
         // whileTap={{backgroundColor: theme?.paper}}
         // 
-        style={{display: "flex", cursor: "pointer", backgroundColor: theme?.paper, alignItems: "center", padding: 15, borderRadius:3, color: theme?.text}}>
+        style={{display: "flex", cursor: "pointer", width: "max-content", backgroundColor: theme?.paper, alignItems: "center", padding: 12, borderRadius:3}}>
+      <div style={{color: pathname == option?.link ? theme?.name == "light" ? theme?.primary : "orange" : theme?.text}}>
       {option?.icon}
-      <Text>{option?.label}</Text>
+      </div>
+      <Text color={pathname == option?.link ? "primary" : "text"}>{option?.label}</Text>
      </motion.div>
       ))
     }

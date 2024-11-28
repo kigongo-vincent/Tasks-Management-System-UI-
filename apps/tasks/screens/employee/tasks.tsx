@@ -219,27 +219,31 @@ const tasks = () => {
       >
         {/* filter  */}
         <div
+          className="shrink"
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             // background: "red",
-            width: innerWidth < 768 ? "100%" : "max-content",
+            width: innerWidth < 768 ? "85vw" : "max-content",
           }}
         >
+
+
           {/* start date  */}
           <Input
-            fullwidth={innerWidth < 768}
             noBorder
             zeroMargin
             setter={setStartDate}
             input={startDate}
+            fullwidth={innerWidth < 768}
             type={"date"}
             placeholder={"Starting date"}
           />
 
-          <div style={{ margin: "0px 10px" }} />
+          <div style={{margin: "0px 3px"}}/>
 
+          <br className="separator"/>
           {/* end date  */}
           <Input
             noBorder
@@ -254,14 +258,17 @@ const tasks = () => {
         {innerWidth < 768 && <br />}
 
         {/* search  */}
+        <div className="search">
         <Input
           zeroMargin
           noBorder
+          fullwidth={innerWidth < 768}
           setter={setSearch}
           input={search}
           type={"search"}
           placeholder={"search for tasks"}
         />
+        </div>
       </div>
 
       {/* total number of working hours  */}

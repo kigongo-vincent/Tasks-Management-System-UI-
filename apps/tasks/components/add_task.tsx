@@ -33,7 +33,7 @@ const add_task = (props: Props) => {
     error: null,
   });
   const [duration, setDuration] = useState({
-    value: "",
+    value: 0,
     error: null,
   });
 
@@ -198,7 +198,15 @@ const add_task = (props: Props) => {
         setter={setDuration}
         input={duration}
       />
-      {/* <br /> */}
+      <br />
+      {/* time hint  */}
+      <Text color="placeholder">Duration in hours: {duration?.value && Math.floor(duration?.value / 60) +
+              ` hour${Math.floor(duration?.value / 60) == 1 ? "" : "s"} and ` +
+              (duration?.value % 60) +
+              " minutes"}</Text>
+      <br />
+
+
       {
         !props?.values && <>
         <br />
@@ -241,22 +249,14 @@ const add_task = (props: Props) => {
         </select>
       )}
       
-      <div style={{display: "flex", alignItems: "center"}}>
-      <Button
-        // loading={loading}
-        outline
-        fullwidth
-        onClick={onSubmit}
-        title={props?.values ? "Edit task": "add to draft"}
-      />
-      <div style={{margin: "0 2px"}}/>
+     
       <Button
         loading={loading}
         fullwidth
         onClick={onSubmit}
         title={props?.values ? "Edit task": "Add task"}
       />
-      </div>
+      
     </form>
   );
 };
