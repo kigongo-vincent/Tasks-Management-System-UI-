@@ -6,6 +6,7 @@ import Text from '../../components/text'
 import { setLoadingState } from '../../model/data'
 import { GET } from '../../utils/HTTP'
 import Header from "../../components/header"
+import { useParams } from 'react-router-dom'
 
 const users = () => {
 
@@ -13,21 +14,21 @@ const users = () => {
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
 
+  const {id} = useParams()
+
   useEffect(() => {
     dispatch(setLoadingState(loading))
   }, [loading])
 
   useEffect(() => {
 
-    GET({ path: "/grouped_tasks", setData: setUsers, setLoading: setLoading })
+    GET({ path: "/grouped_tasks/"+ id, setData: setUsers, setLoading: setLoading })
 
   }, [])
 
 
   const seriailzeTasks = () => {
     users?.forEach(user => {
-      user.id = user?.employee_id
-      user.name = user?.employee_name
       user.daily = `${user?.daily_tasks?.task_count} (${Math.floor(user?.daily_tasks?.total_duration / 60) +
         ` hour${Math.floor(user?.daily_tasks?.total_duration / 60) == 1 ? "" : "s"} and ` +
         (user?.daily_tasks?.total_duration % 60) +

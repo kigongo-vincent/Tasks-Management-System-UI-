@@ -147,11 +147,11 @@ const tabs = () => {
       label: "Draft",
       link: "/employee/saved_tasks/" + user?.user_id
     },
-    {
-      icon: <FaCheckDouble style={{marginRight: 10}}/>,
-      label: "Today's todo List",
-      link: "/employee/todos/" + user?.user_id
-    },
+    // {
+    //   icon: <FaCheckDouble style={{marginRight: 10}}/>,
+    //   label: "Today's todo List",
+    //   link: "/employee/todos/" + user?.user_id
+    // },
     {
       icon: <FaLock style={{marginRight: 10}} />,
       label: "Change password",

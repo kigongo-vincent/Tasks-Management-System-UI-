@@ -133,7 +133,7 @@ export const DataSlice = createSlice({
         localStorage.removeItem("TMS_COMPANY");
         state.company = null;
         localStorage.removeItem("TMS_THEME");
-        window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? DarkMode 
+        state.theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? DarkMode 
     : LightMode
       } else {
         localStorage.setItem("TMS_USER", JSON.stringify(state?.user));
