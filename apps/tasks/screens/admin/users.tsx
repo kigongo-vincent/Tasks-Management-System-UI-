@@ -97,7 +97,7 @@ const users = () => {
           setter={setSearch}
           input={search}
           type={"search"}
-          placeholder={"search for tasks"}
+          placeholder={"search for consultants"}
         />
         </div>
       </div>
