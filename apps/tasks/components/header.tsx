@@ -64,7 +64,8 @@ const header = (props: Props) => {
           </div>
         </div>
         {/* add company button  */}
-        <div>
+        {
+          props?.title && <div>
           <div
             onClick={() => props?.setOpen(true)}
             style={{
@@ -82,6 +83,7 @@ const header = (props: Props) => {
             <Text color={theme?.name == "dark" ? theme?.text : theme?.paper}>Add {props?.title}</Text>
           </div>
         </div>
+        }
         {/* end add company button  */}
       </div>
     </div>

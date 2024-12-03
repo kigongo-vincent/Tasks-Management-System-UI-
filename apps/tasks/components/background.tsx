@@ -4,7 +4,7 @@ import React from 'react'
 import {useSelector} from "react-redux"
 import { getTheme } from '../model/data'
 import { Theme } from '../types'
-import LoginImage from "../assets/images/login.svg"
+// import LoginImage from "../assets/images/login.svg"
 
 const background = ({children}) => {
 
@@ -16,7 +16,7 @@ const background = ({children}) => {
     style={{
         backgroundColor: theme?.pale,
         // mixBlendMode: "luminosity",
-        backgroundImage: LoginImage,
+        // backgroundImage: LoginImage,
         height: "100vh",
         display: "flex",
         alignItems: "center",

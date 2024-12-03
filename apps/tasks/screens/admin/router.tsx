@@ -25,7 +25,7 @@ const router = () => {
         <Route path="/" Component={Dashboard} />
         <Route path="/companies" Component={CompaniesPage} />
         <Route path="/company/:id" Component={CompanyPage} />
-        <Route path="/users" Component={UsersPage} />
+        <Route path="/users/:id" Component={UsersPage} />
         <Route path="/projects/:id" Component={ProjectsPage}/>
         <Route path="/settings" Component={Settings}/>
       </Routes>

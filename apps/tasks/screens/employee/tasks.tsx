@@ -94,7 +94,7 @@ const tasks = () => {
     setTimeout(() => {
       setStartDate({ ...startDate, value: moment()?.format("YYYY-MM-DD") });
       setEndDate({ ...startDate, value: moment()?.format("YYYY-MM-DD") });
-    }, 1000);
+    }, 200);
   }, []);
 
   useEffect(() => {

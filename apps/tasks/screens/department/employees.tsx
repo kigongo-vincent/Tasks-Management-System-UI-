@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Text from "../../components/text";
-import { FaCirclePlus, FaEye, FaPen } from "react-icons/fa6";
+import { FaCirclePlus, FaEnvelope, FaEye, FaPen, FaPhone } from "react-icons/fa6";
 import {
   getTheme,
   getUser,
@@ -32,14 +32,32 @@ const employees = () => {
   const server = useSelector(SERVER_URL);
   const [employees, setEmployees] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
+  const [details, setDetails] = useState(null)
+  const navigate = useNavigate()
   const { id } = useParams();
   const dispatch = useDispatch();
-
   const { state } = useLocation();
 
   const addEmployee = (new_employee: any) => {
     setEmployees([...employees, new_employee]);
   };
+
+  const showBody = (payload: any) => {
+    // console.log(payload)
+    if(user?.role == "company_admin"){
+    setDetails(payload)
+    }else{
+      navigate("/employee/" + payload["id"])
+    }
+  }
+
+  useEffect(()=>{
+
+    if(!open){
+      setDetails(null)
+    }
+
+  },[open])
 
   useEffect(() => {
     GET({
@@ -83,80 +101,117 @@ const employees = () => {
     setOpen(false);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    if(!open){
+    if (!open) {
       setCurrentEmployee(null)
     }
 
-  },[open])
+  }, [open])
 
-  const toggleAccountState=(id, new_state)=>{
+  const toggleAccountState = (id, new_state) => {
 
     fetch(`${server}/update_user/${id}`, {
       method: "PATCH",
       headers: {
         "Content-type": "application/json"
       },
-      body: JSON.stringify({is_active: new_state})
+      body: JSON.stringify({ is_active: new_state })
     })
   }
 
   const user = useSelector(getUser)
 
   return (
-    !user?.email 
-    ?
-    <Navigate to={"/"}/>
-    :
-    JSON.parse(localStorage.getItem("TMS_USER"))?.role == "department_admin" || JSON.parse(localStorage.getItem("TMS_USER"))?.role == "company_admin" || JSON.parse(localStorage.getItem("TMS_USER"))?.role == "admin" ?
-    <div>
-      {/* header  */}
-      <Header
-        setOpen={setOpen}
-        title="consultant"
-        count={employees?.length}
-        heading="Consultant"
-      />
+    !user?.email
+      ?
+      <Navigate to={"/"} />
+      :
+      JSON.parse(localStorage.getItem("TMS_USER"))?.role == "department_admin" || JSON.parse(localStorage.getItem("TMS_USER"))?.role == "company_admin" || JSON.parse(localStorage.getItem("TMS_USER"))?.role == "admin" ?
+        <div>
+          {/* header  */}
+          <Header
+            setOpen={setOpen}
+            title="consultant"
+            count={employees?.length}
+            heading="Consultant"
+          />
 
-      {/* body  */}
-      {employees?.length == 0 ? (
-        <Text is_h1>No results found</Text>
-      ) : (
-        <Table
-          editor={editEmployee}
-          setter={setter}
-          setActive={setActive}
-          columns={["email", "contact" ,"date_joined"]}
-          rows={employees}
-          delete
-          toggle={toggleAccountState}
-          edit
-          view
-          redirect_path="/employee"
-        />
-      )}
+          {/* body  */}
+          {employees?.length == 0 ? (
+            <Text is_h1>No results found</Text>
+          ) : (
+            <Table
+              showBody={showBody}
+              editor={editEmployee}
+              setter={setter}
+              setActive={setActive} h
+              columns={["email", "contact", "date_joined"]}
+              rows={employees}
+              delete
+              toggle={toggleAccountState}
+              edit
+              view
+            // redirect_path="/employee"
+            />
+          )}
 
-      {open && (
-        <Modal
-          title={currentEmployee ? "Edit Consultant" : "Add Consultant"}
-          content={
-            <AddEmployee
-              values={currentEmployee}
-              updateEmp={updateEmployee}
-              add={addEmployee}
+          {open && (
+            <Modal
+              title={currentEmployee ? "Edit Consultant" : "Add Consultant"}
+              content={
+                <AddEmployee
+                  values={currentEmployee}
+                  updateEmp={updateEmployee}
+                  add={addEmployee}
+                  setOpen={setOpen}
+                />
+              }
+              open={open}
               setOpen={setOpen}
             />
-          }
-          open={open}
-          setOpen={setOpen}
-        />
-      )}
-    </div>
-    :
-    (
-      <Navigate to={"/"}/>
-    )
+          )}
+
+          {/* modal for viewing details about the employee  */}
+          {details && (
+            <Modal
+              open={Boolean(details)}
+              setOpen={setDetails}
+              content={
+                <div>
+                  <Text
+                    // color="primary" 
+                    is_h1
+                    heading
+                    justify>
+                    {details["first_name"] + " " + details["last_name"]}
+                  </Text>
+                  <br />
+                  <br />
+                  {/* <hr style={{opacity: .3}}/> */}
+                  {/* <br /> */}
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <FaEnvelope style={{ marginRight: 10 }} color={theme?.text} />
+                    <Text justify>{details["email"]}</Text>
+                  </div>
+                  <br />
+                  <hr style={{ opacity: .1 }} />
+                  <br />
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <FaPhone style={{ marginRight: 10 }} color={theme?.text} />
+                    <Text justify>{details["contact"]}</Text>
+                  </div>
+                </div>
+              }
+              title="User details"
+            />
+          )}
+
+        </div>
+        :
+        (
+          <Navigate to={"/"} />
+        )
   );
 };
 

@@ -7,8 +7,10 @@ import {motion} from "framer-motion"
 import { Company, Department, Theme, User } from '../types'
 import Button from "./button"
 import { useLocation, useNavigate } from 'react-router-dom'
-import { FaCheckDouble, FaCheckToSlot, FaListCheck, FaPeopleGroup } from 'react-icons/fa6'
+import { FaCheckDouble, FaCheckToSlot, FaListCheck, FaPeopleGroup, FaPeopleRoof } from 'react-icons/fa6'
 import { IoSettingsSharp } from "react-icons/io5";
+import { HiUserGroup } from "react-icons/hi";
+
 const sidebar = () => {
 
   const theme:Theme = useSelector(getTheme)
@@ -53,7 +55,12 @@ const sidebar = () => {
     //   link: "/company/",
     // },
     {
-      icon: <FaPeopleGroup style={{marginRight: 10}}/>,
+      icon: <HiUserGroup style={{marginRight: 10}}/>,
+      label: "View all consultants",
+      link: "/admin/users/" + company?.id
+    },
+    {
+      icon: <FaPeopleRoof style={{marginRight: 10}}/>,
       label: "View all departments",
       link: "/admin/company/" + company?.id
     },
