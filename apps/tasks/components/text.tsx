@@ -37,7 +37,7 @@ const text = (props: Props) => {
             : theme?.text,
         fontFamily: "poppins",
         fontWeight: props?.heading ? "bold" : "normal",
-        fontSize: props?.is_h1 ? 24 : props?.small ? 10.5 : 12.5,
+        fontSize: props?.is_h1 ? 24 : props?.small ? 10.5 : 12,
         lineHeight: !props?.is_h1 ? 1.8 : 1.5,
         textAlign: props?.justify ? "justify" : "start"
       }}

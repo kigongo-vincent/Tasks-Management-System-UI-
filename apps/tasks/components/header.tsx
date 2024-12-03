@@ -18,7 +18,7 @@ const header = (props: Props) => {
   const theme:Theme = useSelector(getTheme);
 
   return (
-    <div style={{ background: theme?.paper, padding: 15, borderRadius: 2 }}>
+    <div style={{ background: theme?.paper, padding: 15, borderRadius: 2, minWidth: "max-content" }}>
       {state?.row["name"] && (
         <>
           <Text heading is_h1>

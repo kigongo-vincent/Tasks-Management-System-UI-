@@ -187,7 +187,7 @@ const tasks = () => {
         title="a task to drafts"
         setOpen={setOpen}
         count={tasks?.length}
-        heading={`Tasks`}
+        heading={`Pending Task(s)`}
       />
 
       <div

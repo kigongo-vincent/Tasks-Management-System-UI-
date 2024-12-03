@@ -188,7 +188,7 @@ const sidebar = () => {
         // whileTap={{backgroundColor: theme?.paper}}
         // 
         style={{display: "flex", cursor: "pointer", width: "max-content", backgroundColor: theme?.paper, alignItems: "center", padding: 12, borderRadius:3}}>
-      <div style={{color: pathname == option?.link ? theme?.name == "light" ? theme?.primary : "orange" : theme?.text}}>
+      <div style={{color: pathname == option?.link ? theme?.name == "light" ? theme?.primary : "rgb(247,151,38)" : theme?.text}}>
       {option?.icon}
       </div>
       <Text color={pathname == option?.link ? "primary" : "text"}>{option?.label}</Text>

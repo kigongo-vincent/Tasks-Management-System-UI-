@@ -27,6 +27,7 @@ const add_task = (props: Props) => {
     value: "",
     error: null,
   });
+  
 
   const [body, setBody] = useState({
     value: "",
@@ -64,6 +65,12 @@ const add_task = (props: Props) => {
     );
   };
 
+  useEffect(()=>{
+    if(!addProject){
+      setProject(null)
+    }
+  },[addProject])
+
   const onSubmit = async(e) => {
     e.preventDefault();
 
@@ -90,7 +97,7 @@ const add_task = (props: Props) => {
       props?.setOpen(false)
         dispatch(setAlert({title: "Task saved", body: "The task has been saved on your machine", mode: "success"}))
     }else{
-      if(props?.values["body"] == body?.value && props?.values["duration"] == duration?.value && props?.values["title"] == title?.value){
+      if(props?.values["body"] == body?.value && props?.values["duration"] == duration?.value && props?.values["title"] == title?.value && props?.values["project"] == project){
         dispatch(setAlert({title: "No changes detected", body: "There is nothing to update", mode: "normal"}))
         return
       }else{
@@ -128,7 +135,11 @@ const add_task = (props: Props) => {
 
   useEffect(() => {
     if (addProject) {
-      setProject(projects[0]?.id);
+      if(props?.values){
+        props?.values["project"] && setProject(props?.values["project"]);
+      }else{
+        setProject(projects[0]?.id);
+      }
     }
   }, [addProject]);
 
@@ -139,7 +150,7 @@ const add_task = (props: Props) => {
       setBody({...body, value: props?.values["body"]})
       setDuration({...duration, value: props?.values["duration"]})
       setTitle({...title, value: props?.values["title"]})
-
+      props?.values["project"] && setAddProject(true)
     }
 
   },[props?.values])
@@ -196,8 +207,7 @@ const add_task = (props: Props) => {
               " minutes"}</Text>
       <br />
       <br />
-      {
-        !props?.values && <>
+      <>
         <br />
       {
         projects.length > 0 && <div
@@ -210,12 +220,12 @@ const add_task = (props: Props) => {
       >
         <Text>Attach Project (optional)</Text>
         <div style={{margin: "0 20px"}}/>
-        <Switch setActive={setAddProject} />
+        <Switch setActive={setAddProject} is_active={addProject}/>
       </div>
       }
       <br /> <br />
         </>
-      }
+      
       {addProject && (
         <select
           value={project}
@@ -242,7 +252,7 @@ const add_task = (props: Props) => {
         loading={loading}
         fullwidth
         onClick={onSubmit}
-        title={props?.values ? "Edit task": "Save to drafts"}
+        title={props?.values ? "save changes": "Save to drafts"}
       />
     </form>
   );
