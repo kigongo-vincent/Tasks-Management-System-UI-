@@ -113,11 +113,11 @@ const sidebar = () => {
       label: "View all tasks",
       link: "/employee/" + encryptData(user?.user_id)
     },
-    // {
-    //   icon: <FaListCheck style={{marginRight: 10}}/>,
-    //   label: "Draft",
-    //   link: "/employee/saved_tasks/" + encryptData(user?.user_id)
-    // },
+    {
+      icon: <FaListCheck style={{marginRight: 10}}/>,
+      label: "Draft",
+      link: "/employee/saved_tasks/" + encryptData(user?.user_id)
+    },
     // {
     //   icon: <FaCheckDouble style={{marginRight: 10}}/>,
     //   label: "Today's todo List",

@@ -9,6 +9,8 @@ import Button from "./button";
 import { GET, POST } from "../utils/HTTP";
 import Switch from "./switch";
 import { decryptData, encryptData } from "../utils/security";
+import { motion } from "framer-motion";
+
 
 export interface Props {
   setOpen: (open: boolean) => void;
@@ -23,6 +25,8 @@ const add_task = (props: Props) => {
   const dispatch = useDispatch();
   const [addProject, setAddProject] = useState(false);
   const user:User = useSelector(getUser)
+  const [isActive, setIsActive] = useState(false);
+  const [positionX, setPositionX] = useState(0);
 
   const [title, setTitle] = useState({
     value: "",
@@ -136,9 +140,20 @@ const add_task = (props: Props) => {
   // },[loading])
 
   useEffect(() => {
+    if (isActive) {
+      setPositionX(20);
+      setAddProject(true)
+    } else {
+      setPositionX(0);
+      setAddProject(false)
+    }
+  }, [isActive]);
+
+  useEffect(() => {
     if (addProject) {
       if(props?.values){
         props?.values["project"] && setProject(props?.values["project"]);
+        setIsActive(true)
       }else{
         setProject(projects[0]?.id);
       }
@@ -203,10 +218,10 @@ const add_task = (props: Props) => {
       />
       <br />
       {/* time hint  */}
-      <Text color="placeholder">Duration in hours: {duration?.value && Math.floor(duration?.value / 60) +
+      <Text color="placeholder">{"Duration in hours: " + (duration?.value && Math.floor(duration?.value / 60) +
               ` hour${Math.floor(duration?.value / 60) == 1 ? "" : "s"} and ` +
               (duration?.value % 60) +
-              " minutes"}</Text>
+              " minutes")}</Text>
       <br />
       <br />
       <>
@@ -222,7 +237,45 @@ const add_task = (props: Props) => {
       >
         <Text>Attach Project (optional)</Text>
         <div style={{margin: "0 20px"}}/>
-        <Switch setActive={setAddProject} is_active={addProject}/>
+        
+        {/* switch */}
+        <div
+      onClick={() => {
+        setIsActive(!isActive);
+      }}
+      style={{
+        width: 40,
+        height: 20,
+        cursor: "pointer",
+        border:theme?.name == "dark" ? "1px solid grey":"none",
+        background:
+          theme?.name == "dark"
+            ? !isActive
+              ? "rgba(0,0,0,.1)"
+              : theme?.primary
+            : !isActive
+            ? "rgba(0,0,0,.1)"
+            : "rgba(255,110, 0, .2)",
+        borderRadius: "100px",
+      }}
+    >
+      {/* thumb  */}
+      <motion.div
+        animate={{ x: positionX }}
+        style={{
+          width: 20,
+          height: 20,
+          x: positionX,
+          // border: "1px solid grey",
+          background: theme?.name == "dark"? isActive ? theme?.text : "rgb(50,50,50)" : isActive ? theme?.primary : theme?.placeholder,
+          // background: isActive ? theme?.text : theme?.primary,
+          borderRadius: "100%",
+          // borderRadius: "100%",
+        }}
+      />
+    </div>
+        {/* end switch */}
+
       </div>
       }
       <br /> <br />
@@ -245,7 +298,7 @@ const add_task = (props: Props) => {
           }}
         >
           {projects?.map((project) => (
-            <option  value={project?.id}>{project?.name}</option>
+            <option id={project.id} value={project?.id}>{project?.name}</option>
           ))}
         </select>
       )}

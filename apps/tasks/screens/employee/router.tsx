@@ -11,7 +11,7 @@ const router = () => {
     <Routes>
       <Route path='/:id' Component={TasksPage}/>
       <Route path='/todos/:id' Component={TodosPage}/>
-      {/* <Route path='saved_tasks/:id' Component={SavedTasksPage}/> */}
+      <Route path='saved_tasks/:id' Component={SavedTasksPage}/>
       <Route path='*' element={<Navigate to="/"/>}/>
     </Routes>
     </Layout>
