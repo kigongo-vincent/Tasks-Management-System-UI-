@@ -44,6 +44,11 @@
     display: flex;
 }
 
+a:link, a:visited{
+    text-decoration: none;
+    color: #FF9100
+}
+
 .w-10{
     width: 10vw;
 }

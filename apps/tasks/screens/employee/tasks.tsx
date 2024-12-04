@@ -385,7 +385,7 @@ const tasks = () => {
               <br />
               {/* <hr style={{opacity: .3}}/> */}
               {/* <br /> */}
-              <Text justify>{details["body"]}</Text>
+              <Text justify children={details["body"]}/>
             </div>
           }
           title="Task details"

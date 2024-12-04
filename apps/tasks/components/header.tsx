@@ -82,11 +82,12 @@ const header = (props: Props) => {
           >
             <FaCirclePlus color={theme?.name == "dark" ? theme?.text : theme?.paper} size={15} />
             <div style={{ margin: "0 5px" }} />
-            <Text color={theme?.name == "dark" ? theme?.text : theme?.paper}>Add {props?.title}</Text>
+            <Text color={theme?.name == "dark" ? theme?.text : theme?.paper}>{"Add " + props?.title}</Text>
           </div>
         </div>
         }
         {/* end add company button  */}
+        
       </div>
     </div>
   );

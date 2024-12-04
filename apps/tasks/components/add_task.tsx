@@ -206,10 +206,10 @@ const add_task = (props: Props) => {
       />
       <br />
       {/* time hint  */}
-      <Text color="placeholder">Duration in hours: {duration?.value && Math.floor(duration?.value / 60) +
+      <Text color="placeholder">{"Duration in hours: " + (duration?.value && Math.floor(duration?.value / 60) +
               ` hour${Math.floor(duration?.value / 60) == 1 ? "" : "s"} and ` +
               (duration?.value % 60) +
-              " minutes"}</Text>
+              " minutes")}</Text>
       <br />
 
 
