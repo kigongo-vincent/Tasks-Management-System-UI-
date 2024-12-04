@@ -46,7 +46,7 @@ const employees = () => {
 
   const showBody = (payload: any) => {
     // console.log(payload)
-    if(user?.role == "company_admin"){
+    if(user?.role == "company_admin" || user?.role == "department_admin"){
     setDetails(payload)
     }else{
       navigate("/employee/" + encryptData(payload["id"], {state: {row: payload}}))
@@ -197,7 +197,7 @@ const employees = () => {
                     <Text justify>{details["email"]}</Text>
                   </div>
                   <br />
-                  <hr style={{ opacity: .1 }} />
+                  <hr style={{ opacity: .4 }} />
                   <br />
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <FaPhone style={{ marginRight: 10 }} color={theme?.text} />

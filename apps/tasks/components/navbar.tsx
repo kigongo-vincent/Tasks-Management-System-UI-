@@ -20,9 +20,9 @@ const navbar = () => {
     dispatch(setUser({email: ""}))
     navigate("/")
     dispatch(setAlert(null))
-    setTimeout(() => {
-      dispatch(setAlert({title: "Session terminated", body: "You have been logged out", mode: "normal"}))
-    }, 500);
+    // setTimeout(() => {
+    //   dispatch(setAlert({title: "Session terminated", body: "You have been logged out", mode: "normal"}))
+    // }, 500);
   }
 
   const BackButton=()=>{

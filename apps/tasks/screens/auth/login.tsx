@@ -152,7 +152,7 @@ const login = () => {
     "department_admin" ? (
     <Navigate
       to={
-        "/department/" + encryptData(JSON.parse(localStorage.getItem("TMS_DEPARTMENT"))?.id)
+        "/department/users/" + encryptData(JSON.parse(localStorage.getItem("TMS_DEPARTMENT"))?.id)
       }
     />
   ) : JSON.parse(localStorage.getItem("TMS_USER"))?.role == "admin" ? (

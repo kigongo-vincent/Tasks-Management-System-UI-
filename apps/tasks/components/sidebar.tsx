@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FaBars, FaChartBar, FaHotel, FaList, FaLock, FaSignOutAlt, FaUserAlt } from 'react-icons/fa'
+import { FaBars, FaChartBar, FaHotel, FaList, FaLock, FaSignOutAlt, FaUserAlt, FaUsers } from 'react-icons/fa'
 import Text from "./text"
 import { useDispatch, useSelector } from 'react-redux'
 import { getCompany, getDepartment, getTheme, getUser, setAlert, setUser } from '../model/data'
@@ -12,6 +12,7 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { HiUserGroup } from "react-icons/hi";
 import {encryptData} from "../utils/security"
 import NavbarLink from './navbar_link'
+import { BsPeopleFill } from "react-icons/bs";
 
 const sidebar = () => {
 
@@ -90,7 +91,12 @@ const sidebar = () => {
     //   link: "/department/",
     // },
     {
-      icon: <FaHotel style={{marginRight: 10}}/>,
+      icon: <BsPeopleFill style={{marginRight: 10}}/>,
+      label: "Consultants",
+      link: "/department/users/" + encryptData(department?.id)
+    },
+    {
+      icon: <FaUsers style={{marginRight: 10}}/>,
       label: "View all Consultants",
       link: "/department/" + encryptData(department?.id)
     },
