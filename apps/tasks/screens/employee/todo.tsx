@@ -29,6 +29,7 @@ import AddTodo from "../../components/add_todo";
 import Input from "../../components/input";
 import moment from "moment";
 import Button from "../../components/button";
+import { decryptData, encryptData } from "../../utils/security";
 
 const tasks = () => {
   // company details
@@ -43,7 +44,8 @@ const tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [currentTask, setCurrentTask] = useState(null);
 
-  const { id } = useParams();
+  let { id } = useParams();
+  id = decryptData(id)
   const dispatch = useDispatch();
   const [details, setDetails] = useState("");
   const [hours, setHours] = useState(0);

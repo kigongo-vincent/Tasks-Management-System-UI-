@@ -14,6 +14,7 @@ import Header from "../../components/header";
 import Modal from "../../components/modal"
 import AddProject from "../../components/add_project";
 import { DELETE, GET } from "../../utils/HTTP";
+import { decryptData, encryptData } from "../../utils/security";
 
 
 
@@ -26,7 +27,8 @@ const projects = () => {
   const [open, setOpen] = useState(false);
   const server = useSelector(SERVER_URL);
   const [projects, setProjects] = useState<any[]>([]);
-  const { id } = useParams();
+  let { id } = useParams();
+  id = decryptData(id)
   const dispatch = useDispatch()
   const [currentProject, setCurrentProject] = useState(null)
 

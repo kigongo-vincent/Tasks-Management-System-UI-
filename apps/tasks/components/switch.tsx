@@ -17,6 +17,7 @@ const Switch = (props: Props) => {
 
   const [isActive, setIsActive] = useState(false);
   const [positionX, setPositionX] = useState(0);
+  
 
   useEffect(() => {
     if (isActive) {
@@ -44,6 +45,12 @@ const Switch = (props: Props) => {
 
   // }, [isActive])
 
+  useEffect(()=>{
+
+    setIsActive(props?.is_active)
+
+  }, [props?.is_active])
+
   return (
     // track
     <div
@@ -55,6 +62,7 @@ const Switch = (props: Props) => {
         width: 40,
         height: 20,
         cursor: "pointer",
+        border:theme?.name == "dark" ? "1px solid grey":"none",
         background:
           theme?.name == "dark"
             ? !isActive
@@ -73,7 +81,8 @@ const Switch = (props: Props) => {
           width: 20,
           height: 20,
           x: positionX,
-          background: theme?.name == "dark"? isActive ? theme?.text : theme?.primary : isActive ? theme?.primary : theme?.placeholder,
+          // border: "1px solid grey",
+          background: theme?.name == "dark"? isActive ? theme?.text : "rgb(50,50,50)" : isActive ? theme?.primary : theme?.placeholder,
           // background: isActive ? theme?.text : theme?.primary,
           borderRadius: "100%",
           // borderRadius: "100%",

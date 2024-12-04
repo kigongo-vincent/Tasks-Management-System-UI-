@@ -8,6 +8,7 @@ import Text from "./text";
 import Button from "./button";
 import { GET, POST } from "../utils/HTTP";
 import Switch from "./switch";
+import { decryptData, encryptData } from "../utils/security";
 
 export interface Props {
   setOpen: (open: boolean) => void;
@@ -39,7 +40,11 @@ const add_task = (props: Props) => {
 
   const [loading, setLoading] = useState(false);
   const server = useSelector(SERVER_URL);
-  const { id } = useParams();
+  let { id } = useParams();
+  id = decryptData(id)
+
+  
+  
 
   const errorMessage = () => {
     dispatch(
@@ -160,6 +165,7 @@ const add_task = (props: Props) => {
    if(state?.row){
 
     GET({ path: "/projects/" + state?.row?.company, setData: setProjects, setLoading: setLoading });
+    console.log(state?.row)
 
    }else{
 
@@ -212,16 +218,18 @@ const add_task = (props: Props) => {
         <br />
       {
         projects.length > 0 && <div
+        onClick={()=>setAddProject(!addProject)}
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "flex-end",
           width: "97%",
+          cursor: "pointer"
         }}
       >
         <Text>Attach Project (optional)</Text>
-        <div style={{margin: "0 20px"}}/>
-        <Switch setActive={setAddProject} />
+        <div style={{margin: "0 5px"}}/>
+        <Switch is_active={addProject} setActive={setAddProject} />
       </div>
       }
       <br /> <br />

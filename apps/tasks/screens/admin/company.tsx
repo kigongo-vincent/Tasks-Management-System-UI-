@@ -14,6 +14,7 @@ import Header from "../../components/header";
 import Modal from "../../components/modal"
 import AddDepartment from "../../components/add_department";
 import { DELETE, GET } from "../../utils/HTTP";
+import { decryptData } from "../../utils/security";
 
 
 
@@ -26,9 +27,10 @@ const company = () => {
   const [open, setOpen] = useState(false);
   const server = useSelector(SERVER_URL);
   const [departments, setDepartments] = useState<any[]>([]);
-  const { id } = useParams();
+  let { id } = useParams();
   const dispatch = useDispatch()
   const [currentDepartment, setCurrentDepartment] = useState(null)
+  id = decryptData(id)
 
   const [company, setCompany] = useState({
     name: "",

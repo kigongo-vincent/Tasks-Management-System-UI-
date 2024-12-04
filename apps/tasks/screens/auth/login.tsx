@@ -19,6 +19,7 @@ import Text from "../../components/text";
 import { jwtDecode } from "jwt-decode";
 import { motion } from "framer-motion";
 import { Navigate, useNavigate } from "react-router-dom";
+import { encryptData } from "../../utils/security";
 const login = () => {
   const theme: Theme = useSelector(getTheme);
   const server = useSelector(SERVER_URL);
@@ -43,7 +44,7 @@ const login = () => {
     if (res.status == 200) {
       const data = await res.json();
       dispatch(setDepartment(data));
-      navigate(`/department/${data?.id}`);
+      navigate(`/department/${encryptData(data?.id)}`);
       setLoading(false);
     } else {
       setLoading(false);
@@ -56,7 +57,7 @@ const login = () => {
     if (res.status == 200) {
       const data = await res.json();
       dispatch(setCompany(data));
-      navigate(`/admin/company/${data?.id}`);
+      navigate(`/admin/company/${encryptData(data?.id)}`);
       setLoading(false);
     } else {
       setLoading(false);
@@ -112,7 +113,7 @@ const login = () => {
         } else if (loggedin_user?.role == "admin") {
           navigate(`/admin/companies`);
         } else {
-          navigate(`/employee/${loggedin_user?.user_id}`);
+          navigate(`/employee/${encryptData(loggedin_user?.user_id)}`);
         }
         dispatch(setUser(loggedin_user));
         dispatch(
@@ -139,19 +140,19 @@ const login = () => {
 
   return JSON.parse(localStorage.getItem("TMS_USER"))?.role == "employee" ? (
     <Navigate
-      to={"/employee/" + JSON.parse(localStorage.getItem("TMS_USER"))?.user_id}
+      to={"/employee/" + encryptData(JSON.parse(localStorage.getItem("TMS_USER"))?.user_id)}
     />
   ) : JSON.parse(localStorage.getItem("TMS_USER"))?.role == "company_admin" ? (
     <Navigate
       to={
-        "/admin/company/" + JSON.parse(localStorage.getItem("TMS_COMPANY"))?.id
+        "/admin/company/" + encryptData(JSON.parse(localStorage.getItem("TMS_COMPANY"))?.id)
       }
     />
   ) : JSON.parse(localStorage.getItem("TMS_USER"))?.role ==
     "department_admin" ? (
     <Navigate
       to={
-        "/department/" + JSON.parse(localStorage.getItem("TMS_DEPARTMENT"))?.id
+        "/department/" + encryptData(JSON.parse(localStorage.getItem("TMS_DEPARTMENT"))?.id)
       }
     />
   ) : JSON.parse(localStorage.getItem("TMS_USER"))?.role == "admin" ? (
@@ -170,7 +171,7 @@ const login = () => {
           className="login-main-container"
           style={{
             
-            borderRadius: 30,
+            borderRadius: 4,
             boxShadow: "10px 10px 20px rgba(0,0,0,.05)",
             background: theme.paper,
             display: "flex",

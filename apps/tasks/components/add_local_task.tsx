@@ -8,6 +8,7 @@ import Text from "./text";
 import Button from "./button";
 import { GET, POST } from "../utils/HTTP";
 import Switch from "./switch";
+import { decryptData, encryptData } from "../utils/security";
 
 export interface Props {
   setOpen: (open: boolean) => void;
@@ -43,7 +44,8 @@ const add_task = (props: Props) => {
 
   const [loading, setLoading] = useState(false);
   const server = useSelector(SERVER_URL);
-  const { id } = useParams();
+  let { id } = useParams();
+  id = decryptData(id)
 
   const errorMessage = () => {
     dispatch(

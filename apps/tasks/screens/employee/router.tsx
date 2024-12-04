@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import TasksPage from "./tasks"
 import TodosPage from "./todo"
 import SavedTasksPage from "./saved_tasks"
@@ -12,6 +12,7 @@ const router = () => {
       <Route path='/:id' Component={TasksPage}/>
       <Route path='/todos/:id' Component={TodosPage}/>
       <Route path='saved_tasks/:id' Component={SavedTasksPage}/>
+      <Route path='*' element={<Navigate to="/"/>}/>
     </Routes>
     </Layout>
   )

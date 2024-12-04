@@ -21,6 +21,7 @@ import AddEmployee from "../../components/add_employee";
 import Table from "../../components/table";
 import Header from "../../components/header";
 import { DELETE, GET } from "../../utils/HTTP";
+import { decryptData, encryptData } from "../../utils/security";
 
 const employees = () => {
   // company details
@@ -34,7 +35,8 @@ const employees = () => {
   const [loading, setLoading] = useState(false);
   const [details, setDetails] = useState(null)
   const navigate = useNavigate()
-  const { id } = useParams();
+  let { id } = useParams();
+  id = decryptData(id)
   const dispatch = useDispatch();
   const { state } = useLocation();
 
@@ -47,7 +49,7 @@ const employees = () => {
     if(user?.role == "company_admin"){
     setDetails(payload)
     }else{
-      navigate("/employee/" + payload["id"])
+      navigate("/employee/" + encryptData(payload["id"], {state: {row: payload}}))
     }
   }
 

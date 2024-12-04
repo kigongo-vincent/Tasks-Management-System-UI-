@@ -7,6 +7,7 @@ import Input from "./input";
 import Button from "./button";
 import Text from "./text";
 import { verifyPassword } from "../utils/password_checker";
+import { decryptData, encryptData } from "../utils/security";
 
 export interface Props {
   setOpen: (open: boolean) => void;
@@ -51,7 +52,8 @@ const add_department = (props: Props) => {
 
   const [loading, setLoading] = useState(false);
   const server = useSelector(SERVER_URL);
-  const { id } = useParams();
+  let { id } = useParams();
+  id = decryptData(id)
 
   useEffect(() => {
     // setEmail({...email, value: props?.values["email"]})

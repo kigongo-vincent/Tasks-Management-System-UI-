@@ -27,6 +27,7 @@ import AddTask from "../../components/add_local_task";
 import Input from "../../components/input";
 import moment from "moment";
 import Button from "../../components/button";
+import { decryptData, encryptData } from "../../utils/security";
 
 const tasks = () => {
   // company details
@@ -41,7 +42,8 @@ const tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [currentTask, setCurrentTask] = useState(null);
 
-  const { id } = useParams();
+  let { id } = useParams();
+  id = decryptData(id)
   const dispatch = useDispatch();
   const [details, setDetails] = useState("");
   const [hours, setHours] = useState(0);
@@ -241,6 +243,7 @@ const tasks = () => {
         {/* publish button  */}
         {
           tasks?.length > 0 && <Button
+          outline
           title={"Publish tasks"}
           onClick={publish}
           loading={loading}

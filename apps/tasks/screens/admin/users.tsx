@@ -10,6 +10,7 @@ import Input from "../../components/input"
 import { useParams } from 'react-router-dom'
 import { Theme } from '../../types'
 import {searchItemsByName} from "../../utils/SEARCH"
+import { decryptData, encryptData } from '../../utils/security'
 
 const users = () => {
 
@@ -18,7 +19,8 @@ const users = () => {
   const dispatch = useDispatch()
   const [search, setSearch] = useState("")
 
-  const {id} = useParams()
+  let {id} = useParams()
+  id = decryptData(id)
   const theme:Theme = useSelector(getTheme)
 
   const [searchResults, setSearchResults] = useState([])
@@ -70,26 +72,37 @@ const users = () => {
 
   return (
     <div>
-      <Header heading='Consultants' count={users?.length} />
+      {/* <Header heading='Consultants' count={users?.length} /> */}
+
+      <div style={{ background: theme?.paper, padding: 15, borderRadius: 2, minWidth: "max-content" , display:"flex", justifyContent:"space-between"}}>
+
+      {/* count  */}
+      <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text>Consultant(s)</Text>
+          <div style={{ margin: "0 5px" }} />
+          <div
+            style={{
+              background: theme?.error,
+              height: 30,
+              width: 30,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "100%",
+            }}
+          >
+            <Text color="white">{users?.length > 99 ? "99+" : users?.length}</Text>
+          </div>
+        </div>
 
       {/* search  */}
-      <div
-        className="flex-vertical"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginTop: 10,
-          boxShadow: "10px 10px 20px rgba(0,0,0,.05)",
-          backgroundColor: theme?.paper,
-          borderRadius: 5,
-          padding: 15,
-        }}
-      >
-        
-
-        {/* search  */}
-        <div className="search">
+      <div className="search">
         <Input
           zeroMargin
           noBorder
@@ -99,9 +112,12 @@ const users = () => {
           type={"search"}
           placeholder={"search for consultants"}
         />
-        </div>
+        {/* </div> */}
       </div>
       {/* end search  */}
+
+
+      </div>
 
       {
         users?.length == 0 && !loading

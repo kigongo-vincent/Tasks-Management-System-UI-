@@ -7,6 +7,7 @@ import Input from "./input";
 import Button from "./button";
 import { verifyPassword } from "../utils/password_checker";
 import { UPDATE } from "../utils/HTTP";
+import { decryptData, encryptData } from "../utils/security";
 
 export interface Props {
   setOpen: (open: boolean) => void;
@@ -38,7 +39,8 @@ const add_project = (props: Props) => {
 
   const [loading, setLoading] = useState(false);
   const server = useSelector(SERVER_URL);
-  const { id } = useParams();
+  let { id } = useParams();
+  id = decryptData(id)
 
   useEffect(() => {
     // setEmail({...email, value: props?.values["email"]})

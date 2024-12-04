@@ -10,6 +10,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { FaCheckDouble, FaCheckToSlot, FaListCheck, FaPeopleGroup, FaPeopleRoof } from 'react-icons/fa6'
 import { IoSettingsSharp } from "react-icons/io5";
 import { HiUserGroup } from "react-icons/hi";
+import {encryptData} from "../utils/security"
+import NavbarLink from './navbar_link'
 
 const sidebar = () => {
 
@@ -57,17 +59,17 @@ const sidebar = () => {
     {
       icon: <HiUserGroup style={{marginRight: 10}}/>,
       label: "View all consultants",
-      link: "/admin/users/" + company?.id
+      link: "/admin/users/" + encryptData(company?.id)
     },
     {
       icon: <FaPeopleRoof style={{marginRight: 10}}/>,
       label: "View all departments",
-      link: "/admin/company/" + company?.id
+      link: "/admin/company/" + encryptData(company?.id)
     },
     {
       icon: <FaBars style={{marginRight: 10}}/>,
       label: "View all projects",
-      link: "/admin/projects/" + company?.id
+      link: "/admin/projects/" + encryptData(company?.id)
     },
     {
       icon: <FaLock style={{marginRight: 10}}/>,
@@ -90,7 +92,7 @@ const sidebar = () => {
     {
       icon: <FaHotel style={{marginRight: 10}}/>,
       label: "View all Consultants",
-      link: "/department/" + department?.id
+      link: "/department/" + encryptData(department?.id)
     },
     
     {
@@ -109,17 +111,17 @@ const sidebar = () => {
     {
       icon: <FaCheckToSlot style={{marginRight: 10}}/>,
       label: "View all tasks",
-      link: "/employee/" + user?.user_id
+      link: "/employee/" + encryptData(user?.user_id)
     },
     {
       icon: <FaListCheck style={{marginRight: 10}}/>,
       label: "Draft",
-      link: "/employee/saved_tasks/" + user?.user_id
+      link: "/employee/saved_tasks/" + encryptData(user?.user_id)
     },
     // {
     //   icon: <FaCheckDouble style={{marginRight: 10}}/>,
     //   label: "Today's todo List",
-    //   link: "/employee/todos/" + user?.user_id
+    //   link: "/employee/todos/" + encryptData(user?.user_id)
     // },
     {
       icon: <FaLock style={{marginRight: 10}} />,
@@ -169,30 +171,19 @@ const sidebar = () => {
     style={{background: theme?.paper,
       // , overflowY: "scroll",
       // boxShadow: "10px 10px 20px rgba(50,50,50,.05)",
-      width: "max-conent",
+      // width: "max-conent",
+      // backgroundColor: "red",
+      // alignItems: "stretch",
       height: "100%",
       borderRadius: 3,
     }}>
 
     {/* links  */}
 
-   <div style={{padding: 20, width: "100%"}}>
+   <div style={{padding: 20, width: "100%", display: "flex", flexDirection: "column", alignItems: "stretch"}}>
    {
-      options?.map(option=> (
-        <motion.div
-
-        // onHoverStart={()=>console.log("focused")}
-        // onHoverEnd={()=>console.log("ended")}
-        onClick={option?.action ? option?.action : ()=>navigate(option?.link)}
-        whileHover={{backgroundColor: theme?.pale}}
-        // whileTap={{backgroundColor: theme?.paper}}
-        // 
-        style={{display: "flex", cursor: "pointer", width: "max-content", backgroundColor: theme?.paper, alignItems: "center", padding: 12, borderRadius:3}}>
-      <div style={{color: pathname == option?.link ? theme?.name == "light" ? theme?.primary : "rgb(247,151,38)" : theme?.text}}>
-      {option?.icon}
-      </div>
-      <Text color={pathname == option?.link ? "primary" : "text"}>{option?.label}</Text>
-     </motion.div>
+      options?.map((option, index)=> (
+        <NavbarLink option={option} key={index}/>
       ))
     }
    </div>

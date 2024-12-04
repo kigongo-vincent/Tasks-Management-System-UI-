@@ -9,6 +9,7 @@ import Button from "./button"
 import Modal from "./modal"
 import {motion} from "framer-motion"
 import AddCompany from "./add_company";
+import {encryptData} from "../utils/security"
 
 export interface Props {
   mode: "edit" | "view" | "delete";
@@ -44,7 +45,7 @@ const table_button = (props: Props) => {
       props?.showBody && props.showBody(props.row)
       return
     }
-    navigate(props?.redirect_path ? props?.redirect_path + "/" + props?.row["id"] : "", {state: {row: props?.row}});
+    navigate(props?.redirect_path ? props?.redirect_path + "/" + encryptData(props?.row["id"]) : "", {state: {row: props?.row}});
   };
 
   return (

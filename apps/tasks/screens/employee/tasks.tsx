@@ -19,12 +19,14 @@ import { DELETE, GET } from "../../utils/HTTP";
 import AddTask from "../../components/add_task";
 import Input from "../../components/input";
 import moment from "moment";
+import { decryptData } from "../../utils/security";
 
 const tasks = () => {
   // company details
   // departments in the company
   // adding a new department
-
+  let { id } = useParams();
+  id = decryptData(id)
   const theme: Theme = useSelector(getTheme);
   const [open, setOpen] = useState(false);
   const server = useSelector(SERVER_URL);
@@ -65,7 +67,7 @@ const tasks = () => {
 
   // ==============================end task helper functions =============================================
 
-  const { id } = useParams();
+  
   const dispatch = useDispatch();
   const [details, setDetails] = useState("");
   const [hours, setHours] = useState(0);

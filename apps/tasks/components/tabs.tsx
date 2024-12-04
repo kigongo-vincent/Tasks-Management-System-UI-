@@ -6,6 +6,7 @@ import { FaBars, FaCheckDouble, FaHotel, FaList, FaLock, FaSignOutAlt, FaUser } 
 import { FaCheckToSlot, FaListCheck, FaPeopleGroup, FaToolbox } from 'react-icons/fa6'
 import Tab from "./tab_link"
 import { IoSettingsSharp } from 'react-icons/io5'
+import {encryptData} from "../utils/security"
 
 const tabs = () => {
 
@@ -83,12 +84,12 @@ const tabs = () => {
     {
       icon: <FaPeopleGroup style={{marginRight: 10}}/>,
       label: "View all departments",
-      link: "/admin/company/" + company?.id
+      link: "/admin/company/" + encryptData(company?.id)
     },
     {
       icon: <FaBars style={{marginRight: 10}}/>,
       label: "View all projects",
-      link: "/admin/projects/" + company?.id
+      link: "/admin/projects/" + encryptData(company?.id)
     },
     {
       icon: <FaLock style={{marginRight: 10}}/>,
@@ -116,7 +117,7 @@ const tabs = () => {
     {
       icon: <FaHotel style={{marginRight: 10}}/>,
       label: "View all Consultants",
-      link: "/department/" + department?.id
+      link: "/department/" + encryptData(department?.id)
     },
     
     {
@@ -140,17 +141,17 @@ const tabs = () => {
     {
       icon: <FaCheckToSlot style={{marginRight: 10}}/>,
       label: "View all tasks",
-      link: "/employee/" + user?.user_id
+      link: "/employee/" + encryptData(user?.user_id)
     },
     {
       icon: <FaListCheck style={{marginRight: 10}}/>,
       label: "Draft",
-      link: "/employee/saved_tasks/" + user?.user_id
+      link: "/employee/saved_tasks/" + encryptData(user?.user_id)
     },
     // {
     //   icon: <FaCheckDouble style={{marginRight: 10}}/>,
     //   label: "Today's todo List",
-    //   link: "/employee/todos/" + user?.user_id
+    //   link: "/employee/todos/" + encryptData(user?.user_id)
     // },
     {
       icon: <FaLock style={{marginRight: 10}} />,
