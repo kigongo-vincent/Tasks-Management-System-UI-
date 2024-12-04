@@ -4,6 +4,7 @@ import { Theme } from "../types";
 import { getTheme } from "../model/data";
 import { AnimatePresence, motion } from "framer-motion";
 import Text from "../components/text";
+import { IoClose } from "react-icons/io5";
 
 export interface ModalProps {
   open: boolean;
@@ -87,15 +88,15 @@ const modal = (props: ModalProps) => {
             <div
               onClick={() => props?.setOpen(false)}
               style={{
-                background: theme?.pale,
-                padding: "10px 20px",
-                borderRadius: "100px",
-                display: "flex",
-                alignItems: "center",
+                // background: theme?.pale,
+                // padding: "10px 20px",
+                // borderRadius: "100px",
+                // display: "flex",
+                // alignItems: "center",
                 cursor: "pointer",
               }}
             >
-              <Text>close</Text>
+              <IoClose size={20} color={theme?.placeholder}/>
             </div>
           </div>
 

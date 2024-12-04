@@ -17,6 +17,7 @@ export interface Props {
   editor: any;
   toggle: any;
   cache: boolean;
+  move?:(payload: any)=>void
 }
 
 const Table = (props: Props) => {
@@ -70,6 +71,7 @@ const Table = (props: Props) => {
           edit={props?.edit}
           view={props?.view}
           delete={props?.delete}
+          move = {props?.move}
         />
       ))}
     </table>

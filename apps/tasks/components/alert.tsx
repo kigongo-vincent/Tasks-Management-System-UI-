@@ -7,6 +7,7 @@ import { FaBell, FaCheckCircle } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
 import Button from "./button";
+import { IoClose } from "react-icons/io5";
 
 const alert = (props: Alert) => {
   const theme: Theme = useSelector(getTheme);
@@ -32,7 +33,7 @@ const alert = (props: Alert) => {
           height: "100vh",
           background: "rgba(0,0,0,0.5)",
           // backdropFilter: "blur(3px)",
-          backdropFilter: "blur(6px)",
+          // backdropFilter: "blur(6px)",
         }}
       >
         <motion.div
@@ -120,15 +121,15 @@ const alert = (props: Alert) => {
                   }
                  }
                 style={{
-                  background: theme?.pale,
-                  padding: "10px 20px",
-                  borderRadius: "100px",
-                  display: "flex",
-                  alignItems: "center",
+                  // background: theme?.pale,
+                  // padding: "10px 20px",
+                  // borderRadius: "100px",
+                  // display: "flex",
+                  // alignItems: "center",
                   cursor: "pointer",
                 }}
               >
-                <Text>close</Text>
+                <IoClose color={theme?.placeholder} size={20}/>
               </div>
             </div>
           </div>
@@ -148,7 +149,7 @@ const alert = (props: Alert) => {
           <div
             style={{
               display: "flex",
-              marginTop: 10,
+              marginTop: 5,
               justifyContent: "flex-end",
             }}
           >

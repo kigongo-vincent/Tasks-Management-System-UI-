@@ -25,6 +25,7 @@ export interface Props {
   editor: any;
   toggle?: any;
   cache: boolean
+  move?: (payload: any)=>void
 }
 
 const row = (props: Props) => {
@@ -179,6 +180,18 @@ const row = (props: Props) => {
                     <TableButton
                       setter={props?.setter}
                       mode="delete"
+                      row={props?.row}
+                    />
+                  </span>
+                )}
+                {/*end menu body  */}
+                {/* move  */}
+                {((props?.move && (user?.role == "admin" || user?.role == "company_admin"))) && (
+                  <span>
+                    <TableButton
+                      // setter={props?.setter}
+                      move={props?.move}
+                      mode="move"
                       row={props?.row}
                     />
                   </span>

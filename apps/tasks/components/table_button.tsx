@@ -10,14 +10,16 @@ import Modal from "./modal"
 import {motion} from "framer-motion"
 import AddCompany from "./add_company";
 import {encryptData} from "../utils/security"
+import { MdOutlineTransferWithinAStation } from "react-icons/md";
 
 export interface Props {
-  mode: "edit" | "view" | "delete";
+  mode: "edit" | "view" | "delete" | "move";
   row?: any,
   redirect_path?: string;
   showBody?: (data: any)=>void,
   setter?: any
   editor?: any
+  move?: (payload: any)=>void
 }
 
 const table_button = (props: Props) => {
@@ -48,10 +50,18 @@ const table_button = (props: Props) => {
     navigate(props?.redirect_path ? props?.redirect_path + "/" + encryptData(props?.row["id"]) : "", {state: {row: props?.row}});
   };
 
+  const moveRow=()=>{
+    props?.move && props?.move(props?.row)
+  }
+
   return (
     <motion.div
       whileHover={{background: theme?.pale}}
       onClick={
+        props?.mode == "move"
+        ?
+        moveRow
+        :
         props?.mode == "delete"
           ? deleteRow
           : props?.mode == "view"
@@ -68,7 +78,12 @@ const table_button = (props: Props) => {
         cursor: "pointer",
       }}
     >
-      {props?.mode == "view" ? (
+      {
+      props?.mode == "move"
+      ?
+      <MdOutlineTransferWithinAStation />
+      :
+      props?.mode == "view" ? (
         <FaEye color={theme?.text} size={15} />
       ) : props?.mode == "delete" ? (
         <FaTrashAlt onClick={deleteRow} color={theme?.text} size={15} />
