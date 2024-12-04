@@ -145,7 +145,7 @@ const login = () => {
   ) : JSON.parse(localStorage.getItem("TMS_USER"))?.role == "company_admin" ? (
     <Navigate
       to={
-        "/admin/company/" + encryptData(JSON.parse(localStorage.getItem("TMS_COMPANY"))?.id)
+        "/admin/users/" + encryptData(JSON.parse(localStorage.getItem("TMS_COMPANY"))?.id)
       }
     />
   ) : JSON.parse(localStorage.getItem("TMS_USER"))?.role ==

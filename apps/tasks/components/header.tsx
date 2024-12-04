@@ -26,7 +26,7 @@ const header = (props: Props) => {
           </Text>
           
           {
-            state?.row["admin_email"] && <><br /><Text>controlled by {state?.row["admin_email"]}</Text></>
+            state?.row["admin_email"] && <><br /><Text>{"controlled by " + state?.row["admin_email"]}</Text></>
           }
           <br />
           <br />

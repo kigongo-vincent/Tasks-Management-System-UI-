@@ -21,9 +21,9 @@ setBGColor(theme?.paper)
   return (
     <motion.div
 
-        onHoverStart={()=>setBGColor(theme?.pale)}
-        onHoverEnd={()=>setBGColor(theme?.paper)}
-        onClick={option?.action ? option?.action : ()=>navigate(option?.link)}
+        onMouseOver={(e)=>{e.preventDefault();setBGColor(theme?.pale)}}
+        onMouseLeave={(e)=>{e.preventDefault();setBGColor(theme?.paper)}}
+        onClick={option?.action ? option?.action : (e)=>{e.preventDefault();navigate(option?.link)}}
         // whileHover={{backgroundColor: theme?.pale}}
         // whileTap={{backgroundColor: theme?.paper}}
         // 
