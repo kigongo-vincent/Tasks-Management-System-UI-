@@ -13,6 +13,7 @@ import { HiUserGroup } from "react-icons/hi";
 import {encryptData} from "../utils/security"
 import NavbarLink from './navbar_link'
 import { BsPeopleFill } from "react-icons/bs";
+import { MdSupervisedUserCircle } from "react-icons/md";
 
 const sidebar = () => {
 
@@ -61,6 +62,11 @@ const sidebar = () => {
       icon: <HiUserGroup style={{marginRight: 10}}/>,
       label: "View all consultants",
       link: "/admin/users/" + encryptData(company?.id)
+    },
+    {
+      icon: <MdSupervisedUserCircle style={{marginRight: 10}}/>,
+      label: "Board members",
+      link: "/admin/members/" + encryptData(company?.id)
     },
     {
       icon: <FaPeopleRoof style={{marginRight: 10}}/>,

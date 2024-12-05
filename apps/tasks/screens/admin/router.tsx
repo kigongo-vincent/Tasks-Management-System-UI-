@@ -10,6 +10,7 @@ import { getTheme, getUser } from "../../model/data";
 import Layout from "../../components/layout";
 import ProjectsPage from "./projects"
 import Settings from "./settings"
+import Members from "./Members"
 
 const router = () => {
 
@@ -28,6 +29,7 @@ const router = () => {
         <Route path="/users/:id" Component={UsersPage} />
         <Route path="/projects/:id" Component={ProjectsPage}/>
         <Route path="/settings" Component={Settings}/>
+        <Route path="/members/:id" Component={Members}/>
       <Route path='*' element={<Navigate to="/"/>}/>
 
       </Routes>
