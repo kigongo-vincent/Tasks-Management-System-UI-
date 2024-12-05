@@ -5,7 +5,7 @@ import { getTheme } from "../model/data";
 import { Theme } from "../types";
 import { FaPenClip, FaUser } from "react-icons/fa6";
 
-const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargin, large }) => {
+const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargin, large, rounded }) => {
   const theme: Theme = useSelector(getTheme);
   const [hide, setHide] = useState(false)
 

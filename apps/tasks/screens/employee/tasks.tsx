@@ -198,7 +198,7 @@ const tasks = () => {
     <div>
       {/* header  */}
       <Header
-        title="a task"
+        title={["company_admin", "admin", "employee"]?.includes(user?.role) && "a task"}
         setOpen={setOpen}
         count={filteredTasks?.length}
         heading={ state?.row ? `Tasks for ${state?.row?.first_name}`: 'Tasks'}
@@ -329,8 +329,8 @@ const tasks = () => {
               editor={editTask}
               columns={["title", "duration", "project_name"]}
               rows={searchResults}
-              delete
-              edit
+              delete ={["company_admin", "admin"]?.includes(user?.role)}
+              edit = {["company_admin", "admin"]?.includes(user?.role)}
               view
               // redirect_path="/department"
             />
@@ -344,8 +344,8 @@ const tasks = () => {
             showBody={showBody}
             columns={["title", "duration", "project_name"]}
             rows={filteredTasks}
-            delete
-            edit
+            delete ={["company_admin", "admin"]?.includes(user?.role)}
+            edit = {["company_admin", "admin"]?.includes(user?.role)}
             view
             // redirect_path="/department"
           />

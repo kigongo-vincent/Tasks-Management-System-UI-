@@ -18,6 +18,8 @@ export interface Props {
   toggle: any;
   cache: boolean;
   move?:(payload: any)=>void
+  info?:(payload: any)=>void
+
 }
 
 const Table = (props: Props) => {
@@ -67,6 +69,7 @@ const Table = (props: Props) => {
           redirect_path={props?.redirect_path}
           key={index}
           row={row}
+          info={props?.info}
           columns={props?.columns}
           edit={props?.edit}
           view={props?.view}

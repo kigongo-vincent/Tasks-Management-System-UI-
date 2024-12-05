@@ -297,7 +297,7 @@ const add_member = (props: Props) => {
         loading={loading}
         fullwidth
         onClick={onSubmit}
-        title={props?.values ? "save changes" : "Add consultant"}
+        title={props?.values ? "save changes" : "Add board member"}
       />
     </form>
   );

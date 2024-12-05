@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FaTasks } from 'react-icons/fa'
+import { FaEnvelope, FaPhone, FaTasks } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import Table from '../../components/table'
 import Text from '../../components/text'
@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom'
 import { Theme } from '../../types'
 import {searchItemsByName} from "../../utils/SEARCH"
 import { decryptData, encryptData } from '../../utils/security'
+import Modal from "../../components/modal";
 
 const users = () => {
 
@@ -18,6 +19,8 @@ const users = () => {
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
   const [search, setSearch] = useState("")
+  const [details, setDetails] = useState(null)
+
 
   let {id} = useParams()
   id = decryptData(id)
@@ -139,6 +142,42 @@ const users = () => {
           <Table rows={users} columns={["name", "daily", "weekly", "monthly"]} redirect_path="/employee" view />
 
       }
+
+      {/* modal for viewing details about the employee  */}
+      {details && (
+            <Modal
+              open={Boolean(details)}
+              setOpen={setDetails}
+              content={
+                <div>
+                  <Text
+                    // color="primary" 
+                    is_h1
+                    heading
+                    justify>
+                    {details["first_name"] + " " + details["last_name"]}
+                  </Text>
+                  <br />
+                  <br />
+                  {/* <hr style={{opacity: .3}}/> */}
+                  {/* <br /> */}
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <FaEnvelope style={{ marginRight: 10 }} color={theme?.text} />
+                    <Text justify>{details["email"]}</Text>
+                  </div>
+                  <br />
+                  <hr style={{ opacity: .4 }} />
+                  <br />
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <FaPhone style={{ marginRight: 10 }} color={theme?.text} />
+                    <Text justify>{details["contact"]}</Text>
+                  </div>
+                </div>
+              }
+              title="User details"
+            />
+          )}
+
     </div>
   )
 }

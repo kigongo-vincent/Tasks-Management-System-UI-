@@ -11,8 +11,12 @@ import { useParams } from 'react-router-dom'
 import { Theme } from '../../types'
 import {searchItemsByName} from "../../utils/SEARCH"
 import { decryptData, encryptData } from '../../utils/security'
+import Modal from "../../components/modal";
+import { FaEnvelope, FaPhone } from 'react-icons/fa6'
+
 
 const users = () => {
+  const [details, setDetails] = useState(null)
 
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
@@ -69,6 +73,10 @@ const users = () => {
   // },[])
   seriailzeTasks()
 
+  const INFO=(payload: any)=>{
+    setDetails(payload)
+  }
+  
 
   return (
     <div>
@@ -134,11 +142,47 @@ const users = () => {
           ?
           <Text is_h1>No consultants found</Text>
           :
-          <Table rows={searchResults} columns={["department","name", "daily", "weekly", "monthly"]} redirect_path="/employee" view />
+          <Table info={INFO} rows={searchResults} columns={["department","name", "daily", "weekly", "monthly"]} redirect_path="/employee" view />
           :
-          <Table rows={users} columns={["department","name", "daily", "weekly", "monthly"]} redirect_path="/employee" view />
+          <Table rows={users} info={INFO} columns={["department","name", "daily", "weekly", "monthly"]} redirect_path="/employee" view />
 
       }
+
+      {/* modal for viewing details about the employee  */}
+      {details && (
+            <Modal
+              open={Boolean(details)}
+              setOpen={setDetails}
+              content={
+                <div>
+                  <Text
+                    // color="primary" 
+                    is_h1
+                    heading
+                    justify>
+                    {details["name"]}
+                  </Text>
+                  <br />
+                  <br />
+                  {/* <hr style={{opacity: .3}}/> */}
+                  {/* <br /> */}
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <FaEnvelope style={{ marginRight: 10 }} color={theme?.text} />
+                    <Text justify>{details["email"]}</Text>
+                  </div>
+                  <br />
+                  <hr style={{ opacity: .4 }} />
+                  <br />
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <FaPhone style={{ marginRight: 10 }} color={theme?.text} />
+                    <Text justify>{details["contact"]}</Text>
+                  </div>
+                </div>
+              }
+              title="User details"
+            />
+          )}
+
     </div>
   )
 }

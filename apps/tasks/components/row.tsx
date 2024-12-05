@@ -26,6 +26,7 @@ export interface Props {
   toggle?: any;
   cache: boolean
   move?: (payload: any)=>void
+  info?: (payload: any) => void
 }
 
 const row = (props: Props) => {
@@ -169,6 +170,18 @@ const row = (props: Props) => {
                         editor={props?.editor}
                         setter={props?.setter}
                         mode="edit"
+                        row={props?.row}
+                      />
+                    </span>
+                  )}
+
+                {/* info  */}
+                {props?.info && (
+                    <span>
+                      <TableButton
+                        info={props?.info}
+                        // setter={props?.setter}
+                        mode="info"
                         row={props?.row}
                       />
                     </span>

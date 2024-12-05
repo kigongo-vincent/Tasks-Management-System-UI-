@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTheme, setAlert } from "../model/data";
-import { FaEye, FaPen } from "react-icons/fa6";
+import { FaEye, FaInfo, FaPen } from "react-icons/fa6";
 import { FaTrashAlt } from "react-icons/fa";
 import Text from "./text";
 import { useNavigate } from "react-router-dom";
@@ -13,13 +13,15 @@ import {encryptData} from "../utils/security"
 import { MdOutlineTransferWithinAStation } from "react-icons/md";
 
 export interface Props {
-  mode: "edit" | "view" | "delete" | "move";
+  mode: "edit" | "view" | "delete" | "move" | "info";
   row?: any,
   redirect_path?: string;
   showBody?: (data: any)=>void,
   setter?: any
   editor?: any
   move?: (payload: any)=>void
+  info?: (payload: any)=>void
+  
 }
 
 const table_button = (props: Props) => {
@@ -42,6 +44,10 @@ const table_button = (props: Props) => {
 
   };
 
+  const rowInfo =()=>{
+    props?.info && props?.info(props?.row)
+  }
+
   const viewRow = () => {
     if(!props?.redirect_path){
       props?.showBody && props.showBody(props.row)
@@ -58,6 +64,10 @@ const table_button = (props: Props) => {
     <motion.div
       whileHover={{background: theme?.pale}}
       onClick={
+        props?.info 
+        ?
+        rowInfo
+        :
         props?.mode == "move"
         ?
         moveRow
@@ -79,6 +89,10 @@ const table_button = (props: Props) => {
       }}
     >
       {
+        props?.mode == "info"
+        ?
+        <FaInfo color={theme?.text} size={15} />
+        :
       props?.mode == "move"
       ?
       <MdOutlineTransferWithinAStation />
@@ -94,11 +108,11 @@ const table_button = (props: Props) => {
       <Text>{props?.mode}</Text>
       
       {/* modal  */}
-      {
+      {/* {
         open
         &&
         <Modal open={open} content={<AddCompany values={props?.row}  setOpen={setOpen}/>} title="Edit company" setOpen={setOpen} />
-      }
+      } */}
 
     </motion.div>
   );

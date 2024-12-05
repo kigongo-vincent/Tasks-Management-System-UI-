@@ -214,40 +214,7 @@ const employees = () => {
             />
           )}
 
-          {/* modal for viewing details about the employee  */}
-          {details && (
-            <Modal
-              open={Boolean(details)}
-              setOpen={setDetails}
-              content={
-                <div>
-                  <Text
-                    // color="primary" 
-                    is_h1
-                    heading
-                    justify>
-                    {details["first_name"] + " " + details["last_name"]}
-                  </Text>
-                  <br />
-                  <br />
-                  {/* <hr style={{opacity: .3}}/> */}
-                  {/* <br /> */}
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <FaEnvelope style={{ marginRight: 10 }} color={theme?.text} />
-                    <Text justify>{details["email"]}</Text>
-                  </div>
-                  <br />
-                  <hr style={{ opacity: .4 }} />
-                  <br />
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <FaPhone style={{ marginRight: 10 }} color={theme?.text} />
-                    <Text justify>{details["contact"]}</Text>
-                  </div>
-                </div>
-              }
-              title="User details"
-            />
-          )}
+          
 
         </div>
         :
