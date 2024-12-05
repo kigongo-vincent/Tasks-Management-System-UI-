@@ -12,7 +12,8 @@ import {
   setUser,
 } from "../../model/data";
 import { useDispatch, useSelector } from "react-redux";
-import Logo from "../../assets/icons/logo.svg";
+import LogoLight from "../../assets/icons/logo_light.svg";
+import LogoDark from "../../assets/icons/logo_dark.svg";
 import Input from "../../components/input";
 import Button from "../../components/button";
 import Text from "../../components/text";
@@ -178,6 +179,7 @@ const login = () => {
             
             borderRadius: 4,
             boxShadow: "10px 10px 20px rgba(0,0,0,.05)",
+            backdropFilter: "blur(6px)",
             background: theme.paper,
             display: "flex",
             flexDirection: "column",
@@ -185,7 +187,7 @@ const login = () => {
             justifyContent: "center"
           }}
         >
-          <img src={Logo} alt="" height={70} />
+          <img src={theme?.name == "dark" ? LogoDark : LogoLight} alt="" height={70} />
           <br />
           <Text heading>Login</Text>
           <br />

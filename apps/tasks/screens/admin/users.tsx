@@ -52,18 +52,18 @@ const users = () => {
 
   const seriailzeTasks = () => {
     users?.forEach(user => {
-      user.daily = `${user?.daily_tasks?.task_count} (${Math.floor(user?.daily_tasks?.total_duration / 60) +
-        ` hour${Math.floor(user?.daily_tasks?.total_duration / 60) == 1 ? "" : "s"} and ` +
+      user.daily = `${user?.daily_tasks?.task_count} Tsk${user?.daily_tasks?.task_count != 1 && "s"}, ${Math.floor(user?.daily_tasks?.total_duration / 60) +
+        ` HR${Math.floor(user?.daily_tasks?.total_duration / 60) == 1 ? "" : "s"} & ` +
         (user?.daily_tasks?.total_duration % 60) +
-        " minutes"})`
-      user.monthly = `${user?.monthly_tasks?.task_count} (${Math.floor(user?.monthly_tasks?.total_duration / 60) +
-        ` hour${Math.floor(user?.monthly_tasks?.total_duration / 60) == 1 ? "" : "s"} and ` +
+        " Mins"}`
+      user.monthly = `${user?.monthly_tasks?.task_count} Tsk${user?.monthly_tasks?.task_count != 1 && "s"}, ${Math.floor(user?.monthly_tasks?.total_duration / 60) +
+        ` HR${Math.floor(user?.monthly_tasks?.total_duration / 60) == 1 ? "" : "s"} & ` +
         (user?.monthly_tasks?.total_duration % 60) +
-        " minutes"})`
-      user.weekly = `${user?.weekly_tasks?.task_count} (${Math.floor(user?.weekly_tasks?.total_duration / 60) +
-        ` hour${Math.floor(user?.weekly_tasks?.total_duration / 60) == 1 ? "" : "s"} and ` +
+        " Mins"}`
+      user.weekly = `${user?.weekly_tasks?.task_count} Tsk${user?.weekly_tasks?.task_count != 1 && "s"}, ${Math.floor(user?.weekly_tasks?.total_duration / 60) +
+        ` HR${Math.floor(user?.weekly_tasks?.total_duration / 60) == 1 ? "" : "s"} & ` +
         (user?.weekly_tasks?.total_duration % 60) +
-        " minutes"})`
+        " Mins"}`
     })
   }
 

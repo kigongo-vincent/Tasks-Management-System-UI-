@@ -1,7 +1,8 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTheme, getUser, setAlert, setUser } from '../model/data'
-import Logo from "../assets/icons/logo.svg";
+import Logo from "../assets/icons/logo_light.svg";
+import LogoDark from "../assets/icons/logo_dark.svg";
 import { FaBackspace, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import Text from "./text"
 import { Theme, User } from '../types';
@@ -63,7 +64,8 @@ const navbar = () => {
       >
         {/* logo  */}
         <div style={{display: "flex", alignItems: "center"}}>
-        <img src={Logo} height={50} alt="" />
+        {/* <a href="/"><img src={theme?.name == "light" ? Logo : LogoDark} height={50} alt="" role='button' /></a> */}
+        <a href="/" style={{fontFamily: "Lobster", fontSize: 20, color: theme?.text}}>Tek Tasks</a>
         {/* <BackButton/> */}
         </div>
 
