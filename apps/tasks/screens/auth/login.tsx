@@ -100,6 +100,7 @@ const login = () => {
           user_id: decrypted_data?.user_id,
           role: decrypted_data?.role,
           company: decrypted_data?.company,
+          username: decrypted_data?.username,
           tokens: {
             access: data?.access,
             refresh: data?.refresh,
@@ -112,8 +113,12 @@ const login = () => {
           await fetchDepartment(loggedin_user?.user_id);
         } else if (loggedin_user?.role == "admin") {
           navigate(`/admin/companies`);
-        } else {
+        } else if (loggedin_user?.role == "employee") {
           navigate(`/employee/${encryptData(loggedin_user?.user_id)}`);
+        }else if (loggedin_user?.role == "company_member"){
+          navigate(`/admin/users/${encryptData(loggedin_user?.username?.slice(0, 1))}`);
+        }else{
+          navigate("/")
         }
         dispatch(setUser(loggedin_user));
         dispatch(

@@ -36,6 +36,7 @@ const initialState: State = {
     email: TMS_USER?.email,
     role: TMS_USER?.role,
     user_id: TMS_USER?.user_id,
+    username: TMS_USER?.username,
     tokens: TMS_USER?.tokens,
     company: TMS_USER?.company,
     // contact: "0756643681"

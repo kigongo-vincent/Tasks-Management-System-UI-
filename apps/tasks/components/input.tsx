@@ -9,7 +9,7 @@ const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargi
   const theme: Theme = useSelector(getTheme);
   const [hide, setHide] = useState(false)
 
-  const [BColor, setBColor] = useState("rgba(0,0,0,.05)")
+  const [BColor, setBColor] = useState("rgba(0,0,0,0)")
 
   useEffect(()=>{
 
@@ -22,7 +22,7 @@ const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargi
   return (
     <div
       onFocus={()=>setBColor(theme?.primary)}
-      onBlur={()=>setBColor("rgba(0,0,0,.05)")}
+      onBlur={()=>setBColor("rgba(0,0,0,0)")}
       style={{
         display: "flex",
         alignItems: "center",

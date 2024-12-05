@@ -32,7 +32,7 @@
 
 .login-bg{
     background-image: url(./assets/images/login.jpg);
-    mix-blend-mode: multiply;
+    /* mix-blend-mode: multiply; */
     width: 50vw;
 }
 

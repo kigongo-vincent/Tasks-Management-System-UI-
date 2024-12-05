@@ -55,7 +55,9 @@ const Index = () => {
 
   // },[alert?.title])
 
+  
   const theme: Theme = useSelector(getTheme)
+  document.querySelector("body").style.backgroundColor = theme?.pale
   const {pathname} = useLocation()
 
   const navigate = useNavigate()

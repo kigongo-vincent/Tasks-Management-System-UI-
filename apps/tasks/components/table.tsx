@@ -33,7 +33,7 @@ const Table = (props: Props) => {
         borderColor: "rgba(0,0,0,.05)",
         // overflow: "hidden",
         background: theme?.paper,
-        boxShadow: "10px 10px 20px rgba(0,0,0,.05)",
+        // boxShadow: "10px 10px 20px rgba(0,0,0,.05)",
         borderRadius: 4,
       }}
     >

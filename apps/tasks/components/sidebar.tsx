@@ -90,6 +90,29 @@ const sidebar = () => {
     },
   ]
 
+  const memberOptions=[
+    // {
+    //   icon: <FaChartBar style={{marginRight: 10}}/>,
+    //   label: "Dashboard",
+    //   link: "/company/",
+    // },
+    {
+      icon: <HiUserGroup style={{marginRight: 10}}/>,
+      label: "View all consultants",
+      link: "/admin/users/" + encryptData(user?.username?.slice(0, 1))
+    },
+    {
+      icon: <FaLock style={{marginRight: 10}}/>,
+      label: "Change password",
+      link: "/change_password"
+    },
+    {
+      icon: <IoSettingsSharp style={{marginRight: 10}}/>,
+      label: "settings",
+      link: "/admin/settings"
+    },
+  ]
+
   const departmentOptions = [
     // {
     //   icon: <FaChartBar style={{marginRight: 10}}/>,
@@ -155,6 +178,9 @@ const sidebar = () => {
     switch(user?.role){
       case "admin":
         setOptions(adminOptions)
+        break;
+      case "company_member":
+        setOptions(memberOptions)
         break;
       case 'company_admin':
         setOptions(companyOptions)
