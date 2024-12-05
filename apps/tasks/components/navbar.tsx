@@ -13,12 +13,12 @@ import Button from "./button"
 const navbar = () => {
 
   const theme: Theme = useSelector(getTheme)
-  const user:User = useSelector(getUser)
+  const user: User = useSelector(getUser)
   const dispatch = useDispatch()
-  const navigate= useNavigate()
+  const navigate = useNavigate()
 
-  const logout=()=>{
-    dispatch(setUser({email: ""}))
+  const logout = () => {
+    dispatch(setUser({ email: "" }))
     navigate("/")
     dispatch(setAlert(null))
     // setTimeout(() => {
@@ -26,24 +26,24 @@ const navbar = () => {
     // }, 500);
   }
 
-  const BackButton=()=>{
-    return(
+  const BackButton = () => {
+    return (
       <div
-      className='d-none'
-      onClick={()=>navigate(-1)}
-      style={{
-        // position: "fixed",
-        // background: theme?.pale,
-        // bottom: "2.5%",
-        // right: "2.5%",
-        marginLeft: 10,
-        alignItems: "center",
-        // boxShadow: "10px 10px 20px rgba(0,0,0,.01)",
-        // padding: "15px 30px",
-        borderRadius: 5,
-        cursor: "pointer"
-      }}>
-        <FaBackspace color={theme?.text} style={{marginRight: 10}}/>
+        className='d-none'
+        onClick={() => navigate(-1)}
+        style={{
+          // position: "fixed",
+          // background: theme?.pale,
+          // bottom: "2.5%",
+          // right: "2.5%",
+          marginLeft: 10,
+          alignItems: "center",
+          // boxShadow: "10px 10px 20px rgba(0,0,0,.01)",
+          // padding: "15px 30px",
+          borderRadius: 5,
+          cursor: "pointer"
+        }}>
+        <FaBackspace color={theme?.text} style={{ marginRight: 10 }} />
         <Text>Back</Text>
       </div>
     )
@@ -52,66 +52,78 @@ const navbar = () => {
   return (
     <div
       className='navbar'
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          background: theme?.paper,
-          boxShadow: "10px 10px 20px rgba(50,50,50,.05)",
-          borderRadius: 3,
-          padding: "5px 12px",
-        }}
-      >
-        {/* logo  */}
-        <div style={{display: "flex", alignItems: "center"}}>
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        background: theme?.paper,
+        boxShadow: "10px 10px 20px rgba(50,50,50,.05)",
+        borderRadius: 3,
+        padding: "5px 12px",
+      }}
+    >
+      {/* logo  */}
+      <div style={{ display: "flex", alignItems: "center" }}>
         {/* <a href="/"><img src={theme?.name == "light" ? Logo : LogoDark} height={50} alt="" role='button' /></a> */}
-        <a href="/" style={{fontFamily: "Lobster", fontSize: 20, color: theme?.text}}>Tek Tasks</a>
+        <a href="/" style={{
+          fontFamily: "Lobster", 
+          display: 'inline-block',
+          padding: '15px 30px',
+          textDecoration: 'none',
+          fontSize: '20px',
+          // fontWeight: 'bold',
+          background: 'linear-gradient(45deg, #FDC830, #FF5E62, #FF9100, #FF9100)', // Instagram-like gradient with orange, pink, and purple
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text', // for Safari support
+          color: 'transparent',
+          transition: 'background 0.5s ease',
+        }}>Tek Tasks</a>
         {/* <BackButton/> */}
-        </div>
+      </div>
 
-        {/* email  */}
-        <div className='d-none' style={{ alignItems: "center" }}>
-          <Text>{user?.email ? user?.email : "Guest"}</Text>
+      {/* email  */}
+      <div className='d-none' style={{ alignItems: "center" }}>
+        <Text>{user?.email ? user?.email : "Guest"}</Text>
 
-          {/* user icon  */}
+        {/* user icon  */}
+        <div
+          style={{
+            width: 40,
+            height: 40,
+            position: "relative",
+            margin: "0 20px",
+            background: theme?.pale,
+            borderRadius: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <FaUser color={theme?.placeholder} />
+
+          {/* activity badge  */}
           <div
             style={{
-              width: 40,
-              height: 40,
-              position: "relative",
-              margin: "0 20px",
-              background: theme?.pale,
+              height: 10,
+              width: 10,
               borderRadius: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              background: theme?.success,
+              position: "absolute",
+              right: "5%",
+              bottom: "5%",
             }}
-          >
-            <FaUser color={theme?.placeholder} />
-
-            {/* activity badge  */}
-            <div
-              style={{
-                height: 10,
-                width: 10,
-                borderRadius: "100%",
-                background: theme?.success,
-                position: "absolute",
-                right: "5%",
-                bottom: "5%",
-              }}
-            />
-          </div>
-
-
-          {/* logout icon  */}
-          <FaSignOutAlt size={18} className='d-none' 
-          onClick={()=>dispatch(setAlert({title: "Logout Confirmation", mode: "normal", body: "Are you sure you want to logout", buttons: [<Button onClick={logout} contain title={"confirm Logout"}/>]}))} style={{cursor: "pointer"}} 
-          color={theme?.placeholder}/>
+          />
         </div>
 
-        
+
+        {/* logout icon  */}
+        <FaSignOutAlt size={18} className='d-none'
+          onClick={() => dispatch(setAlert({ title: "Logout Confirmation", mode: "normal", body: "Are you sure you want to logout", buttons: [<Button onClick={logout} contain title={"confirm Logout"} />] }))} style={{ cursor: "pointer" }}
+          color={theme?.placeholder} />
       </div>
+
+
+    </div>
   )
 }
 
