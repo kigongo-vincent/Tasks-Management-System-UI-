@@ -48,13 +48,9 @@ const settings = () => {
         Settings
       </Text>
       <br />
-
-      <br />
-      <br />
-      <hr style={{ opacity: 0.1 }} />
+      {/* <hr style={{ opacity: 0.1 }} /> */}
       <br />
       {/* <br /> */}
-
       <Text>Theme settings (experimental)</Text>
 
       <div
@@ -62,7 +58,7 @@ const settings = () => {
           background: theme?.paper,
           borderRadius: 4,
           padding: 20,
-          margin: "15px 0",
+          margin: "10px 0",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
