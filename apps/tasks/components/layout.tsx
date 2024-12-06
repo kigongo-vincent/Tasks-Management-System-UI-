@@ -73,6 +73,7 @@ const layout = ({ children, center }) => {
             justifyContent: center && "center",
             borderRadius: 3,
             flexDirection: "column",
+            transition: ".2s",
             height: "100%",
           }}
         >

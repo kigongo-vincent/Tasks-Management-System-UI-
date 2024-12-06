@@ -1,7 +1,7 @@
 *{
     margin: 0;
     padding: 0;
-    /* transition: .2s; */
+    transition: .09s;
 }
 
 /* ::-webkit-scrollbar{
@@ -113,7 +113,7 @@ a:link, a:visited, a:active, a:focus{
     }
 
     .login-bg{
-        
+        background: none;
     }
 
     .bottom-navbar{

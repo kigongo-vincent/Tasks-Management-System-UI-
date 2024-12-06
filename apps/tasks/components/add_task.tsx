@@ -71,6 +71,16 @@ const add_task = (props: Props) => {
 
     if(!props?.values){
 
+      if(title?.value?.length > 100){
+        dispatch(setAlert({title: "Long title detected", body: "Please provide a reasonable title", mode: "error"}))
+        return
+      }
+
+      if(duration?.value < 1){
+        dispatch(setAlert({title: "Invalid duration", body: "Please provide the correct duration", mode: "error"}))
+        return
+      }
+
       if(!body?.value || !title?.value || !duration?.value){
         dispatch(setAlert({
           title: "Empty fields",
@@ -100,7 +110,10 @@ const add_task = (props: Props) => {
         dispatch(setAlert({title: "No changes detected", body: "There is nothing to update", mode: "normal"}))
         return
       }else{
-
+        if(title?.value?.length > 100){
+          dispatch(setAlert({title: "Long title detected", body: "Please provide a reasonable title", mode: "error"}))
+          return
+        }
         if(!body?.value || !duration?.value || !title?.value){
           dispatch(setAlert({title: "empty fields detected", body: "Please fill out all form fields", mode: "error"}))
           return

@@ -3,16 +3,18 @@ import Text from "../../components/text";
 import { Theme } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
 import { getTheme, setTheme } from "../../model/data";
-import { FaMoon } from "react-icons/fa";
+import { FaLock, FaMoon } from "react-icons/fa";
 import Switch from "../../components/switch"
 import { DarkMode, LightMode } from "../../theme/theme";
 import { FaSun } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const settings = () => {
   const theme: Theme = useSelector(getTheme);
 
   const [inDarkMode, setInDarkMode] = useState(theme?.name == "dark")
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(()=>{
 
@@ -46,7 +48,6 @@ const settings = () => {
         Settings
       </Text>
       <br />
-      <Text>Control the user experience of the application</Text>
 
       <br />
       <br />
@@ -92,6 +93,38 @@ const settings = () => {
         {/* mode switch  */}
         <Switch is_active={inDarkMode} setActive={setInDarkMode}/>
       </div>
+
+        <Text>Security</Text>
+        <div
+        onClick={()=>navigate(`/change_password`)}
+        style={{
+          background: theme?.paper,
+          borderRadius: 4,
+          padding: 20,
+          margin: "15px 0",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          cursor: "pointer"
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          {/* mode icon  */}
+            <FaLock color={theme?.text} style={{ marginRight: 10 }} />
+
+          {/* mode label  */}
+          <Text>
+            Change your password
+          </Text>
+        </div>
+      </div>
+
     </div>
   );
 };

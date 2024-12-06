@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { getTheme, getUser, SERVER_URL, setAlert, setLoadingState } from "../model/data";
-import { Theme, User } from "../types";
+import { addTask, editTask, getTheme, getUser, SERVER_URL, setAlert, setLoadingState } from "../model/data";
+import { Task, Theme, User } from "../types";
 import Input from "./input";
 import Text from "./text";
 import Button from "./button";
 import { GET, POST } from "../utils/HTTP";
 import Switch from "./switch";
 import { decryptData, encryptData } from "../utils/security";
-import {motion} from "framer-motion"
+import { motion } from "framer-motion";
+
 
 export interface Props {
   setOpen: (open: boolean) => void;
@@ -31,23 +32,24 @@ const add_task = (props: Props) => {
     value: "",
     error: null,
   });
+  
 
   const [body, setBody] = useState({
     value: "",
     error: null,
   });
   const [duration, setDuration] = useState({
-    value: 0,
+    value: "",
     error: null,
   });
+
+  const [projects, setProjects] = useState([]);
+  const [project, setProject] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const server = useSelector(SERVER_URL);
   let { id } = useParams();
   id = decryptData(id)
-
-  
-  
 
   const errorMessage = () => {
     dispatch(
@@ -69,6 +71,11 @@ const add_task = (props: Props) => {
     );
   };
 
+  useEffect(()=>{
+    if(!addProject){
+      setProject(null)
+    }
+  },[addProject])
 
   const onSubmit = async(e) => {
     e.preventDefault();
@@ -83,22 +90,18 @@ const add_task = (props: Props) => {
         }))
         return
       }
-
-      POST({
-        data: props?.data,
-        path: "/drafts/" + id,
-        payload: {
-          body: body.value,
-          duration: duration?.value,
-          project: project && project,
-          title: title?.value
-        },
-        setData: props?.setData,
-        setLoading: setLoading,
-        setOpen: props?.setOpen,
-        errorMessage: errorMessage,
-        successMessage: successMessage,
-      });
+      dispatch(addTask({
+        id: Math.floor(Math.random() * 1000),
+        title: title?.value,
+        body: body?.value,
+        local_timestamp: new Date().toISOString(),
+        duration: duration?.value,
+        employee: user?.user_id,
+        project: project && project,
+        project_name: project && projects?.find(p => parseInt(p?.id) == parseInt(project))?.name
+      }))
+      props?.setOpen(false)
+        dispatch(setAlert({title: "Task saved", body: "The task has been saved on your machine", mode: "success"}))
     }else{
       if(props?.values["body"] == body?.value && props?.values["duration"] == duration?.value && props?.values["title"] == title?.value && props?.values["project"] == project){
         dispatch(setAlert({title: "No changes detected", body: "There is nothing to update", mode: "normal"}))
@@ -109,42 +112,42 @@ const add_task = (props: Props) => {
           dispatch(setAlert({title: "empty fields detected", body: "Please fill out all form fields", mode: "error"}))
           return
         }
-        
-        setLoading(true)
-        const res = await fetch(`${server}/task/${props?.values["id"]}`,{
-          method: "PATCH",
-          headers: {
-            "Content-type": 'application/json'
-          },
-          body: JSON.stringify({
-            body: body?.value,
-            duration: duration?.value,
-            title: title?.value,
-            project: project
-          })
-        })
 
-        if(res.status == 202){
-          const data = await res.json()
-          props?.updateTasks(data)
-          setLoading(false)
-          props?.setOpen(false)
-          dispatch(setAlert({title: "Task updated successfully", body: "The task has been updated", mode: "success"}))
-
-        }else{
-          setLoading(false)
-          dispatch(setAlert({title: "Failed to update task", body: "Please try again", mode: "error"}))
+        const updated_task = {
+          id: props?.values["id"],
+          title: title?.value,
+          body: body?.value,
+          local_timestamp: new Date().toISOString(),
+          duration: duration?.value,
+          employee: user?.user_id,
+          project: project && project,
+          project_name: project && projects?.find(p => parseInt(p?.id) == parseInt(project))?.name
         }
+
+        dispatch(editTask(updated_task))
+        // console.log(updated_task)
+        // props?.setData([...props?.data, updated_task])
+        props?.setOpen(false)
+        dispatch(setAlert({title: "Task updated successfully", body: "The task has been updated", mode: "success"}))
       }
     }
   };
 
-  const [projects, setProjects] = useState([]);
-  const [project, setProject] = useState(null);
+ 
 
   // useEffect(()=>{
   //     dispatch(setLoadingState(loading))
   // },[loading])
+
+  useEffect(() => {
+    if (isActive) {
+      setPositionX(20);
+      setAddProject(true)
+    } else {
+      setPositionX(0);
+      setAddProject(false)
+    }
+  }, [isActive]);
 
   useEffect(() => {
     if (addProject) {
@@ -165,8 +168,6 @@ const add_task = (props: Props) => {
       setDuration({...duration, value: props?.values["duration"]})
       setTitle({...title, value: props?.values["title"]})
       props?.values["project"] && setAddProject(true)
-      console.log(props?.values["project"])
-      setIsActive(props['values']['project'])
     }
 
   },[props?.values])
@@ -177,7 +178,6 @@ const add_task = (props: Props) => {
    if(state?.row){
 
     GET({ path: "/projects/" + state?.row?.company, setData: setProjects, setLoading: setLoading });
-    console.log(state?.row)
 
    }else{
 
@@ -185,33 +185,6 @@ const add_task = (props: Props) => {
 
    }
   }, [state, user])
-
-  useEffect(() => {
-    if (isActive) {
-      setPositionX(20);
-      setAddProject(true)
-    } else {
-      setPositionX(0);
-      setAddProject(false)
-    }
-  }, [isActive]);
-
-  useEffect(() => {
-    if (addProject) {
-      if(props?.values){
-        props?.values["project"] ? setProject(props?.values["project"]): setProject(projects[0]?.id)
-        setIsActive(true)
-      }else{
-        setProject(projects[0]?.id);
-      }
-    }
-  }, [addProject]);
-
-  useEffect(()=>{
-    if(!isActive){
-      setProject(null)
-    }
-  },[isActive])
 
   return (
     <form onSubmit={onSubmit}>
@@ -250,10 +223,8 @@ const add_task = (props: Props) => {
               (duration?.value % 60) +
               " minutes")}</Text>
       <br />
-
-
-      {
-        <>
+      <br />
+      <>
         <br />
       {
         projects.length > 0 && <div
@@ -309,7 +280,7 @@ const add_task = (props: Props) => {
       }
       <br /> <br />
         </>
-      }
+      
       {addProject && (
         <select
           value={project}
@@ -327,19 +298,17 @@ const add_task = (props: Props) => {
           }}
         >
           {projects?.map((project) => (
-            <option  value={project?.id}>{project?.name}</option>
+            <option id={project.id} value={project?.id}>{project?.name}</option>
           ))}
         </select>
       )}
       
-     
       <Button
         loading={loading}
         fullwidth
         onClick={onSubmit}
-        title={props?.values ? "Save changes": "Add task"}
+        title={props?.values ? "save changes": "Save to drafts"}
       />
-      
     </form>
   );
 };

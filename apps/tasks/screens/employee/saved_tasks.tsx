@@ -42,6 +42,8 @@ const tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [currentTask, setCurrentTask] = useState(null);
 
+  const saved_tasks = useSelector(getTasks)
+
   let { id } = useParams();
   id = decryptData(id)
   const dispatch = useDispatch();
@@ -75,12 +77,13 @@ const tasks = () => {
     }, 1000);
   }, []);
 
-  const saved_tasks = useSelector(getTasks);
+  // const saved_tasks = useSelector(getTasks);
 
   useEffect(() => {
     // GET({ path: "/tasks/" + id, setData: setTasks, setLoading: setLoading });
-    setTasks(saved_tasks);
-  }, [saved_tasks]);
+    // setTasks(saved_tasks);
+    GET({path: "/drafts/" + id, setData: setTasks, setLoading: setLoading})
+  }, []);
 
   useEffect(() => {
     dispatch(setLoadingState(loading));
@@ -104,7 +107,8 @@ const tasks = () => {
 
   const setter = (id) => {
     dispatch(setAlert({ title: "", body: "", mode: "normal" }));
-    dispatch(removeTask(id));
+    // dispatch(removeTask(id));
+    DELETE({ data: tasks, setData: setTasks, path: "/task/" + id, id: id });
     // DELETE({ data: tasks, setData: setTasks, path: "/task/" + id, id: id });
     getTotalHours();
   };
@@ -134,6 +138,8 @@ const tasks = () => {
     dispatch(setAlert({title: "publish Confirmation", mode: "normal", body: "Are you sure you want to publish these tasks", buttons: [<Button onClick={uploadTasks} loading={loading} contain title={"confirm publish"}/>]}))
   }
 
+  const navigate = useNavigate()
+
   const uploadTasks=async()=>{
     setLoading(true)
     dispatch(setAlert({title: "", mode: "normal", body: ""}))
@@ -145,7 +151,7 @@ const tasks = () => {
 
 
       // loop through tasks, obtaining the employee, title, body and project if not null, and duration 
-      tasks.forEach(async(task)=> {
+      saved_tasks?.length > 0 && saved_tasks.forEach(async(task)=> {
         dispatch(setLoadingState(true))
         const res = await fetch(`${server}/tasks/${user?.user_id}`,{
           method: "POST",
@@ -161,18 +167,29 @@ const tasks = () => {
         })
 
         if(res.status == 201){
-          dispatch(removeTask(task?.id))
-          if(task?.id == tasks?.length){
-            dispatch(setLoadingState(false))
-            dispatch(setAlert({title: "Upload success", body: "You have successfully uploaded your pending tasks", mode: "success"}))
-          }
+
         }
         else{
           dispatch(setAlert({title: "Upload Error", body: "please try again", mode: "error"}))
-          dispatch(setLoadingState(false))
+          // dispatch(setLoadingState(false))
+          setLoading(false)
+          return
         }
 
       })
+
+      const res = await fetch(`${server}/drafts/${id}`, {
+        method: "PATCH"
+      })
+
+      if(res.status == 202){
+        dispatch(setAlert({title: "Publish success", body: "Your tasks have been published", mode: "success"}))
+        setLoading(false)
+        navigate(`/employee/${encryptData(id)}`)
+      }else{
+        dispatch(setAlert({title: "Publish failed", body: "Please try again", mode: "error"}))
+        setLoading(false)
+      }
 
       // clear the tasks list 
 

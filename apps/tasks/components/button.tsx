@@ -21,7 +21,7 @@ const button = ({loading, title, onClick, fullwidth, contain, outline}) => {
       outline: "none",
       width: fullwidth ? "98%" : contain ? "max-content" : "81%",
       boxShadow: !outline ? "10px 10px 20px rgba(0,0,0,.1)" : "",
-      padding: 15,
+      padding: "15px 12px",
       borderRadius: 5
     }}>
       {loading ? <img src={Spinner} height={18}/>: title}

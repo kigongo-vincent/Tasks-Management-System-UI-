@@ -41,11 +41,6 @@ const sidebar = () => {
     //   link: "/admin/users"
     // },
     {
-      icon: <FaLock style={{marginRight: 10}}/>,
-      label: "Change password",
-      link: "/change_password"
-    },
-    {
       icon: <IoSettingsSharp style={{marginRight: 10}}/>,
       label: "settings",
       link: "/admin/settings"
@@ -79,11 +74,6 @@ const sidebar = () => {
       link: "/admin/projects/" + encryptData(company?.id)
     },
     {
-      icon: <FaLock style={{marginRight: 10}}/>,
-      label: "Change password",
-      link: "/change_password"
-    },
-    {
       icon: <IoSettingsSharp style={{marginRight: 10}}/>,
       label: "settings",
       link: "/admin/settings"
@@ -100,11 +90,6 @@ const sidebar = () => {
       icon: <HiUserGroup style={{marginRight: 10}}/>,
       label: "View all consultants",
       link: "/admin/users/" + encryptData(user?.username?.slice(0, 1))
-    },
-    {
-      icon: <FaLock style={{marginRight: 10}}/>,
-      label: "Change password",
-      link: "/change_password"
     },
     {
       icon: <IoSettingsSharp style={{marginRight: 10}}/>,
@@ -131,11 +116,6 @@ const sidebar = () => {
     },
     
     {
-      icon: <FaLock style={{marginRight: 10}}/>,
-      label: "Change password",
-      link: "/change_password"
-    },
-    {
       icon: <IoSettingsSharp style={{marginRight: 10}}/>,
       label: "settings",
       link: "/admin/settings"
@@ -152,16 +132,6 @@ const sidebar = () => {
       icon: <FaListCheck style={{marginRight: 10}}/>,
       label: "Draft",
       link: "/employee/saved_tasks/" + encryptData(user?.user_id)
-    },
-    // {
-    //   icon: <FaCheckDouble style={{marginRight: 10}}/>,
-    //   label: "Today's todo List",
-    //   link: "/employee/todos/" + encryptData(user?.user_id)
-    // },
-    {
-      icon: <FaLock style={{marginRight: 10}} />,
-      label: "Change password",
-      link: "/change_password"
     },
     {
       icon: <IoSettingsSharp style={{marginRight: 10}}/>,
@@ -213,6 +183,7 @@ const sidebar = () => {
       // backgroundColor: "red",
       // alignItems: "stretch",
       height: "100%",
+      transition: ".2s",
       borderRadius: 3,
     }}>
 

@@ -74,7 +74,7 @@ const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargi
           border: "none",
           outline: "none",
           fontFamily: "poppins",
-          fontSize: 12.5
+          fontSize: 12
         }}></textarea>
         :
       <input
@@ -87,7 +87,7 @@ const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargi
           border: "none",
           outline: "none",
           fontFamily: "poppins",
-          fontSize: 12.5,
+          fontSize: 12,
           colorScheme: theme?.name =="light" ? "light" : "dark"
         }}
         value={input.value}
