@@ -55,7 +55,7 @@ const users = () => {
       user.daily = `${Math.floor(user?.daily_tasks?.total_duration / 60) +
         `HR${Math.floor(user?.daily_tasks?.total_duration / 60) == 1 ? "" : "s"} & ` +
         (user?.daily_tasks?.total_duration % 60) +
-        "Mins"}, ${user?.daily_tasks?.task_count}Task${user?.daily_tasks?.task_count != 1 && "s"}`
+        "Mins"}, ${user?.daily_tasks?.task_count}Task${user?.daily_tasks?.task_count != 1 ? "s" : ""}`
       user.monthly = `${Math.floor(user?.monthly_tasks?.total_duration / 60) +
         `HR${Math.floor(user?.monthly_tasks?.total_duration / 60) == 1 ? "" : "s"} & ` +
         (user?.monthly_tasks?.total_duration % 60) +
@@ -63,7 +63,7 @@ const users = () => {
       user.weekly = `${Math.floor(user?.weekly_tasks?.total_duration / 60) +
         `HR${Math.floor(user?.weekly_tasks?.total_duration / 60) == 1 ? "" : "s"} & ` +
         (user?.weekly_tasks?.total_duration % 60) +
-        "Mins"}, ${user?.weekly_tasks?.task_count}Task${user?.weekly_tasks?.task_count != 1 && "s"}`
+        "Mins"}, ${user?.weekly_tasks?.task_count}Task${user?.weekly_tasks?.task_count != 1 ? "s": ""}`
     })
   }
 
