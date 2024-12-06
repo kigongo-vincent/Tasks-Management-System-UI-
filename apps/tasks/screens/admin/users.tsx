@@ -50,7 +50,7 @@ const users = () => {
   }, [])
 
 
-  const seriailzeTasks = () => {
+  const seriailizeTasks = () => {
     users?.forEach(user => {
       user.daily = `${Math.floor(user?.daily_tasks?.total_duration / 60) +
         `HR${Math.floor(user?.daily_tasks?.total_duration / 60) == 1 ? "" : "s"} & ` +
@@ -71,7 +71,7 @@ const users = () => {
 
 
   // },[])
-  seriailzeTasks()
+  seriailizeTasks()
 
   const INFO = (payload: any) => {
     setDetails(payload)
