@@ -5,7 +5,7 @@ import { getTheme } from "../model/data";
 import { Theme } from "../types";
 import { FaPenClip, FaUser } from "react-icons/fa6";
 
-const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargin, large, rounded }) => {
+const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargin, large, rounded, limit }) => {
   const theme: Theme = useSelector(getTheme);
   const [hide, setHide] = useState(false)
 
@@ -78,6 +78,7 @@ const input = ({ input, type, placeholder, setter, fullwidth, noBorder,zeroMargi
         }}></textarea>
         :
       <input
+        maxLength={limit ? limit : ""}
         required
         style={{
           margin: "0 10px",

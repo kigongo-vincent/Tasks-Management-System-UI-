@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Alert, Theme } from "../types";
 import { useDispatch, useSelector } from "react-redux";
 import { allowHide, disableHide, getTheme, setAlert } from "../model/data";
@@ -9,18 +9,30 @@ import { AnimatePresence, motion } from "framer-motion";
 import Button from "./button";
 import { IoClose } from "react-icons/io5";
 
-const alert = (props: Alert) => {
+const AlertComponent = (props: Alert) => {
   const theme: Theme = useSelector(getTheme);
-
   const dispatch = useDispatch();
 
-  // useLayoutEffect(()=>{
+  // Create a ref for the alert container
+  const alertRef = useRef<HTMLDivElement>(null);
 
-  //   if(props?.title == "Weak password"){
-  //     dispatch(disableHide())
-  //   }
+  // Handle clicks outside the alert container
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (alertRef.current && !alertRef.current.contains(event.target as Node)) {
+        dispatch(setAlert({ title: "", body: "", mode: "" }));  // Close the alert if clicked outside
+        dispatch(allowHide());  // Allow alert hiding after click
+      }
+    };
 
-  // }, [props?.title])
+    // Attach event listener
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Cleanup event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dispatch]);
 
   return (
     <AnimatePresence mode="sync">
@@ -32,38 +44,25 @@ const alert = (props: Alert) => {
           width: "100vw",
           height: "100vh",
           background: "rgba(0,0,0,0.5)",
-          // backdropFilter: "blur(3px)",
-          // backdropFilter: "blur(6px)",
         }}
       >
         <motion.div
-          initial={{
-            y: -100,
-            opacity: 0,
-          }}
-          animate={{
-            y: 0,
-            opacity: 1,
-          }}
-          exit={{
-            y: -100,
-            opacity: 0,
-          }}
-          
+          ref={alertRef}  // Attach ref to alert container
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -100, opacity: 0 }}
           style={{
             position: "absolute",
             top: "1%",
-            left: innerWidth > 768 ?"35%": "5%",
+            left: innerWidth > 768 ? "35%" : "5%",
             background: theme?.paper,
-            boxShadow:
-              "10px 10px 20px rgba(0,0,0,.05), -10px -10px 20px rgba(0,0,0,.05)",
-            width: innerWidth > 768 ?"30vw": "80vw",
+            boxShadow: "10px 10px 20px rgba(0,0,0,.05), -10px -10px 20px rgba(0,0,0,.05)",
+            width: innerWidth > 768 ? "30vw" : "80vw",
             borderRadius: "3px",
-            
             padding: 20,
           }}
         >
-          {/* header  */}
+          {/* Header */}
           <div>
             <div
               style={{
@@ -80,72 +79,39 @@ const alert = (props: Alert) => {
                   justifyContent: "space-between",
                 }}
               >
-                {props?.mode == "success" ? (
-                  <FaCheckCircle
-                    color={theme?.success}
-                    style={{ marginRight: 10 }}
-                    size={20}
-                  />
-                ) : props?.mode == "error" ? (
-                  <FaX
-                    color={theme?.error}
-                    style={{ marginRight: 10 }}
-                    size={16}
-                  />
+                {props?.mode === "success" ? (
+                  <FaCheckCircle color={theme?.success} style={{ marginRight: 10 }} size={20} />
+                ) : props?.mode === "error" ? (
+                  <FaX color={theme?.error} style={{ marginRight: 10 }} size={16} />
                 ) : (
-                  <FaBell
-                    color={theme?.text}
-                    style={{ marginRight: 10 }}
-                    size={16}
-                  />
+                  <FaBell color={theme?.text} style={{ marginRight: 10 }} size={16} />
                 )}
-                <Text
-                  color={
-                    props?.mode == "success"
-                      ? "success"
-                      : props?.mode == "error"
-                      ? "error"
-                      : "text"
-                  }
-                >
+                <Text color={props?.mode === "success" ? "success" : props?.mode === "error" ? "error" : "text"}>
                   {props?.title}
                 </Text>
               </div>
 
-              {/* close button  */}
+              {/* Close button */}
               <div
-                onClick={() =>
-                  {
-                   dispatch(setAlert({ title: "", body: "", mode: "" }));
-                   dispatch(allowHide())
-                  }
-                 }
+                onClick={() => {
+                  dispatch(setAlert({ title: "", body: "", mode: "" }));
+                  dispatch(allowHide());
+                }}
                 style={{
-                  // background: theme?.pale,
-                  // padding: "10px 20px",
-                  // borderRadius: "100px",
-                  // display: "flex",
-                  // alignItems: "center",
                   cursor: "pointer",
                 }}
               >
-                <IoClose color={theme?.placeholder} size={20}/>
+                <IoClose color={theme?.placeholder} size={20} />
               </div>
             </div>
           </div>
 
-          {/* about  */}
+          {/* Body */}
           <div>
-            {/* <br /> */}
-            {/* <Text primary>{props?.title}</Text> */}
-            {/* <br /> */}
-            {/* <br /> */}
             <Text>{props?.body}</Text>
           </div>
 
-          {/* weak password  */}
-
-          {/* buttons  */}
+          {/* Buttons */}
           <div
             style={{
               display: "flex",
@@ -153,15 +119,13 @@ const alert = (props: Alert) => {
               justifyContent: "flex-end",
             }}
           >
-            {props?.title == "Weak password" ? (
+            {props?.title === "Weak password" ? (
               <Button
                 contain
-                onClick={() =>
-                 {
+                onClick={() => {
                   dispatch(setAlert({ title: "", body: "", mode: "" }));
-                  dispatch(allowHide())
-                 }
-                }
+                  dispatch(allowHide());
+                }}
                 title={"I've understood"}
                 loading={false}
               />
@@ -169,11 +133,10 @@ const alert = (props: Alert) => {
               props?.buttons && props?.buttons[0]
             )}
           </div>
-          <div>{/* button iteration  */}</div>
         </motion.div>
       </div>
     </AnimatePresence>
   );
 };
 
-export default alert;
+export default AlertComponent;

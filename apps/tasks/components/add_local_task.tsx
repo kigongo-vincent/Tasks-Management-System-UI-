@@ -224,6 +224,7 @@ const add_task = (props: Props) => {
         type={"text"}
         setter={setTitle}
         input={title}
+        limit={50}
       />
       <Input
         large
