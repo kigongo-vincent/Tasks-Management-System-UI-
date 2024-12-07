@@ -56,10 +56,14 @@ const users = () => {
         `HR${Math.floor(user?.daily_tasks?.total_duration / 60) == 1 ? "" : "s"} & ` +
         (user?.daily_tasks?.total_duration % 60) +
         "Mins"}, ${user?.daily_tasks?.task_count}Task${user?.daily_tasks?.task_count != 1 ? "s" : ""}`
+
+
       user.monthly = `${Math.floor(user?.monthly_tasks?.total_duration / 60) +
         `HR${Math.floor(user?.monthly_tasks?.total_duration / 60) == 1 ? "" : "s"} & ` +
         (user?.monthly_tasks?.total_duration % 60) +
-        "Mins"}, ${user?.monthly_tasks?.task_count}Task${user?.monthly_tasks?.task_count != 1 && "s"}`
+        "Mins"}, ${user?.monthly_tasks?.task_count}Task${user?.monthly_tasks?.task_count != 1 ? "s": ""}`
+
+
       user.weekly = `${Math.floor(user?.weekly_tasks?.total_duration / 60) +
         `HR${Math.floor(user?.weekly_tasks?.total_duration / 60) == 1 ? "" : "s"} & ` +
         (user?.weekly_tasks?.total_duration % 60) +
