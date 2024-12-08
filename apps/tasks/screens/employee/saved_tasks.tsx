@@ -214,6 +214,7 @@ const tasks = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          marginTop: innerWidth > 768 ? 0 : 10
         }}
       >
         {/* total number of working hours  */}

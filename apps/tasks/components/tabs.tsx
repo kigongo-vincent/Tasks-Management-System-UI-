@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getCompany, getDepartment, getTheme, getUser } from '../model/data'
 import { Theme } from '../types'
-import { FaBars, FaCheckDouble, FaHotel, FaList, FaLock, FaSignOutAlt, FaUser } from 'react-icons/fa'
-import { FaCheckToSlot, FaListCheck, FaPeopleGroup, FaToolbox } from 'react-icons/fa6'
+import { FaBars, FaCheckDouble, FaHotel, FaList, FaLock, FaSignOutAlt, FaUser, FaUsers } from 'react-icons/fa'
+import { FaCheckToSlot, FaListCheck, FaPeopleGroup, FaPeopleRoof, FaToolbox } from 'react-icons/fa6'
 import Tab from "./tab_link"
 import { IoSettingsSharp } from 'react-icons/io5'
 import {encryptData} from "../utils/security"
+import { HiUserGroup } from 'react-icons/hi'
+import { MdSupervisedUserCircle } from 'react-icons/md'
+import { BsPeopleFill } from 'react-icons/bs'
 
 const tabs = () => {
 
@@ -60,19 +63,10 @@ const tabs = () => {
     //   link: "/admin/users"
     // },
     {
-      icon: <FaLock style={{marginRight: 10}}/>,
-      label: "Change password",
-      link: "/change_password"
-    },
-    {
       icon: <IoSettingsSharp style={{marginRight: 10}}/>,
       label: "settings",
       link: "/admin/settings"
     },
-    {
-      icon: <FaSignOutAlt/>,
-      label: "Logout"
-    }
   ]
 
   const companyOptions=[
@@ -82,7 +76,17 @@ const tabs = () => {
     //   link: "/company/",
     // },
     {
-      icon: <FaPeopleGroup style={{marginRight: 10}}/>,
+      icon: <HiUserGroup style={{marginRight: 10}}/>,
+      label: "View all consultants",
+      link: "/admin/users/" + encryptData(company?.id)
+    },
+    {
+      icon: <MdSupervisedUserCircle style={{marginRight: 10}}/>,
+      label: "Board members",
+      link: "/admin/members/" + encryptData(company?.id)
+    },
+    {
+      icon: <FaPeopleRoof style={{marginRight: 10}}/>,
       label: "View all departments",
       link: "/admin/company/" + encryptData(company?.id)
     },
@@ -92,20 +96,28 @@ const tabs = () => {
       link: "/admin/projects/" + encryptData(company?.id)
     },
     {
-      icon: <FaLock style={{marginRight: 10}}/>,
-      label: "Change password",
-      link: "/change_password"
+      icon: <IoSettingsSharp style={{marginRight: 10}}/>,
+      label: "settings",
+      link: "/admin/settings"
+    },
+  ]
+
+  const memberOptions=[
+    // {
+    //   icon: <FaChartBar style={{marginRight: 10}}/>,
+    //   label: "Dashboard",
+    //   link: "/company/",
+    // },
+    {
+      icon: <HiUserGroup style={{marginRight: 10}}/>,
+      label: "View all consultants",
+      link: "/admin/users/" + encryptData(user?.username?.slice(0, 1))
     },
     {
       icon: <IoSettingsSharp style={{marginRight: 10}}/>,
       label: "settings",
       link: "/admin/settings"
     },
-    {
-      icon: <FaSignOutAlt/>,
-      label: "Logout",
-      
-    }
   ]
 
   const departmentOptions = [
@@ -115,26 +127,21 @@ const tabs = () => {
     //   link: "/department/",
     // },
     {
-      icon: <FaHotel style={{marginRight: 10}}/>,
+      icon: <BsPeopleFill style={{marginRight: 10}}/>,
+      label: "Consultants",
+      link: "/department/users/" + encryptData(department?.id)
+    },
+    {
+      icon: <FaUsers style={{marginRight: 10}}/>,
       label: "View all Consultants",
       link: "/department/" + encryptData(department?.id)
     },
     
     {
-      icon: <FaLock style={{marginRight: 10}}/>,
-      label: "Change password",
-      link: "/change_password"
-    },
-    {
       icon: <IoSettingsSharp style={{marginRight: 10}}/>,
       label: "settings",
       link: "/admin/settings"
     },
-    {
-      icon: <FaSignOutAlt/>,
-      label: "Logout",
-      
-    }
   ]
 
   const employeeOptions = [
@@ -148,26 +155,11 @@ const tabs = () => {
       label: "Draft",
       link: "/employee/saved_tasks/" + encryptData(user?.user_id)
     },
-    // {
-    //   icon: <FaCheckDouble style={{marginRight: 10}}/>,
-    //   label: "Today's todo List",
-    //   link: "/employee/todos/" + encryptData(user?.user_id)
-    // },
-    {
-      icon: <FaLock style={{marginRight: 10}} />,
-      label: "Change password",
-      link: "/change_password"
-    },
     {
       icon: <IoSettingsSharp style={{marginRight: 10}}/>,
       label: "settings",
       link: "/admin/settings"
     },
-    {
-      icon: <FaSignOutAlt/>,
-      label: "Logout",
-      
-    }
   ]
 
 

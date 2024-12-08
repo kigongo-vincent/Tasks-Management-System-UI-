@@ -18,6 +18,22 @@ const navbar_link = ({option}) => {
 setBGColor(theme?.paper)
   }, [theme])
 
+  function compareStrings(str1, str2) {
+    // Helper function to remove "/U2Fsd" if it exists in the string
+    function removeU2Fsd(str) {
+      const index = str.indexOf("/U2Fsd");
+      return index !== -1 ? str.slice(0, index) : str;
+    }
+  
+    // Remove "/U2Fsd" from both strings
+    const cleanedStr1 = removeU2Fsd(str1);
+    const cleanedStr2 = removeU2Fsd(str2);
+  
+    // Return true if the cleaned strings are the same
+    return cleanedStr1 === cleanedStr2;
+  }
+  
+  
   return (
     <motion.div
 
@@ -28,10 +44,10 @@ setBGColor(theme?.paper)
         // whileTap={{backgroundColor: theme?.paper}}
         // 
         style={{display: "flex", cursor: "pointer", minWidth: "max-content", backgroundColor: BGColor, alignItems: "center", padding: 12, borderRadius:3}}>
-      <div style={{color: pathname == option?.link ? theme?.name == "light" ? theme?.primary : "rgb(247,151,38)" : theme?.text}}>
+      <div style={{color: compareStrings(pathname, option?.link) ? theme?.name == "light" ? theme?.primary : "rgb(247,151,38)" : theme?.text}}>
       {option?.icon}
       </div>
-      <Text color={pathname == option?.link ? "primary" : "text"}>{option?.label}</Text>
+      <Text color={compareStrings(pathname, option?.link) ? "primary" : "text"}>{option?.label}</Text>
      </motion.div>
   )
 }

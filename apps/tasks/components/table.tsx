@@ -45,7 +45,12 @@ const Table = (props: Props) => {
         {props?.columns?.map((column) => (
           <td style={{ padding: "7px 10px" }}>
             <Text color="white">
-              {column == "admin_email" ? "EMAIL" : column == "admin_contact" ? "CONTACT"  : column?.toLocaleUpperCase()?.replace("_", " ")}
+              {
+              column == "project_name"
+              ?
+              "PROJECT"
+              :
+              column == "admin_email" ? "EMAIL" : column == "admin_contact" ? "CONTACT"  : column?.toLocaleUpperCase()?.replace("_", " ")}
             </Text>
           </td>
         ))}
