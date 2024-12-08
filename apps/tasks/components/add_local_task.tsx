@@ -84,12 +84,17 @@ const add_task = (props: Props) => {
         return
       }
 
+      if(duration?.value < 1){
+        dispatch(setAlert({title: "Invalid Duration", body: "Please provide the correct duration", mode: "error"}))
+        return
+      }
+
       POST({
         data: props?.data,
         path: "/drafts/" + id,
         payload: {
           body: body.value,
-          duration: duration?.value,
+          duration: Math.floor(duration?.value),
           project: project && project,
           title: title?.value
         },
@@ -109,6 +114,11 @@ const add_task = (props: Props) => {
           dispatch(setAlert({title: "empty fields detected", body: "Please fill out all form fields", mode: "error"}))
           return
         }
+
+        if(duration?.value < 1){
+          dispatch(setAlert({title: "Invalid Duration", body: "Please provide the correct duration", mode: "error"}))
+          return
+        }
         
         setLoading(true)
         const res = await fetch(`${server}/task/${props?.values["id"]}`,{
@@ -118,7 +128,7 @@ const add_task = (props: Props) => {
           },
           body: JSON.stringify({
             body: body?.value,
-            duration: duration?.value,
+            duration: Math.floor(duration?.value),
             title: title?.value,
             project: project
           })

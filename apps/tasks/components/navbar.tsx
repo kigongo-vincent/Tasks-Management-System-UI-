@@ -66,18 +66,21 @@ const navbar = () => {
       <div style={{ display: "flex", alignItems: "center" }}>
         {/* <a href="/"><img src={theme?.name == "light" ? Logo : LogoDark} height={50} alt="" role='button' /></a> */}
         <a href="/" style={{
-          fontFamily: "Lobster", 
-          display: 'inline-block',
-          padding: '15px 30px',
-          textDecoration: 'none',
-          fontSize: '20px',
-          // fontWeight: 'bold',
-          background: 'linear-gradient(45deg, #FDC830, #FF5E62, #FF9100, #FF9100)', // Instagram-like gradient with orange, pink, and purple
-          backgroundClip: 'text',
-          WebkitBackgroundClip: 'text', // for Safari support
-          color: 'transparent',
-          transition: 'background 0.5s ease',
-        }}>Tek Tasks</a>
+          fontFamily: "Kanit, sans-serif", 
+          // display: 'inline-block',
+          padding: '15px 20px',
+          fontWeight: 800,
+          // textDecoration: 'none',
+          fontSize: '18px',
+          // // fontWeight: 'bold',
+          // background: 'linear-gradient(45deg, #FDC830, #FF5E62, #FF9100, #FF9100)', // Instagram-like gradient with orange, pink, and purple
+          // backgroundClip: 'text',
+          // WebkitBackgroundClip: 'text', // for Safari support
+          // color: 'transparent',
+          color: theme?.text,
+          // transition: 'background 0.5s ease',
+          textShadow: "3px 3px 5px rgba(0,0,0,.1)"
+        }}>TEK TASKS</a>
         {/* <BackButton/> */}
       </div>
 
