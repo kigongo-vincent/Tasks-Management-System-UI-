@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FaEnvelope, FaPhone, FaTasks } from 'react-icons/fa'
+import { FaBuilding, FaCalendar, FaChartArea, FaChartBar, FaEnvelope, FaPhone, FaTasks, FaUser } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import Table from '../../components/table'
 import Text from '../../components/text'
@@ -12,6 +12,7 @@ import { Theme } from '../../types'
 import { searchItemsByName } from "../../utils/SEARCH"
 import { decryptData, encryptData } from '../../utils/security'
 import Modal from "../../components/modal";
+import { sortArray } from '../../utils/sort'
 
 const users = () => {
 
@@ -69,6 +70,31 @@ const users = () => {
         "Mins"}, ${user?.weekly_tasks?.task_count}Task${user?.weekly_tasks?.task_count != 1 ? "s": ""}`
     })
   }
+
+  const [currentFilter, setCurrentFilter] = useState("")
+
+  const filterOptions = [
+    {
+      label: "Name",
+      icon: <FaUser/>,
+      action: ()=>{search ? setSearchResults(sortArray(searchResults, "name", "asc")) :setUsers(sortArray(users, "name", "asc")); setCurrentFilter("Name")}
+    },
+    {
+      label: "Performance by Day",
+      icon: <FaChartArea/>,
+      action: ()=>{search ? setSearchResults(sortArray(searchResults, "daily_tasks.total_duration", "desc")) :setUsers(sortArray(users, "daily_tasks.total_duration", "desc")); setCurrentFilter("Performance by Day")}
+    },
+    {
+      label: "Performance by Week",
+      icon: <FaChartBar/>,
+      action: ()=>{search ? setSearchResults(sortArray(searchResults, "weekly_tasks.total_duration", "desc")) :setUsers(sortArray(users, "weekly_tasks.total_duration", "desc")); setCurrentFilter("Performance by Week")}
+    },
+    {
+      label: "Performance by Month",
+      icon: <FaCalendar/>,
+      action: ()=>{search ? setSearchResults(sortArray(searchResults, "monthly_tasks.total_duration", "desc")) :setUsers(sortArray(users, "monthly_tasks.total_duration", "desc")); setCurrentFilter("Performance by Month")}
+    },
+  ]
 
   // useEffect(()=>{
 
@@ -141,9 +167,9 @@ const users = () => {
               ?
               <Text is_h1>No consultants found</Text>
               :
-              <Table rows={searchResults} columns={["name", "daily", "weekly", "monthly"]} redirect_path="/employee" view />
+              <Table filterOptions={filterOptions} currentFilter={currentFilter} rows={searchResults} columns={["name", "daily", "weekly", "monthly"]} redirect_path="/employee" view />
             :
-            <Table rows={users} columns={["name", "daily", "weekly", "monthly"]} redirect_path="/employee" view />
+            <Table filterOptions={filterOptions} currentFilter={currentFilter} rows={users} columns={["name", "daily", "weekly", "monthly"]} redirect_path="/employee" view />
 
       }
 

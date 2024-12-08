@@ -71,6 +71,9 @@ a:link, a:visited, a:active, a:focus{
 .br{
     display: none;
 }
+.w-15{
+    width: 15vw;
+}
 
 @media (max-width: 768px){
 
@@ -105,6 +108,9 @@ a:link, a:visited, a:active, a:focus{
 
     .w-10{
         width: 30vw;
+    }
+    .w-15{
+        width: 40vw;
     }
 
     .login-parent{

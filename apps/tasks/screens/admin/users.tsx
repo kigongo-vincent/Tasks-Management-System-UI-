@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { FaTasks } from 'react-icons/fa'
+import { FaBuilding, FaCalendar, FaChartBar, FaTasks, FaUser } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import Table from '../../components/table'
 import Text from '../../components/text'
-import { getTheme, setLoadingState } from '../../model/data'
+import { getTheme, setLoadingState, setUser } from '../../model/data'
 import { GET } from '../../utils/HTTP'
 import Header from "../../components/header"
 import Input from "../../components/input"
@@ -12,7 +12,8 @@ import { Theme } from '../../types'
 import { searchItemsByName } from "../../utils/SEARCH"
 import { decryptData, encryptData } from '../../utils/security'
 import Modal from "../../components/modal";
-import { FaEnvelope, FaPhone } from 'react-icons/fa6'
+import { FaChartArea, FaEnvelope, FaPhone } from 'react-icons/fa6'
+import {sortArray} from "../../utils/sort"
 
 
 const users = () => {
@@ -49,6 +50,43 @@ const users = () => {
 
   }, [])
 
+  // useEffect(()=>{
+  //   users && setUsers(sortArray(users, "name", "asc"))
+  // },[])
+
+  const [currentFilter, setCurrentFilter] = useState("")
+
+  const filterOptions = [
+    {
+      label: "Name",
+      icon: <FaUser/>,
+      action: ()=>{search ? setSearchResults(sortArray(searchResults, "name", "asc")) :setUsers(sortArray(users, "name", "asc")); setCurrentFilter("Name")}
+    },
+    {
+      label: "Department",
+      icon: <FaBuilding/>,
+      action: ()=>{search ? setSearchResults(sortArray(searchResults, "department", "asc")) :setUsers(sortArray(users, "department", "asc")); setCurrentFilter("Department")}
+
+    },
+    {
+      label: "Performance by Day",
+      icon: <FaChartArea/>,
+      action: ()=>{search ? setSearchResults(sortArray(searchResults, "daily_tasks.total_duration", "desc")) :setUsers(sortArray(users, "daily_tasks.total_duration", "desc")); setCurrentFilter("Performance by Day")}
+    },
+    {
+      label: "Performance by Week",
+      icon: <FaChartBar/>,
+      action: ()=>{search ? setSearchResults(sortArray(searchResults, "weekly_tasks.total_duration", "desc")) :setUsers(sortArray(users, "weekly_tasks.total_duration", "desc")); setCurrentFilter("Performance by Week")}
+    },
+    {
+      label: "Performance by Month",
+      icon: <FaCalendar/>,
+      action: ()=>{search ? setSearchResults(sortArray(searchResults, "monthly_tasks.total_duration", "desc")) :setUsers(sortArray(users, "monthly_tasks.total_duration", "desc")); setCurrentFilter("Performance by Month")}
+    },
+  ]
+
+
+
 
   const seriailizeTasks = () => {
     users?.forEach(user => {
@@ -80,7 +118,6 @@ const users = () => {
   const INFO = (payload: any) => {
     setDetails(payload)
   }
-
 
   return (
     <div>
@@ -146,9 +183,9 @@ const users = () => {
               ?
               <Text is_h1>No consultants found</Text>
               :
-              <Table info={INFO} rows={searchResults} columns={["department", "name", "daily", "weekly", "monthly"]} redirect_path="/employee" view />
+              <Table filterOptions={filterOptions} currentFilter={currentFilter} info={INFO} rows={searchResults} columns={["department", "name", "daily", "weekly", "monthly"]} redirect_path="/employee" view />
             :
-            <Table rows={users} info={INFO} columns={["department", "name", "daily", "weekly", "monthly"]} redirect_path="/employee" view />
+            <Table filterOptions={filterOptions} currentFilter={currentFilter} rows={users} info={INFO} columns={["department", "name", "daily", "weekly", "monthly"]} redirect_path="/employee" view />
 
       }
 

@@ -1,7 +1,6 @@
-// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import Text from "../../components/text";
-import { FaCirclePlus, FaEye, FaPen } from "react-icons/fa6";
+import { FaBook, FaBriefcase, FaBuilding, FaCalendar, FaChartArea, FaChartBar, FaCirclePlus, FaClock, FaEye, FaPen, FaUser } from "react-icons/fa6";
 import {
   getTheme,
   getUser,
@@ -20,6 +19,7 @@ import AddTask from "../../components/add_task";
 import Input from "../../components/input";
 import moment from "moment";
 import { decryptData } from "../../utils/security";
+import { sortArray } from "../../utils/sort";
 
 const tasks = () => {
   // company details
@@ -41,9 +41,9 @@ const tasks = () => {
 
   // ==============================task helper functions =============================================
 
-  const populateFilteredTasks = () => {};
+  const populateFilteredTasks = () => { };
 
-  const populateSearchResults = () => {};
+  const populateSearchResults = () => { };
 
   const populateDailyTasks = () => {
     const results = [];
@@ -67,7 +67,7 @@ const tasks = () => {
 
   // ==============================end task helper functions =============================================
 
-  
+
   const dispatch = useDispatch();
   const [details, setDetails] = useState("");
   const [hours, setHours] = useState(0);
@@ -130,15 +130,26 @@ const tasks = () => {
   };
 
   const searchTasks = (query: string) => {
-    const results = filteredTasks?.filter((task) =>
-      task?.body?.includes(query?.toString()) || task?.duration?.includes(query?.toString())|| task?.title?.includes(query?.toString())
+    // Ensure query is case-insensitive by converting it to lowercase
+    const lowerCaseQuery = query.toLowerCase();
+  
+    // Use filter to search through tasks based on the specific fields (project_name, title, body)
+    const results = filteredTasks?.filter((task) => 
+      ["project_name", "title", "body"].some((key) => {
+        const value = task[key];
+        // Check if value is a string or number and convert to string for case-insensitive comparison
+        if (value !== undefined && value !== null) {
+          const valueStr = value.toString().toLowerCase();
+          return valueStr.includes(lowerCaseQuery); // Case-insensitive search
+        }
+        return false;
+      })
     );
-    if (results?.length != 0) {
-      setSearchResults(results);
-    } else {
-      setSearchResults([]);
-    }
+  
+    // Update search results based on the results
+    setSearchResults(results?.length ? results : []);
   };
+  
 
   const filterTasks = (startDate: string, endDate: string) => {
     const start = moment(startDate);
@@ -189,226 +200,252 @@ const tasks = () => {
 
   const user = useSelector(getUser)
 
+  const [currentFilter, setCurrentFilter] = useState("")
+
+  const filterOptions = [
+    {
+      label: "Title",
+      icon: <FaBook />,
+      action: () => {setFilteredTasks(sortArray(filteredTasks, "title", "asc")); setCurrentFilter("Title") }
+    },
+    {
+      label: "Duration",
+      icon: <FaClock />,
+      action: () => {setFilteredTasks(sortArray(filteredTasks, "duration", "desc")); setCurrentFilter("Duration") }
+
+    },
+    {
+      label: "Project",
+      icon: <FaBriefcase />,
+      action: () => {setFilteredTasks(sortArray(filteredTasks, "project_name", "asc")); setCurrentFilter("Project") }
+
+    },
+  ]
+
   return (
-    !user?.email 
-    ?
-    <Navigate to={"/"}/>
-    :
+    !user?.email
+      ?
+      <Navigate to={"/"} />
+      :
 
-    <div>
-      {/* header  */}
-      <Header
-        title={["company_admin", "admin", "employee"]?.includes(user?.role) && "a task"}
-        setOpen={setOpen}
-        count={filteredTasks?.length}
-        heading={ state?.row ? `Tasks for ${state?.row?.first_name}`: 'Tasks'}
-      />
-
-      
-      {/* sub header  */}
-      <div
-        className="flex-vertical"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginTop: 10,
-          boxShadow: "10px 10px 20px rgba(0,0,0,.05)",
-          backgroundColor: theme?.paper,
-          borderRadius: 5,
-          padding: 15,
-        }}
-      >
-        {/* filter  */}
-        <div
-          className="shrink"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            // background: "red",
-            width: innerWidth < 768 ? "85vw" : "max-content",
-          }}
-        >
-
-
-          {/* start date  */}
-          <Input
-            noBorder
-            zeroMargin
-            setter={setStartDate}
-            input={startDate}
-            fullwidth={innerWidth < 768}
-            type={"date"}
-            placeholder={"Starting date"}
-          />
-
-          <div style={{margin: "0px 3px"}}/>
-
-          <br className="separator"/>
-          {/* end date  */}
-          <Input
-            noBorder
-            fullwidth={innerWidth < 768}
-            zeroMargin
-            setter={setEndDate}
-            input={endDate}
-            type={"date"}
-            placeholder={"ending date"}
-          />
-        </div>
-        {innerWidth < 768 && <br />}
-
-        {/* search  */}
-        <div className="search">
-        <Input
-          zeroMargin
-          noBorder
-          fullwidth={innerWidth < 768}
-          setter={setSearch}
-          input={search}
-          type={"search"}
-          placeholder={"search for tasks"}
+      <div>
+        {/* header  */}
+        <Header
+          title={["company_admin", "admin", "employee"]?.includes(user?.role) && "a task"}
+          setOpen={setOpen}
+          count={filteredTasks?.length}
+          heading={state?.row ? `Tasks for ${state?.row?.first_name}` : 'Tasks'}
         />
-        </div>
-      </div>
 
-      {/* total number of working hours  */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          margin: "10px 0",
-          background: theme?.paper,
-          boxShadow: "10px 10px 20px rgba(0,0,0,.05)",
-          borderRadius: 5,
-          width: "max-content",
-          padding: "18px 20px",
-        }}
-      >
-        {innerWidth > 768 ? (
-          <Text>Total Number of working hours</Text>
-        ) : (
-          <Text>working hours:</Text>
-        )}
+
+        {/* sub header  */}
         <div
+          className="flex-vertical"
           style={{
-            // background: theme?.error,
-            // height: 30,
-            // width: innerWidth > 768 ? "": "100vw",
-            padding: "3px 12px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            borderRadius: "100px",
-            // marginLeft:
+            marginTop: 10,
+            boxShadow: "10px 10px 20px rgba(0,0,0,.05)",
+            backgroundColor: theme?.paper,
+            borderRadius: 5,
+            padding: 15,
           }}
         >
-          <Text heading>
-            {Math.floor(hours / 60) +
-              ` hour${Math.floor(hours / 60) == 1 ? "" : "s"} and ` +
-              (hours % 60) +
-              " minutes"}
-          </Text>
-        </div>
-      </div>
+          {/* filter  */}
+          <div
+            className="shrink"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              // background: "red",
+              width: innerWidth < 768 ? "85vw" : "max-content",
+            }}
+          >
 
-      {/* body  */}
-      {
-        // search?.value ||
-        // startDate.value || endDate.value
-        // ?
-        search?.value ? (
-          searchResults?.length == 0 ? (
-            <Text is_h1>No results found</Text>
+
+            {/* start date  */}
+            <Input
+              noBorder
+              zeroMargin
+              setter={setStartDate}
+              input={startDate}
+              fullwidth={innerWidth < 768}
+              type={"date"}
+              placeholder={"Starting date"}
+            />
+
+            <div style={{ margin: "0px 3px" }} />
+
+            <br className="separator" />
+            {/* end date  */}
+            <Input
+              noBorder
+              fullwidth={innerWidth < 768}
+              zeroMargin
+              setter={setEndDate}
+              input={endDate}
+              type={"date"}
+              placeholder={"ending date"}
+            />
+          </div>
+          {innerWidth < 768 && <br />}
+
+          {/* search  */}
+          <div className="search">
+            <Input
+              zeroMargin
+              noBorder
+              fullwidth={innerWidth < 768}
+              setter={setSearch}
+              input={search}
+              type={"search"}
+              placeholder={"search for tasks"}
+            />
+          </div>
+        </div>
+
+        {/* total number of working hours  */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            margin: "10px 0",
+            background: theme?.paper,
+            boxShadow: "10px 10px 20px rgba(0,0,0,.05)",
+            borderRadius: 5,
+            width: "max-content",
+            padding: "18px 20px",
+          }}
+        >
+          {innerWidth > 768 ? (
+            <Text>Total Number of working hours</Text>
+          ) : (
+            <Text>working hours:</Text>
+          )}
+          <div
+            style={{
+              // background: theme?.error,
+              // height: 30,
+              // width: innerWidth > 768 ? "": "100vw",
+              padding: "3px 12px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              borderRadius: "100px",
+              // marginLeft:
+            }}
+          >
+            <Text heading>
+              {Math.floor(hours / 60) +
+                ` hour${Math.floor(hours / 60) == 1 ? "" : "s"} and ` +
+                (hours % 60) +
+                " minutes"}
+            </Text>
+          </div>
+        </div>
+
+        {/* body  */}
+        {
+          // search?.value ||
+          // startDate.value || endDate.value
+          // ?
+          search?.value ? (
+            searchResults?.length == 0 ? (
+              <Text is_h1>No Tasks found</Text>
+            ) : (
+              <Table
+                currentFilter={currentFilter}
+                filterOptions={filterOptions}
+                setter={setter}
+                showBody={showBody}
+                editor={editTask}
+                columns={["title", "duration", "project_name"]}
+                rows={searchResults}
+                delete={["company_admin", "admin"]?.includes(user?.role)}
+                edit={["company_admin", "admin"]?.includes(user?.role)}
+                view
+              // redirect_path="/department"
+              />
+            )
+          ) : filteredTasks?.length == 0 ? (
+            <Text is_h1>No Tasks found</Text>
           ) : (
             <Table
+              currentFilter={currentFilter}
+              filterOptions={filterOptions}
+              editor={editTask}
               setter={setter}
               showBody={showBody}
-              editor={editTask}
               columns={["title", "duration", "project_name"]}
-              rows={searchResults}
-              delete ={["company_admin", "admin"]?.includes(user?.role)}
-              edit = {["company_admin", "admin"]?.includes(user?.role)}
+              rows={filteredTasks}
+              delete={["company_admin", "admin"]?.includes(user?.role)}
+              edit={["company_admin", "admin"]?.includes(user?.role)}
               view
-              // redirect_path="/department"
+            // redirect_path="/department"
             />
           )
-        ) : filteredTasks?.length == 0 ? (
-          <Text is_h1>No results found</Text>
-        ) : (
-          <Table
-            editor={editTask}
-            setter={setter}
-            showBody={showBody}
-            columns={["title", "duration", "project_name"]}
-            rows={filteredTasks}
-            delete ={["company_admin", "admin"]?.includes(user?.role)}
-            edit = {["company_admin", "admin"]?.includes(user?.role)}
-            view
-            // redirect_path="/department"
+          // :
+
+          // <Text is_h1>Please select a date</Text>
+          //   dailyTasks?.length == 0
+          //   ?
+          //   :
+          //   <Table
+          //   setter={setter}
+          //   showBody={showBody}
+          //   columns={["body", "duration", "project_name"]}
+          //   rows={dailyTasks}
+          //   delete
+          //   edit
+          //   view
+          //   // redirect_path="/department"
+          // />
+        }
+
+        {details && (
+          <Modal
+            open={Boolean(details)}
+            setOpen={setDetails}
+            content={
+              <div>
+                <Text
+                  // color="primary" 
+                  is_h1
+                  heading
+                  justify>
+                  {details["title"]}
+                </Text>
+                <br />
+                <br />
+                {/* <hr style={{opacity: .3}}/> */}
+                {/* <br /> */}
+                <Text justify children={details["body"]} />
+              </div>
+            }
+            title="Task details"
           />
-        )
-        // :
+        )}
 
-        // <Text is_h1>Please select a date</Text>
-        //   dailyTasks?.length == 0
-        //   ?
-        //   :
-        //   <Table
-        //   setter={setter}
-        //   showBody={showBody}
-        //   columns={["body", "duration", "project_name"]}
-        //   rows={dailyTasks}
-        //   delete
-        //   edit
-        //   view
-        //   // redirect_path="/department"
-        // />
-      }
-
-      {details && (
-        <Modal
-          open={Boolean(details)}
-          setOpen={setDetails}
-          content={
-            <div>
-              <Text 
-              // color="primary" 
-              is_h1 
-              heading 
-              justify>
-                {details["title"]}
-              </Text>
-              <br />
-              <br />
-              {/* <hr style={{opacity: .3}}/> */}
-              {/* <br /> */}
-              <Text justify children={details["body"]}/>
-            </div>
-          }
-          title="Task details"
-        />
-      )}
-
-      {open && (
-        <Modal
-          title={currentTask ? "Edit task" : "add task"}
-          open={open}
-          setOpen={setOpen}
-          content={
-            <AddTask
-              values={currentTask}
-              setData={setTasks}
-              updateTasks={updateTasks}
-              data={tasks}
-              setOpen={setOpen}
-            />
-          }
-        />
-      )}
-    </div>
+        {open && (
+          <Modal
+            title={currentTask ? "Edit task" : "add task"}
+            open={open}
+            setOpen={setOpen}
+            content={
+              <AddTask
+                values={currentTask}
+                setData={setTasks}
+                updateTasks={updateTasks}
+                data={tasks}
+                setOpen={setOpen}
+              />
+            }
+          />
+        )}
+      </div>
   );
 };
 
