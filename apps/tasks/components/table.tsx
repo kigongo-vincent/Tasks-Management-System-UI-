@@ -24,6 +24,7 @@ export interface Props {
   info?: (payload: any) => void
   filterOptions?: any[]
   currentFilter?: string
+  no_limit?: boolean
 }
 
 const Table = (props: Props) => {
@@ -56,6 +57,10 @@ const Table = (props: Props) => {
           <td style={{ padding: "7px 10px" ,width: "max-content", minWidth: "max-content"}}>
             <Text color="white">
               {
+                column == "created_at"
+                ?
+                "DATE"
+                :
                 column == "project_name"
                   ?
                   "PROJECT"
@@ -152,6 +157,7 @@ const Table = (props: Props) => {
       {/* rows  */}
       {props?.rows?.map((row, index) => (
         <Row
+          no_limit={props?.no_limit}
           index={index}
           toggle={props?.toggle}
           cache={props?.cache}

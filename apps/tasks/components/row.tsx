@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { getTheme, getUser } from "../model/data";
 import { FaX } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
+import moment from "moment";
 
 export interface Props {
   index: number,
@@ -27,6 +28,7 @@ export interface Props {
   cache: boolean
   move?: (payload: any)=>void
   info?: (payload: any) => void
+  no_limit?: boolean 
 }
 
 const row = (props: Props) => {
@@ -40,17 +42,26 @@ const row = (props: Props) => {
         {props?.columns?.map((column, index) => (
           <td style={{ padding: "5px 10px",width: "max-content", minWidth: "max-content" }}>
             <Text>
-              {TextCropper(
+              {
+                column == "created_at"
+                ?
+                moment(row[column]).format('MMMM DD YYYY, h:mm:ss a')
+                :
+              TextCropper(
                 !column?.includes("date")
                   ? props?.row[column]
-                  : getRelativeTime(props?.row[column]),
-                60
+                  :
+                  getRelativeTime(props?.row[column]),
+                props?.no_limit ? 1000 : 60
               )}
             </Text>
           </td>
         ))}
 
-        <td
+        {
+          (props?.view || props?.edit || props?.delete || props?.redirect_path)
+          &&
+          <td
           style={{
             padding: "7px 10px",
             display: "flex",
@@ -214,6 +225,7 @@ const row = (props: Props) => {
             )}
           </motion.div>
         </td>
+        }
       </tr>
     </AnimatePresence>
   );

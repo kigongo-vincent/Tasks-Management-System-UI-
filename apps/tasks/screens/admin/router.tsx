@@ -11,6 +11,7 @@ import Layout from "../../components/layout";
 import ProjectsPage from "./projects"
 import Settings from "./settings"
 import Members from "./Members"
+import LogsPage from "./logs"
 
 const router = () => {
 
@@ -28,6 +29,7 @@ const router = () => {
         <Route path="/company/:id" Component={CompanyPage} />
         <Route path="/users/:id" Component={UsersPage} />
         <Route path="/projects/:id" Component={ProjectsPage}/>
+        <Route path="/logs/:id" Component={LogsPage}/>
         <Route path="/settings" Component={Settings}/>
         <Route path="/members/:id" Component={Members}/>
       <Route path='*' element={<Navigate to="/"/>}/>
