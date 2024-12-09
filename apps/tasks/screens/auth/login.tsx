@@ -102,7 +102,8 @@ const login = () => {
           user_id: decrypted_data?.user_id,
           role: decrypted_data?.role,
           company: decrypted_data?.company,
-          username: decrypted_data?.name,
+          name:  decrypted_data?.name,
+          username: decrypted_data?.username,
           tokens: {
             access: data?.access,
             refresh: data?.refresh,
