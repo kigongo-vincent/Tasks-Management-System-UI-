@@ -91,7 +91,7 @@ const navbar = () => {
 
       {/* email  */}
       <div className='d-none' style={{ alignItems: "center" }}>
-        <Text>{user?.email ? user?.email : "Guest"}</Text>
+        <Text>{user?.email ? user?.username ? user?.username : user?.email : "Guest"}</Text>
 
         {/* user icon  */}
         <div
