@@ -38,7 +38,7 @@ const row = (props: Props) => {
     <AnimatePresence mode="sync">
       <tr className="shadow" style={{background: props?.index % 2 == 0 ? theme?.pale : ""}}>
         {props?.columns?.map((column, index) => (
-          <td style={{ padding: "5px 10px" }}>
+          <td style={{ padding: "5px 10px",width: "max-content", minWidth: "max-content" }}>
             <Text>
               {TextCropper(
                 !column?.includes("date")

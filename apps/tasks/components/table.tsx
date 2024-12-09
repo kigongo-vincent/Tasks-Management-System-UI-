@@ -53,7 +53,7 @@ const Table = (props: Props) => {
       <tr style={{ background: theme?.primary }}>
         {/* columns  */}
         {props?.columns?.map((column) => (
-          <td style={{ padding: "7px 10px" }}>
+          <td style={{ padding: "7px 10px" ,width: "max-content", minWidth: "max-content"}}>
             <Text color="white">
               {
                 column == "project_name"
