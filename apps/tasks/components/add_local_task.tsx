@@ -175,7 +175,6 @@ const add_task = (props: Props) => {
       setDuration({...duration, value: props?.values["duration"]})
       setTitle({...title, value: props?.values["title"]})
       props?.values["project"] && setAddProject(true)
-      console.log(props?.values["project"])
       setIsActive(props['values']['project'])
     }
 

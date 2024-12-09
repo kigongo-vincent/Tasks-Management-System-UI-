@@ -9,6 +9,7 @@ import Button from "./button";
 import { GET, POST } from "../utils/HTTP";
 import Switch from "./switch";
 import { decryptData, encryptData } from "../utils/security";
+import {motion} from "framer-motion"
 
 export interface Props {
   setOpen: (open: boolean) => void;
@@ -23,6 +24,8 @@ const add_task = (props: Props) => {
   const dispatch = useDispatch();
   const [addProject, setAddProject] = useState(false);
   const user:User = useSelector(getUser)
+  const [isActive, setIsActive] = useState(false);
+  const [positionX, setPositionX] = useState(0);
 
   const [title, setTitle] = useState({
     value: "",
@@ -71,16 +74,6 @@ const add_task = (props: Props) => {
 
     if(!props?.values){
 
-      if(title?.value?.length > 100){
-        dispatch(setAlert({title: "Long title detected", body: "Please provide a reasonable title", mode: "error"}))
-        return
-      }
-
-      if(duration?.value < 1){
-        dispatch(setAlert({title: "Invalid duration", body: "Please provide the correct duration", mode: "error"}))
-        return
-      }
-
       if(!body?.value || !title?.value || !duration?.value){
         dispatch(setAlert({
           title: "Empty fields",
@@ -90,12 +83,17 @@ const add_task = (props: Props) => {
         return
       }
 
+      if(duration?.value < 1){
+        dispatch(setAlert({title: "Invalid Duration", body: "Please provide the correct duration", mode: "error"}))
+        return
+      }
+
       POST({
         data: props?.data,
         path: "/tasks/" + id,
         payload: {
           body: body.value,
-          duration: duration?.value,
+          duration: Math.floor(duration?.value),
           project: project && project,
           title: title?.value
         },
@@ -106,16 +104,18 @@ const add_task = (props: Props) => {
         successMessage: successMessage,
       });
     }else{
-      if(props?.values["body"] == body?.value && props?.values["duration"] == duration?.value && props?.values["title"] == title?.value){
+      if(props?.values["body"] == body?.value && props?.values["duration"] == duration?.value && props?.values["title"] == title?.value && props?.values["project"] == project){
         dispatch(setAlert({title: "No changes detected", body: "There is nothing to update", mode: "normal"}))
         return
       }else{
-        if(title?.value?.length > 100){
-          dispatch(setAlert({title: "Long title detected", body: "Please provide a reasonable title", mode: "error"}))
-          return
-        }
+
         if(!body?.value || !duration?.value || !title?.value){
           dispatch(setAlert({title: "empty fields detected", body: "Please fill out all form fields", mode: "error"}))
+          return
+        }
+
+        if(duration?.value < 1){
+          dispatch(setAlert({title: "Invalid Duration", body: "Please provide the correct duration", mode: "error"}))
           return
         }
         
@@ -127,8 +127,9 @@ const add_task = (props: Props) => {
           },
           body: JSON.stringify({
             body: body?.value,
-            duration: duration?.value,
-            title: title?.value
+            duration: Math.floor(duration?.value),
+            title: title?.value,
+            project: project
           })
         })
 
@@ -156,7 +157,12 @@ const add_task = (props: Props) => {
 
   useEffect(() => {
     if (addProject) {
-      setProject(projects[0]?.id);
+      if(props?.values){
+        props?.values["project"] && setProject(props?.values["project"]);
+        setIsActive(true)
+      }else{
+        setProject(projects[0]?.id);
+      }
     }
   }, [addProject]);
 
@@ -167,7 +173,8 @@ const add_task = (props: Props) => {
       setBody({...body, value: props?.values["body"]})
       setDuration({...duration, value: props?.values["duration"]})
       setTitle({...title, value: props?.values["title"]})
-
+      props?.values["project"] && setAddProject(true)
+      setIsActive(props['values']['project'])
     }
 
   },[props?.values])
@@ -186,6 +193,33 @@ const add_task = (props: Props) => {
 
    }
   }, [state, user])
+
+  useEffect(() => {
+    if (isActive) {
+      setPositionX(20);
+      setAddProject(true)
+    } else {
+      setPositionX(0);
+      setAddProject(false)
+    }
+  }, [isActive]);
+
+  useEffect(() => {
+    if (addProject) {
+      if(props?.values){
+        props?.values["project"] ? setProject(props?.values["project"]): setProject(projects[0]?.id)
+        setIsActive(true)
+      }else{
+        setProject(projects[0]?.id);
+      }
+    }
+  }, [addProject]);
+
+  useEffect(()=>{
+    if(!isActive){
+      setProject(null)
+    }
+  },[isActive])
 
   return (
     <form onSubmit={onSubmit}>
@@ -228,22 +262,58 @@ const add_task = (props: Props) => {
 
 
       {
-        !props?.values && <>
+        <>
         <br />
       {
         projects.length > 0 && <div
-        onClick={()=>setAddProject(!addProject)}
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "flex-end",
           width: "97%",
-          cursor: "pointer"
         }}
       >
         <Text>Attach Project (optional)</Text>
-        <div style={{margin: "0 5px"}}/>
-        <Switch is_active={addProject} setActive={setAddProject} />
+        <div style={{margin: "0 20px"}}/>
+        
+        {/* switch */}
+        <div
+      onClick={() => {
+        setIsActive(!isActive);
+      }}
+      style={{
+        width: 40,
+        height: 20,
+        cursor: "pointer",
+        border:theme?.name == "dark" ? "1px solid grey":"none",
+        background:
+          theme?.name == "dark"
+            ? !isActive
+              ? "rgba(0,0,0,.1)"
+              : theme?.primary
+            : !isActive
+            ? "rgba(0,0,0,.1)"
+            : "rgba(255,110, 0, .2)",
+        borderRadius: "100px",
+      }}
+    >
+      {/* thumb  */}
+      <motion.div
+        animate={{ x: positionX }}
+        style={{
+          width: 20,
+          height: 20,
+          x: positionX,
+          // border: "1px solid grey",
+          background: theme?.name == "dark"? isActive ? theme?.text : "rgb(50,50,50)" : isActive ? theme?.primary : theme?.placeholder,
+          // background: isActive ? theme?.text : theme?.primary,
+          borderRadius: "100%",
+          // borderRadius: "100%",
+        }}
+      />
+    </div>
+        {/* end switch */}
+
       </div>
       }
       <br /> <br />

@@ -193,7 +193,7 @@ const employees = () => {
               delete
               toggle={toggleAccountState}
               edit
-              view
+              // view
             // redirect_path="/employee"
             />
           )}
