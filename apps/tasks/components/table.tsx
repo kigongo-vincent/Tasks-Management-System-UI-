@@ -74,7 +74,7 @@ const Table = (props: Props) => {
                 alignItems: "center",
                 cursor: "pointer",
                 border: `1px solid ${theme?.name == "dark" ? theme?.placeholder: theme?.pale}`,
-                padding: "7px 20px",
+                padding: "7px 14px",
                 borderRadius: 4
               }}>
                 <FaSort color={theme?.name == "dark" ? theme?.text: theme?.paper} style={{ marginRight: 5 }} />
