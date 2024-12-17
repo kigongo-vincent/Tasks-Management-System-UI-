@@ -12,6 +12,8 @@ import Button from "./button"
 
 const navbar = () => {
 
+  const name = JSON.parse(localStorage.getItem("TMS_USER"))?.name
+
   const theme: Theme = useSelector(getTheme)
   const user: User = useSelector(getUser)
   const dispatch = useDispatch()
@@ -91,7 +93,7 @@ const navbar = () => {
 
       {/* email  */}
       <div className='d-none' style={{ alignItems: "center" }}>
-        <Text>{user?.email ? user?.name ? user?.name : user?.email : "Guest"}</Text>
+        <Text>{user?.email ? name ? name : user?.email : "Guest"}</Text>
 
         {/* user icon  */}
         <div
