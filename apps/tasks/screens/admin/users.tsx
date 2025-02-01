@@ -113,10 +113,10 @@ const users = () => {
         "Mins"}, ${user?.previous_month_tasks?.task_count}Task${user?.previous_month_tasks?.task_count != 1 ? "s": ""}`
 
 
-      user.weekly = `${Math.floor(user?.weekly_tasks?.total_duration / 60) +
-        `HR${Math.floor(user?.weekly_tasks?.total_duration / 60) == 1 ? "" : "s"} & ` +
-        (user?.weekly_tasks?.total_duration % 60) +
-        "Mins"}, ${user?.weekly_tasks?.task_count}Task${user?.weekly_tasks?.task_count != 1 ? "s": ""}`
+      // user.weekly = `${Math.floor(user?.weekly_tasks?.total_duration / 60) +
+      //   `HR${Math.floor(user?.weekly_tasks?.total_duration / 60) == 1 ? "" : "s"} & ` +
+      //   (user?.weekly_tasks?.total_duration % 60) +
+      //   "Mins"}, ${user?.weekly_tasks?.task_count}Task${user?.weekly_tasks?.task_count != 1 ? "s": ""}`
     })
   }
 
@@ -194,9 +194,9 @@ const users = () => {
               ?
               <Text is_h1>No consultants found</Text>
               :
-              <Table filterOptions={filterOptions} currentFilter={currentFilter} info={INFO} rows={searchResults} columns={["department", "name", "daily", "previous_month", "weekly", "monthly"]} redirect_path="/employee" view />
+              <Table filterOptions={filterOptions} currentFilter={currentFilter} info={INFO} rows={searchResults} columns={["department", "name", "daily", "previous_month", "monthly"]} redirect_path="/employee" view />
             :
-            <Table filterOptions={filterOptions} currentFilter={currentFilter} rows={users} info={INFO} columns={["department", "name", "daily", "previous_month", "weekly", "monthly"]} redirect_path="/employee" view />
+            <Table filterOptions={filterOptions} currentFilter={currentFilter} rows={users} info={INFO} columns={["department", "name", "daily", "previous_month", "monthly"]} redirect_path="/employee" view />
 
       }
 
