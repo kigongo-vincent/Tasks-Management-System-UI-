@@ -45,7 +45,7 @@ const row = (props: Props) => {
               {
                 column == "created_at"
                 ?
-                moment(row[column]).format('MMMM DD YYYY, h:mm:ss a')
+                moment(props?.row[column]).format('MMMM DD YYYY, h:mm:ss a')
                 :
               TextCropper(
                 !column?.includes("date")

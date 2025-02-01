@@ -14,6 +14,7 @@ import { decryptData, encryptData } from '../../utils/security'
 import Modal from "../../components/modal";
 import { FaChartArea, FaEnvelope, FaPhone } from 'react-icons/fa6'
 import {sortArray} from "../../utils/sort"
+import { PiArrowFatLineRight } from 'react-icons/pi'
 
 
 const users = () => {
@@ -74,6 +75,11 @@ const users = () => {
       action: ()=>{search ? setSearchResults(sortArray(searchResults, "daily_tasks.total_duration", "desc")) :setUsers(sortArray(users, "daily_tasks.total_duration", "desc")); setCurrentFilter("Performance by Day")}
     },
     {
+      label: "sort by previous month",
+      icon: <PiArrowFatLineRight/>,
+      action: ()=>{search ? setSearchResults(sortArray(searchResults, "previous_month_tasks.total_duration", "desc")) :setUsers(sortArray(users, "previous_month_tasks.total_duration", "desc")); setCurrentFilter("sort by previous month")}
+    },
+    {
       label: "Performance by Week",
       icon: <FaChartBar/>,
       action: ()=>{search ? setSearchResults(sortArray(searchResults, "weekly_tasks.total_duration", "desc")) :setUsers(sortArray(users, "weekly_tasks.total_duration", "desc")); setCurrentFilter("Performance by Week")}
@@ -100,6 +106,11 @@ const users = () => {
         `HR${Math.floor(user?.monthly_tasks?.total_duration / 60) == 1 ? "" : "s"} & ` +
         (user?.monthly_tasks?.total_duration % 60) +
         "Mins"}, ${user?.monthly_tasks?.task_count}Task${user?.monthly_tasks?.task_count != 1 ? "s": ""}`
+        
+      user.previous_month = `${Math.floor(user?.previous_month_tasks?.total_duration / 60) +
+        `HR${Math.floor(user?.previous_month_tasks?.total_duration / 60) == 1 ? "" : "s"} & ` +
+        (user?.previous_month_tasks?.total_duration % 60) +
+        "Mins"}, ${user?.previous_month_tasks?.task_count}Task${user?.previous_month_tasks?.task_count != 1 ? "s": ""}`
 
 
       user.weekly = `${Math.floor(user?.weekly_tasks?.total_duration / 60) +
@@ -183,9 +194,9 @@ const users = () => {
               ?
               <Text is_h1>No consultants found</Text>
               :
-              <Table filterOptions={filterOptions} currentFilter={currentFilter} info={INFO} rows={searchResults} columns={["department", "name", "daily", "weekly", "monthly"]} redirect_path="/employee" view />
+              <Table filterOptions={filterOptions} currentFilter={currentFilter} info={INFO} rows={searchResults} columns={["department", "name", "daily", "previous_month", "weekly", "monthly"]} redirect_path="/employee" view />
             :
-            <Table filterOptions={filterOptions} currentFilter={currentFilter} rows={users} info={INFO} columns={["department", "name", "daily", "weekly", "monthly"]} redirect_path="/employee" view />
+            <Table filterOptions={filterOptions} currentFilter={currentFilter} rows={users} info={INFO} columns={["department", "name", "daily", "previous_month", "weekly", "monthly"]} redirect_path="/employee" view />
 
       }
 
